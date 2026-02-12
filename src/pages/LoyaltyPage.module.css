@@ -1,0 +1,175 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-bottom: 6rem;
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.heroContent {
+  position: relative;
+  max-width: 760px;
+  padding: 0 2rem;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+.heroContent h1 {
+  font-size: 2.9rem;
+  font-weight: 800;
+}
+
+.heroContent p {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+/* ================= BACK ================= */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.back {
+  background: transparent;
+  border: none;
+  color: #0f172a;   /* 🔒 explicit */
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+
+/* SECTIONS */
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+}
+
+.bodyText {
+  max-width: 760px;
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* CARD WRAP */
+
+.cardWrap {
+  max-width: 760px;
+}
+
+/* SNAPSHOT */
+
+.snapshot {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  max-width: 900px;
+}
+
+.snapshot div {
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  box-shadow: inset 6px 0 0 currentColor;
+  color: #1f2933;
+}
+
+.snapshot strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.snapshot span {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+/* PLATINUM CARDS */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1.75rem;
+  background: #ffffff;
+  box-shadow: inset 6px 0 0 currentColor;
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.lockedNote {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #64748b;
+  padding-left: 1rem;
+  border-left: 3px solid #cbd5e1;
+}
+
+/* NOTICE */
+
+.notice {
+  max-width: 760px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #64748b;
+  padding-left: 1rem;
+  border-left: 3px solid #cbd5e1;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .cards,
+  .snapshot {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,100 @@
+.page {
+  padding: 3rem 2rem;
+}
+
+/* HERO */
+
+.hero {
+  background: #f5f3ee; /* Support Staff — Warm Stone (LOCKED) */
+  border-radius: 20px;
+  padding: 56px 32px;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.heroSub {
+  font-size: 1.05rem;
+  opacity: 0.85;
+  margin-top: 0.75rem;
+}
+
+/* BACK */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem auto 2rem;
+}
+
+.back {
+  margin: 1rem auto;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+/* INTRO CONTEXT */
+
+.intro {
+  max-width: 820px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.intro h2 {
+  margin-bottom: 0.75rem;
+}
+
+.intro p {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+/* EXISTING STYLES — UNCHANGED */
+
+.nationSection {
+  max-width: 1100px;
+  margin: 3rem auto;
+}
+
+.nationHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.flag {
+  width: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1.5rem;
+}
+
+.role {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.meta {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.65;
+  margin-bottom: 0.5rem;
+}
+
+.bio {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}

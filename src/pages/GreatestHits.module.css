@@ -1,0 +1,169 @@
+.page {
+  padding: 0 24px 96px;
+  background: #f9fafb;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+  margin-bottom: 72px;
+  text-align: center;
+}
+
+.heroImage {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.35)
+  );
+}
+
+.heroText {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 640px;
+  color: #ffffff;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+.heroText h1 {
+  margin-bottom: 14px;
+  font-size: 2.6rem;
+  font-weight: 800;
+}
+
+.heroText p {
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+/* ================= SECTIONS ================= */
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto 72px;
+}
+
+.sectionTitle {
+  margin-bottom: 24px;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+/* ================= STRIPS ================= */
+
+.strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 24px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+/* ================= GRID ================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+/* ================= HIT CARDS ================= */
+
+.hitCard,
+.hitCardLarge {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: inset 6px 0 0 #0f172a;
+}
+
+.hitCard {
+  padding: 16px;
+}
+
+.hitCardLarge {
+  padding: 20px;
+}
+
+/* ================= THUMBNAILS ================= */
+
+.thumbnail,
+.thumbnailLarge {
+  position: relative;
+  background: #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.thumbnail {
+  height: 140px;
+}
+
+.thumbnailLarge {
+  height: 180px;
+}
+
+.duration {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(15, 23, 42, 0.85);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+/* ================= INFO ================= */
+
+.hitInfo strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.context {
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+  .heroImage {
+    height: 300px;
+  }
+
+  .strip {
+    grid-auto-columns: minmax(200px, 1fr);
+  }
+}

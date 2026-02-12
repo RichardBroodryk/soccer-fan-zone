@@ -1,0 +1,151 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* LOGO */
+.logoLink {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 36px;
+}
+
+/* DESKTOP LINKS */
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+.links a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.links a.active {
+  color: #2563eb;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.exit {
+  background: #f1f5f9;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* HAMBURGER */
+.hamburger {
+  width: 40px;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  background: #0f172a;
+  border-radius: 2px;
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 90;
+}
+
+/* DRAWER */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 320px;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 100;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer.open {
+  right: 0;
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.drawerHeader img {
+  height: 32px;
+}
+
+.drawerHeader button {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* DRAWER NAV */
+.drawerNav {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.drawerNav a {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.drawerNav a.active {
+  color: #2563eb;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 12px 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .links {
+    display: none;
+  }
+}

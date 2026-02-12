@@ -1,0 +1,44 @@
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid #e5e5e5;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.teams {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.team {
+  color: #111;
+}
+
+.vs {
+  opacity: 0.6;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.date {
+  white-space: nowrap;
+}
+
+.venue {
+  text-align: right;
+}

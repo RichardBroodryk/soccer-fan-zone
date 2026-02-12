@@ -1,0 +1,161 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroContent {
+  max-width: 680px;
+  padding: 0 2rem;
+  text-align: center;
+  transform: translateX(-12px); /* slight, intentional shift */
+}
+
+.heroContent h1 {
+  font-size: 2.6rem;
+  margin-bottom: 0.75rem;
+  color: #0b1220;
+}
+
+.heroContent p {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: #0b1220; /* darkened secondary heading */
+}
+
+/* ================= BACK ================= */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 12px;
+}
+
+.back {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+
+/* ================= SECTIONS ================= */
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+}
+
+.sub {
+  color: #374151;
+  margin-bottom: 2rem;
+}
+
+/* ================= CONTEXT ================= */
+
+.contextBanner {
+  background: #f8fafc;
+  border-left: 4px solid #0f172a;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.95rem;
+}
+
+.contextLink {
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= TIPS ================= */
+
+.tips {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: #f6f6f6;
+}
+
+.tips h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.tips ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ================= GRID ================= */
+/* HARD LOCK: TWO COLUMNS */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+/* ================= CARD ================= */
+
+.card {
+  padding: 1.5rem;
+  box-shadow: inset 6px 0 0 currentColor;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.serviceLink {
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.serviceLink:hover {
+  text-decoration: underline;
+}
+
+.note {
+  display: block;
+  font-size: 0.85rem;
+  color: #6b7280;
+}

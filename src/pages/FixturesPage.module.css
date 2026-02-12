@@ -1,0 +1,100 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.heroContent {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.heroContent h1 {
+  margin: 0;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.heroContent p {
+  margin-top: 0.5rem;
+  max-width: 760px;
+  margin-inline: auto;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #e5e7eb;
+}
+
+/* ================= BACK ================= */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 48px;
+}
+
+.back {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+
+/* ================= SECTIONS ================= */
+
+.section {
+  padding: 0 24px;
+}
+
+/* ================= EMPTY ================= */
+
+.empty {
+  padding: 24px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 240px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+}

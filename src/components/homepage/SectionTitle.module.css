@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 18px 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 6px;
+  border-left: 4px solid #0d6efd;
+}
+
+.icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.subtitle {
+  margin: 0 0 14px 16px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}

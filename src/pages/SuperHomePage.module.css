@@ -1,0 +1,32 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+
+  padding: 0 24px 120px;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+/* FEATURED TOURNAMENT — IDENTICAL TO PREMIUM */
+.featured {
+  max-width: 520px;
+}
+
+/* HUB GRID — IDENTICAL TO PREMIUM */
+.hubGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .hubGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featured {
+    max-width: none;
+  }
+}

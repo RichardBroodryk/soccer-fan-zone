@@ -1,0 +1,94 @@
+.row {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: inset 6px 0 0 #64748b;
+}
+
+/* ================= DATE ================= */
+
+.date {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* ================= TEAMS ================= */
+
+.teams {
+  display: grid;
+  grid-template-columns: 1fr minmax(48px, 64px) 1fr;
+  align-items: center;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.team:first-child {
+  justify-content: flex-start;
+}
+
+.team:last-child {
+  justify-content: flex-end;
+}
+
+/* VS — SOLID, INERT, BREATHING */
+
+.vs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #000000;
+  letter-spacing: 0.04em;
+}
+
+/* ================= META ================= */
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.tournamentLink {
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.tournamentLink:hover {
+  text-decoration: underline;
+}
+
+/* ================= FLAGS ================= */
+
+.flag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+  .teams {
+    grid-template-columns: 1fr minmax(40px, 52px) 1fr;
+  }
+
+  .vs {
+    font-size: 0.75rem;
+  }
+}

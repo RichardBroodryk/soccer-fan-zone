@@ -1,0 +1,27 @@
+// Canonical flag resolver — defensive and non-crashing
+
+export const FLAG_MAP: Record<string, string | undefined> = {
+  argentina: require("../assets/images/flags/argentina.jpg"),
+  australia: require("../assets/images/flags/australia.jpg"),
+  canada: require("../assets/images/flags/canada.jpg"),
+  chile: require("../assets/images/flags/chile.jpg"),
+  england: require("../assets/images/flags/england.png"),
+  fiji: require("../assets/images/flags/fiji.jpg"),
+  france: require("../assets/images/flags/france.jpg"),
+  georgia: require("../assets/images/flags/georgia.jpg"),
+  ireland: require("../assets/images/flags/ireland.jpg"),
+  italy: require("../assets/images/flags/italy.jpg"),
+  japan: require("../assets/images/flags/japan.jpg"),
+  namibia: require("../assets/images/flags/namibia.jpg"),
+  netherlands: require("../assets/images/flags/netherlands.jpg"),
+  "new-zealand": require("../assets/images/flags/new-zealand.jpg"),
+  portugal: require("../assets/images/flags/portugal.jpg"),
+  romania: require("../assets/images/flags/romania.jpg"),
+  samoa: require("../assets/images/flags/samoa.jpg"),
+  scotland: require("../assets/images/flags/scotland.jpg"),
+  "south-africa": require("../assets/images/flags/south-africa.jpg"),
+  tonga: require("../assets/images/flags/tonga.jpg"),
+  "united-states-of-america": require("../assets/images/flags/united-states-of-america.jpg"),
+  uruguay: require("../assets/images/flags/uruguay.jpg"),
+  wales: require("../assets/images/flags/wales.jpg"),
+};

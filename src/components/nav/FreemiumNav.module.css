@@ -1,0 +1,46 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  height: 38px;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.premium,
+.super {
+  border-radius: 999px;
+  padding: 0.55rem 1.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+/* PREMIUM */
+.premium {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5f5;
+}
+
+/* SUPER */
+.super {
+  background: #0f172a;
+  color: #ffffff;
+}

@@ -1,0 +1,103 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 72px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.header h1 {
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* ================= BACK BUTTON WRAP ================= */
+
+.backRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 24px 0;
+}
+
+/* ================= BACK BUTTON (CANONICAL) ================= */
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+
+/* ===== FEED ===== */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ===== ITEM ===== */
+.feedItem {
+  padding-left: 20px;
+  border-left: 4px solid #e6e6e6;
+}
+
+.meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.feedItem h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+.feedItem p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #334155;
+  max-width: 720px;
+}
+
+/* ===== EMPTY ===== */
+.empty {
+  padding: 48px;
+  background: #f6f6f6;
+  border-radius: 16px;
+  text-align: center;
+  color: #555;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .feedItem {
+    border-left: none;
+    padding-left: 0;
+  }
+}

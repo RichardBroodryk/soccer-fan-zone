@@ -1,0 +1,208 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* HERO */
+.hero {
+  height: 320px;
+  background-image: url("../assets/images/raz/notifications-page.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* UPDATED: text backdrop for readability */
+.heroContent {
+  text-align: center;
+  max-width: 720px;
+  padding: 24px 32px;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 18px;
+  color: #ffffff;
+}
+
+.heroContent h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.heroContent p {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+/* CONTENT WRAPPER */
+.content {
+  max-width: 1200px;
+  margin: 64px auto 0;
+  padding: 0 24px 72px;
+  color: #111;
+}
+
+/* GRID */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 56px;
+}
+
+/* LEFT */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.statusBlock,
+.metaBlock {
+  padding-left: 16px;
+  border-left: 4px solid #111;
+}
+
+.statusBlock h3,
+.metaBlock h3 {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.statusValue {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.primaryButton {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid #111;
+  background: transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* RIGHT */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.notificationItem {
+  padding-left: 20px;
+  border-left: 4px solid #e6e6e6;
+}
+
+.unread {
+  border-color: #111;
+}
+
+.notificationHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.notificationTitle {
+  font-weight: 600;
+}
+
+.time {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+.message {
+  font-size: 0.95rem;
+  color: #333;
+  max-width: 720px;
+}
+
+.emptyState {
+  padding: 48px;
+  background: #f6f6f6;
+  border-radius: 16px;
+  text-align: center;
+  color: #555;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .statusBlock,
+  .metaBlock,
+  .notificationItem {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+/* ================= TEAM ALERTS ================= */
+
+.teamAlerts {
+  margin-bottom: 24px;
+}
+
+.teamAlerts h2 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.teamIntro {
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.teamList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.teamBlock {
+  padding-left: 20px;
+  border-left: 4px solid #e6e6e6;
+}
+
+.teamHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+/* 🔑 FLAG SIZE FIX */
+.teamHeader img {
+  width: 22px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.teamHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.alertList {
+  margin: 6px 0 0 32px;
+  padding: 0;
+  list-style: disc;
+}
+
+.alertList li {
+  font-size: 0.9rem;
+  color: #333;
+}

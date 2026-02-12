@@ -1,0 +1,85 @@
+.hub {
+  position: relative;
+  min-height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* IMAGE */
+.background {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* CONTENT */
+.content {
+  position: relative;
+  height: 100%;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  color: #ffffff;
+  z-index: 2;
+}
+
+/* TITLE */
+.title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+/* FEATURES */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* FEATURE ITEM */
+.feature {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ICON SLOT */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SVG ICON SIZE */
+.icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .hub {
+    min-height: 180px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+}

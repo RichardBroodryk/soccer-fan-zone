@@ -1,0 +1,95 @@
+.secondarySplash {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-image: url("../assets/images/stadiums/splash-two-background.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.75)
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 6rem;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  text-align: center;
+}
+
+/* TITLE */
+
+.titleSection {
+  margin-bottom: 1rem;
+}
+
+.mainTitle {
+  font-size: 2.6rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  opacity: 0.85;
+}
+
+/* HEART MOMENT */
+
+.anthemMoment {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+/* CTA */
+
+.continueSection {
+  margin-top: 1.5rem;
+}
+
+.continueButton {
+  background: #ffffff;
+  color: #0b0b0b;
+  border: none;
+  padding: 0.95rem 2.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.continueButton:hover {
+  background: #e6e6e6;
+}
+
+/* LEGAL */
+
+.legal {
+  margin-top: auto;
+  padding-top: 3rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+}

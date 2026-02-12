@@ -1,0 +1,48 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+/* ================= CATEGORY ================= */
+
+.category h3 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.85rem;
+}
+
+.name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.value {
+  font-weight: 700;
+  color: #374151;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 800px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+}

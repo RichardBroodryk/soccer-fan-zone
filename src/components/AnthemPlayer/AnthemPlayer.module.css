@@ -1,0 +1,56 @@
+.player {
+  padding-left: 16px;
+  border-left: 4px solid;
+}
+
+.label {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: #555555;
+}
+
+/* ===== CONTROLS ===== */
+
+.controls {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111111;
+  cursor: pointer;
+  padding: 0;
+}
+
+.controls button:hover {
+  text-decoration: underline;
+}
+
+/* ===== PROGRESS ===== */
+
+.progressWrap {
+  height: 4px;
+  background: #e6e6e6;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+}
+
+/* ===== TIME ===== */
+
+.time {
+  font-size: 0.85rem;
+  color: #555555;
+}

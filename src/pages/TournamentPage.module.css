@@ -1,0 +1,166 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================================================
+   HERO
+   ================================================== */
+
+.hero {
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Wide / logo-style artwork */
+.heroContained {
+  background-size: contain;
+  background-color: #020617;
+  align-items: flex-start;
+}
+
+/* 🔑 NEW — bias image right (Nations / Pacific / SVNS) */
+.heroBiased {
+  background-position: 68% center;
+}
+
+/* ==================================================
+   HERO CONTENT
+   ================================================== */
+
+.heroContent {
+  max-width: 760px;
+  padding: 36px 24px 0;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* 🔑 NEW — left-aligned editorial intro */
+.heroContentLeft {
+  text-align: left;
+  margin-left: 6%;
+  margin-right: auto;
+}
+
+/* SVNS must remain white even when left-aligned */
+.heroSVNS .heroContent,
+.heroSVNS .heroContent h1,
+.heroSVNS .heroContent p {
+  color: #ffffff;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ==================================================
+   BACK NAV
+   ================================================== */
+
+.backNav {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 0 24px;
+}
+
+/* ==================================================
+   SECTIONS
+   ================================================== */
+
+.section {
+  max-width: 1200px;
+  margin: 64px auto 0;
+  padding: 0 24px;
+}
+
+/* ==================================================
+   ANTHEMS
+   ================================================== */
+
+.anthemsRow {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.anthemCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    inset 6px 0 0 currentColor,
+    0 6px 20px rgba(0, 0, 0, 0.08);
+  font-weight: 700;
+}
+
+.anthemCard svg {
+  width: 16px;
+  height: 16px;
+}
+
+.anthemCard span {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* ==================================================
+   FLAGS
+   ================================================== */
+
+.flagsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 72px);
+  gap: 14px;
+}
+
+/* ==================================================
+   SECTION HEADERS
+   ================================================== */
+
+.sectionHeader h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.sectionHeader p {
+  margin-top: 6px;
+  opacity: 0.75;
+}
+
+/* ==================================================
+   COMMENTS
+   ================================================== */
+
+.commentsPanel {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px 28px;
+  box-shadow:
+    inset 6px 0 0 #000000,
+    0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ==================================================
+   EMPTY / ERROR
+   ================================================== */
+
+.emptyState {
+  text-align: center;
+  padding: 40px 16px;
+  color: #475569;
+}
+
+.error {
+  padding: 64px;
+  text-align: center;
+}

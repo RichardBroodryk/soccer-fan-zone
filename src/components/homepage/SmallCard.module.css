@@ -1,0 +1,56 @@
+.card {
+  border-radius: 18px;
+  padding: 22px;
+  min-height: 156px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 6px 0 0 currentColor,
+    0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.icon {
+  font-size: 26px;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* VARIANTS */
+.mens {
+  color: #14532d;
+  background: #e6f2ed;
+}
+
+.womens {
+  color: #1d4ed8;
+  background: #eaf0ff;
+}
+
+.anthems {
+  color: #5b21b6;
+  background: #f1ebff;
+}
+
+.fanzone {
+  color: #a16207;
+  background: #fff6dc;
+}
+
+.media {
+  color: #1f2933;
+  background: #ffffff;
+}
+
+.utility {
+  color: #475569;
+  background: #f1f5f9;
+}

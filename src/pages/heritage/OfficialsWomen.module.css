@@ -1,0 +1,92 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+/* HERO */
+
+.hero {
+  background: #f2edf6; /* Officials Women — Soft Lavender Stone */
+  border-radius: 20px;
+  padding: 56px 32px;
+  text-align: center;
+}
+
+.heroSub {
+  font-size: 1.05rem;
+  opacity: 0.85;
+  margin-top: 0.75rem;
+}
+
+/* BACK */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem auto 3rem;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  margin: 12px 0;
+}
+
+/* SHARED STRUCTURE (MATCHES MEN) */
+
+.sectionMuted {
+  background: #f7f7f7;
+  padding: 28px;
+  border-radius: 16px;
+  margin-top: 48px;
+  text-align: center;
+}
+
+.grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.cardHeader {
+  display: flex;
+  gap: 16px;
+}
+
+.portrait {
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.flag {
+  width: 28px;
+  margin: 6px 0;
+}
+
+.meta {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.era {
+  display: block;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.bio {
+  margin-top: 0.5rem;
+}

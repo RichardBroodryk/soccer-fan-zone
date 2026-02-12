@@ -1,0 +1,120 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.heroContent {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.heroContent h1 {
+  margin: 0;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.heroContent p {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+/* ================= HUB GRID ================= */
+
+.hubGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  padding: 0 24px;
+}
+
+/* ================= HUB CARD ================= */
+
+.hubCard {
+  position: relative;
+  height: 220px;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.45),
+    rgba(15, 23, 42, 0.1)
+  );
+}
+
+/* 🔒 AUTHORITATIVE TEXT PLATE */
+.cardPlate {
+  position: relative;
+  margin: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+}
+
+.cardPlate h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.cardPlate p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #334155;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 240px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .hubGrid {
+    grid-template-columns: 1fr;
+  }
+}

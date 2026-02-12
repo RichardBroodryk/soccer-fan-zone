@@ -1,0 +1,146 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+  min-height: 340px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.25),
+    rgba(15, 23, 42, 0.45)
+  );
+}
+
+.heroContent {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.heroContent h1 {
+  margin: 0;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.heroContent p {
+  margin-top: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= SECTION ================= */
+
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+  color: #0f172a;
+}
+
+.matches {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.placeholder {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* ================= ACTIONS ================= */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 24px;
+}
+
+.primary {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 26px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 14px 26px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary:hover {
+  background: #f1f5f9;
+}
+
+/* ================= ERROR ================= */
+
+.error {
+  padding: 64px;
+  text-align: center;
+}
+
+.error button {
+  margin-top: 16px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 260px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
