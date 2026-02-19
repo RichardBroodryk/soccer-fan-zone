@@ -1,3 +1,8 @@
+/* UPDATED:
+   - Women’s tournament rows now use women’s hero image when logo is not present
+   - Fixes standalone international tests image
+*/
+
 import { useNavigate } from "react-router-dom";
 import styles from "./WomensTournamentsPage.module.css";
 
@@ -30,7 +35,8 @@ export default function WomensTournamentsPage() {
         description:
           t.heroSubtitle ??
           "International rugby competition",
-        logo: visual?.logo,
+        logo:
+          visual?.heroImageWomen || visual?.logo,
         route: t.route,
       };
     });

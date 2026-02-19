@@ -1,4 +1,4 @@
-import {
+import { 
   BrowserRouter as Router,
   Routes,
   Route,
@@ -139,8 +139,6 @@ function DevHomeEntry() {
   return <Navigate to="/" replace />;
 }
 
-// (all your imports remain exactly as-is above)
-
 export default function App() {
   const isDev = process.env.NODE_ENV === "development";
 
@@ -187,12 +185,10 @@ export default function App() {
           <Route path="/anthems" element={<NationalAnthemsDirectory />} />
           <Route path="/anthems/:nationId" element={<NationalAnthemPage />} />
 
-          {/* ===== TOURNAMENT FLOW (REPAIRED) ===== */}
+          {/* ===== TOURNAMENT FLOW ===== */}
           <Route path="/tournaments" element={<TournamentsHubPage />} />
           <Route path="/tournaments/men" element={<MensTournamentsPage />} />
           <Route path="/tournaments/women" element={<WomensTournamentsPage />} />
-
-          {/* Canonical tournament routes */}
           <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
           <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
 

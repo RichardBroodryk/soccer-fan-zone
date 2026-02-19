@@ -153,3 +153,22 @@
     height: 56px;
   }
 }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+}

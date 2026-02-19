@@ -1,3 +1,8 @@
+/* UPDATED:
+   - Men’s tournament rows now use men’s hero image when logo is not present
+   - Fixes standalone international tests image
+*/
+
 import { useNavigate } from "react-router-dom";
 import styles from "./MensTournamentsPage.module.css";
 
@@ -30,7 +35,8 @@ export default function MensTournamentsPage() {
         description:
           t.heroSubtitle ??
           "International rugby competition",
-        logo: visual?.logo,
+        logo:
+          visual?.heroImageMen || visual?.logo,
         route: t.route,
       };
     });

@@ -15,6 +15,10 @@ import pacificNationsCup from "../assets/images/tournaments/nations-cup-2026.jpg
 import svns from "../assets/images/tournaments/svns-2026.jpg";
 import greatestRivalry from "../assets/images/tournaments/greatest-rivalry-2026.jpg";
 
+/* NEW: International Tests heroes */
+import internationalTestsMen from "../assets/images/tournaments/international-tests-men-hero.jpg";
+import internationalTestsWomen from "../assets/images/tournaments/international-tests-women-hero.jpg";
+
 /* ================= TYPES ================= */
 
 export type HeroLayout =
@@ -91,6 +95,16 @@ export const tournamentVisuals: TournamentVisual[] = [
     heroLayout: "contained",
     anthemMode: "rivalry",
   },
+
+  /* ================= NEW: INTERNATIONAL TESTS ================= */
+
+  {
+  conceptId: "international-tests",
+  heroImageMen: internationalTestsMen,
+  heroImageWomen: internationalTestsWomen,
+  heroLayout: "contained",
+  anthemMode: "global",
+},
 ];
 
 /* ==================================================

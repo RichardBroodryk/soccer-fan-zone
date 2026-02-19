@@ -37,6 +37,7 @@ type Podcast = {
   url: string;
   image: string;
   episodes: Episode[];
+  isPartner?: boolean; // NEW: optional partner flag
 };
 
 /* ================= PAGE ================= */
@@ -66,6 +67,7 @@ export default function PodcastsPage() {
       description:
         "One of the world’s most listened-to rugby podcasts, mixing opinion, humour, and sharp analysis.",
       episodes: [],
+      // isPartner: true, // activate when they become a partner
     },
     {
       id: 2,
@@ -165,7 +167,8 @@ export default function PodcastsPage() {
     },
   ];
 
-  const filteredPodcasts =
+  /* FILTER */
+  const filtered =
     activeTournament === "all"
       ? podcasts
       : podcasts.filter((p) =>
@@ -174,6 +177,13 @@ export default function PodcastsPage() {
               f.toLowerCase().replace(/\s+/g, "-") === activeTournament
           )
         );
+
+  /* SORT: partners first */
+  const filteredPodcasts = [...filtered].sort((a, b) => {
+    const aPartner = a.isPartner ? 1 : 0;
+    const bPartner = b.isPartner ? 1 : 0;
+    return bPartner - aPartner;
+  });
 
   return (
     <div className={styles.page}>

@@ -1,3 +1,9 @@
+/* UPDATED:
+   - Restored row click navigation to tournament routes
+   - Gender-aware hub images (men/women)
+   - No code removed
+*/
+
 import { useNavigate } from "react-router-dom";
 import styles from "./TournamentsHubPage.module.css";
 
@@ -14,6 +20,7 @@ type TournamentRow = {
   year: number;
   description: string;
   logo?: string;
+  route: string;
 };
 
 export default function TournamentsHubPage() {
@@ -29,7 +36,9 @@ export default function TournamentsHubPage() {
         description:
           t.heroSubtitle ??
           "International rugby competition",
-        logo: visual?.logo,
+        logo:
+          visual?.heroImageMen || visual?.logo,
+        route: t.route,
       };
     });
 
@@ -43,7 +52,9 @@ export default function TournamentsHubPage() {
         description:
           t.heroSubtitle ??
           "International rugby competition",
-        logo: visual?.logo,
+        logo:
+          visual?.heroImageWomen || visual?.logo,
+        route: t.route,
       };
     });
 
@@ -80,7 +91,12 @@ export default function TournamentsHubPage() {
 
         <div className={styles.list}>
           {mensTournaments.map((t) => (
-            <div key={t.name} className={styles.row}>
+            <div
+              key={t.name}
+              className={styles.row}
+              onClick={() => navigate(t.route)}
+              style={{ cursor: "pointer" }}
+            >
               {t.logo && (
                 <img
                   src={t.logo}
@@ -118,7 +134,12 @@ export default function TournamentsHubPage() {
 
         <div className={styles.list}>
           {womensTournaments.map((t) => (
-            <div key={t.name} className={styles.row}>
+            <div
+              key={t.name}
+              className={styles.row}
+              onClick={() => navigate(t.route)}
+              style={{ cursor: "pointer" }}
+            >
               {t.logo && (
                 <img
                   src={t.logo}

@@ -1,5 +1,5 @@
 /* ==================================================
-   TOURNAMENT META — AUTHORITATIVE v3 (LOCKED)
+   TOURNAMENT META — AUTHORITATIVE v4 (LOCKED)
    Rugby Anthem Zone
    Scope: Tournament identity + routing + match binding
 
@@ -19,7 +19,8 @@ export type TournamentType =
   | "championship"
   | "cup"
   | "sevens"
-  | "tour";
+  | "tour"
+  | "test-series";
 
 export type Gender = "men" | "women";
 
@@ -48,6 +49,10 @@ export interface TournamentMeta {
   heroBadge?: string;
   heroSubtitle?: string;
 
+  /* ================= CALENDAR WINDOW ================= */
+
+  window?: "spring" | "midyear" | "autumn" | "season";
+
   /* ================= ROUTING ================= */
 
   /** 🔒 CANONICAL ROUTE — route-as-authority */
@@ -56,7 +61,6 @@ export interface TournamentMeta {
 
 /* ==================================================
    2026 TOURNAMENTS — CANONICAL SET
-   (Aligned to international calendar reality)
    ================================================== */
 
 export const tournaments2026: TournamentMeta[] = [
@@ -75,6 +79,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "England · France · Ireland · Italy · Scotland · Wales",
     route: "/tournaments/men/six-nations-2026",
+    window: "spring",
   },
 
   {
@@ -90,6 +95,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "Six Nations · SANZAAR · Japan · Fiji",
     route: "/tournaments/men/nations-championship-2026",
+    window: "midyear",
   },
 
   {
@@ -105,6 +111,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "Pacific region · International competition",
     route: "/tournaments/men/pacific-nations-cup-2026",
+    window: "midyear",
   },
 
   {
@@ -120,6 +127,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "World Rugby global sevens circuit",
     route: "/tournaments/men/svns-2026",
+    window: "season",
   },
 
   {
@@ -128,13 +136,29 @@ export const tournaments2026: TournamentMeta[] = [
     name: "The Greatest Rivalry",
     year: 2026,
     gender: "men",
-    type: "tour",
+    type: "test-series",
     status: "planned",
     matchKey: "Men's SA vs NZ Rival Tour 2026",
     heroBadge: "ICONIC RIVALRY",
     heroSubtitle:
       "South Africa · New Zealand",
     route: "/tournaments/men/sa-nz-rival-tour-2026",
+    window: "midyear",
+  },
+
+  {
+    conceptId: "international-tests",
+    instanceId: "international-tests-2026-men",
+    name: "International Tests",
+    year: 2026,
+    gender: "men",
+    type: "tour",
+    status: "active",
+    matchKey: "Men's International Tests 2026",
+    heroBadge: "TEST MATCHES",
+    heroSubtitle: "Standalone international fixtures",
+    route: "/tournaments/men/international-tests-2026",
+    window: "midyear",
   },
 
   /* ================= WOMEN ================= */
@@ -152,6 +176,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "England · France · Ireland · Italy · Scotland · Wales",
     route: "/tournaments/women/six-nations-2026",
+    window: "spring",
   },
 
   {
@@ -167,6 +192,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "Cross-hemisphere elite competition",
     route: "/tournaments/women/nations-championship-2026",
+    window: "autumn",
   },
 
   {
@@ -182,6 +208,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "Pacific region · International competition",
     route: "/tournaments/women/pacific-nations-cup-2026",
+    window: "midyear",
   },
 
   {
@@ -197,6 +224,7 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle:
       "World Rugby global women’s sevens circuit",
     route: "/tournaments/women/svns-2026",
+    window: "season",
   },
 
   {
@@ -205,12 +233,28 @@ export const tournaments2026: TournamentMeta[] = [
     name: "Women’s SA vs NZ Rival Tour",
     year: 2026,
     gender: "women",
-    type: "tour",
+    type: "test-series",
     status: "planned",
     matchKey: "Women's SA vs NZ Rival Tour 2026",
     heroBadge: "ICONIC RIVALRY",
     heroSubtitle:
       "South Africa · New Zealand",
     route: "/tournaments/women/sa-nz-rival-tour-2026",
+    window: "autumn",
+  },
+
+  {
+    conceptId: "international-tests",
+    instanceId: "international-tests-2026-women",
+    name: "International Tests",
+    year: 2026,
+    gender: "women",
+    type: "tour",
+    status: "active",
+    matchKey: "Women's International Tests 2026",
+    heroBadge: "TEST MATCHES",
+    heroSubtitle: "Standalone international fixtures",
+    route: "/tournaments/women/international-tests-2026",
+    window: "midyear",
   },
 ];

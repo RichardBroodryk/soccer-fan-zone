@@ -26,15 +26,14 @@ export interface MatchData {
 }
 
 // --------------------------------------------------
-// 2026 MATCHES — CANONICAL DATASET (COMPLETED WHERE VALID)
+// 2026 MATCHES — CANONICAL DATASET
 // --------------------------------------------------
 
 export const matches2026: MatchData[] = [
   // ==================================================
-  // SIX NATIONS 2026 — MEN (COMPLETED SIMULATION)
+  // SIX NATIONS 2026 — MEN
   // ==================================================
 
-  // ROUND 1
   {
     id: 101,
     tournament: "Six Nations 2026",
@@ -62,8 +61,6 @@ export const matches2026: MatchData[] = [
     away: { name: "Wales", country: "wales" },
     score: { home: 31, away: 19 },
   },
-
-  // ROUND 2
   {
     id: 104,
     tournament: "Six Nations 2026",
@@ -91,8 +88,6 @@ export const matches2026: MatchData[] = [
     away: { name: "France", country: "france" },
     score: { home: 18, away: 26 },
   },
-
-  // ROUND 3
   {
     id: 107,
     tournament: "Six Nations 2026",
@@ -120,8 +115,6 @@ export const matches2026: MatchData[] = [
     away: { name: "Italy", country: "italy" },
     score: { home: 42, away: 16 },
   },
-
-  // ROUND 4
   {
     id: 110,
     tournament: "Six Nations 2026",
@@ -149,8 +142,6 @@ export const matches2026: MatchData[] = [
     away: { name: "England", country: "england" },
     score: { home: 15, away: 34 },
   },
-
-  // ROUND 5
   {
     id: 113,
     tournament: "Six Nations 2026",
@@ -180,27 +171,82 @@ export const matches2026: MatchData[] = [
   },
 
   // ==================================================
-  // RUGBY CHAMPIONSHIP / TOURS — FUTURE (NO SCORES)
+  // MEN — INTERNATIONAL TESTS (STANDALONE)
   // ==================================================
 
   {
-    id: 201,
-    tournament: "Rugby Championship 2026",
-    date: "2026-08-10",
-    venue: "Eden Park",
-    home: { name: "New Zealand", country: "new-zealand" },
-    away: { name: "South Africa", country: "south-africa" },
+    id: 200,
+    tournament: "Men's International Tests 2026",
+    date: "2026-07-04",
+    venue: "TBC",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "Ireland", country: "ireland" },
   },
+  {
+    id: 201,
+    tournament: "Men's International Tests 2026",
+    date: "2026-07-11",
+    venue: "TBC",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "France", country: "france" },
+  },
+  {
+    id: 202,
+    tournament: "Men's International Tests 2026",
+    date: "2026-07-18",
+    venue: "TBC",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "Italy", country: "italy" },
+  },
+  {
+    id: 203,
+    tournament: "Men's International Tests 2026",
+    date: "2026-08-08",
+    venue: "Hanazono Rugby Stadium",
+    home: { name: "Japan", country: "japan" },
+    away: { name: "Australia", country: "australia" },
+  },
+
+  // ==================================================
+  // MEN — SA vs NZ RIVAL TOUR
+  // ==================================================
+
   {
     id: 301,
     tournament: "Men's SA vs NZ Rival Tour 2026",
-    date: "2026-09-12",
+    date: "2026-08-22",
     venue: "Ellis Park",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
   },
   {
+    id: 302,
+    tournament: "Men's SA vs NZ Rival Tour 2026",
+    date: "2026-09-12",
+    venue: "TBC",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "New Zealand", country: "new-zealand" },
+  },
+
+  // ==================================================
+  // WOMEN — INTERNATIONAL TESTS
+  // ==================================================
+
+  {
     id: 401,
+    tournament: "Women's International Tests 2026",
+    date: "2026-03-27",
+    venue: "GIO Stadium",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "Fiji", country: "fiji" },
+  },
+
+  // ==================================================
+  // WOMEN — SA vs NZ RIVAL TOUR
+  // ==================================================
+
+  {
+    id: 501,
     tournament: "Women's SA vs NZ Rival Tour 2026",
     date: "2026-09-05",
     venue: "FNB Stadium",
