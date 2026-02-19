@@ -14,6 +14,10 @@ function resolveStatus(
   return "upcoming";
 }
 
+function normalize(value: string) {
+  return value.toLowerCase().trim();
+}
+
 export function resolveCalendarMatches(): CalendarMatch[] {
   const resolved: CalendarMatch[] = [];
 
@@ -21,7 +25,9 @@ export function resolveCalendarMatches(): CalendarMatch[] {
     try {
       /** ================= TOURNAMENT ================= */
       const tournament = tournaments2026.find(
-        (t) => t.matchKey === match.tournament
+        (t) =>
+          normalize(t.matchKey) ===
+          normalize(match.tournament)
       );
 
       if (!tournament) {
@@ -34,16 +40,9 @@ export function resolveCalendarMatches(): CalendarMatch[] {
       /** ================= STADIUM ================= */
       const stadium = stadiums.find(
         (s) =>
-          s.slug === match.venue ||
-          s.name === match.venue
+          normalize(s.slug) === normalize(match.venue) ||
+          normalize(s.name) === normalize(match.venue)
       );
-
-      if (!stadium) {
-        console.warn(
-          `[Calendar] Skipped match ${match.id}: unknown venue "${match.venue}"`
-        );
-        continue;
-      }
 
       /** ================= DATE ================= */
       const dateObj = new Date(match.date);
@@ -53,6 +52,12 @@ export function resolveCalendarMatches(): CalendarMatch[] {
         );
         continue;
       }
+
+      /** ================= SAFE STADIUM FALLBACK ================= */
+      const stadiumSlug = stadium?.slug ?? "unknown";
+      const stadiumName = stadium?.name ?? match.venue;
+      const city = stadium?.city;
+      const country = stadium?.country;
 
       /** ================= PUSH ================= */
       resolved.push({
@@ -68,10 +73,10 @@ export function resolveCalendarMatches(): CalendarMatch[] {
         home: match.home,
         away: match.away,
 
-        stadiumSlug: stadium.slug,
-        stadiumName: stadium.name,
-        city: stadium.city,
-        country: stadium.country,
+        stadiumSlug,
+        stadiumName,
+        city,
+        country,
 
         status: resolveStatus(
           dateObj,
@@ -88,5 +93,8 @@ export function resolveCalendarMatches(): CalendarMatch[] {
     }
   }
 
-  return resolved;
+  /** ================= SORT (GLOBAL) ================= */
+  return resolved.sort(
+    (a, b) => a.date.getTime() - b.date.getTime()
+  );
 }

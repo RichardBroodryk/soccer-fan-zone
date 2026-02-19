@@ -6,6 +6,7 @@ import calendarBg from "../assets/images/raz/calendar-hero.jpg";
 
 import { resolveCalendarMatches } from "../utils/calendar/resolveCalendarMatches";
 import { groupMatchesByMonth } from "../utils/calendar/groupMatchesByMonth";
+import { groupMatchesBySeason } from "../utils/calendar/groupMatchesBySeason";
 
 import CalendarMonth from "../components/calendar/CalendarMonth";
 
@@ -47,6 +48,7 @@ export default function CalendarPage() {
 
   /** ================= GROUP ================= */
   const monthGroups = groupMatchesByMonth(filteredMatches);
+  const seasonGroups = groupMatchesBySeason(monthGroups);
 
   const goMatchFromCalendar = (id: number) => {
     navigate(`/match/${id}`, { state: { from: "calendar" } });
@@ -116,16 +118,22 @@ export default function CalendarPage() {
           </select>
         </div>
 
-        {/* ================= MONTHS ================= */}
-        {monthGroups.length === 0 ? (
+        {/* ================= SEASONS ================= */}
+        {seasonGroups.length === 0 ? (
           <p>No fixtures match the selected filters.</p>
         ) : (
-          monthGroups.map((group) => (
-            <CalendarMonth
-              key={`${group.year}-${group.month}`}
-              group={group}
-              onMatchSelect={goMatchFromCalendar}
-            />
+          seasonGroups.map((season) => (
+            <section key={season.id}>
+              <h2>{season.label}</h2>
+
+              {season.months.map((group) => (
+                <CalendarMonth
+                  key={`${group.year}-${group.month}`}
+                  group={group}
+                  onMatchSelect={goMatchFromCalendar}
+                />
+              ))}
+            </section>
           ))
         )}
       </section>
