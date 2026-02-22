@@ -10,10 +10,6 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop.
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <title>React App</title>
@@ -32,6 +28,24 @@
         window.Paddle.Initialize({
           token: "live_2bfb17d9fcf0a48f769b6021d1b",
         });
+
+      // ✅ AUTO-OPEN CHECKOUT WHEN BACKEND REDIRECTS
+      (function () {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const txn = params.get("_ptxn");
+
+          if (txn && window.Paddle) {
+            console.log("RAZ → Opening Paddle checkout:", txn);
+
+            window.Paddle.Checkout.open({
+              transactionId: txn,
+            });
+          }
+        } catch (err) {
+          console.error("RAZ Paddle auto-open failed:", err);
+        }
+      })();
     </script>
   </head>
 
