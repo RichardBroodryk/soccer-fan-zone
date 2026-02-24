@@ -2,18 +2,21 @@ import { useNavigate } from "react-router-dom";
 import styles from "./WelcomePage.module.css";
 
 /**
- * WELCOME PAGE v2 — LOCKED
- * Orientation & intent only.
- * No selling. No pricing. No contracts.
+ * WELCOME PAGE v3 — FLOW CORRECTED
+ * Adds login entry points per tier.
+ * No pricing logic changed.
  */
 
 export default function WelcomePage() {
   const navigate = useNavigate();
 
-  // 🔒 Correct routing: Welcome → What You Get
+  // 🔒 Tier routing
   const goFreemium = () => navigate("/what-you-get/freemium");
   const goPremium = () => navigate("/what-you-get/premium");
   const goSuper = () => navigate("/what-you-get/super");
+
+  // 🔐 Login routing (global)
+  const goLogin = () => navigate("/login");
 
   return (
     <section className={styles.page}>
@@ -43,11 +46,20 @@ export default function WelcomePage() {
               A permanent free way to engage with the platform and follow the
               game at a casual level.
             </p>
+
             <button
               className={styles.secondaryButton}
               onClick={goFreemium}
             >
               Explore Free
+            </button>
+
+            {/* ✅ NEW: Login */}
+            <button
+              className={styles.loginButton}
+              onClick={goLogin}
+            >
+              Login
             </button>
           </div>
 
@@ -61,11 +73,20 @@ export default function WelcomePage() {
               Designed for regular rugby followers who want a cleaner,
               more focused way to experience matches and tournaments.
             </p>
+
             <button
               className={styles.primaryButton}
               onClick={goPremium}
             >
               View Premium Access
+            </button>
+
+            {/* ✅ NEW: Login */}
+            <button
+              className={styles.loginButton}
+              onClick={goLogin}
+            >
+              Login
             </button>
           </div>
 
@@ -79,11 +100,20 @@ export default function WelcomePage() {
               For dedicated supporters who want the deepest, most
               distraction-free way to engage with rugby on the platform.
             </p>
+
             <button
               className={styles.secondaryButton}
               onClick={goSuper}
             >
               View Super Premium Access
+            </button>
+
+            {/* ✅ NEW: Login */}
+            <button
+              className={styles.loginButton}
+              onClick={goLogin}
+            >
+              Login
             </button>
           </div>
         </div>
