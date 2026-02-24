@@ -4,14 +4,14 @@ const TOKEN_KEY = "raz_token";
 const USER_ID_KEY = "raz_user_id";
 
 export const registerUser = async (email: string, password: string) => {
-  return apiRequest("/register", "POST", {
+  return apiRequest("/api/register", "POST", {
     email,
     password,
   });
 };
 
 export const loginUser = async (email: string, password: string) => {
-  const data = await apiRequest("/login", "POST", {
+  const data = await apiRequest("/api/login", "POST", {
     email,
     password,
   });
@@ -20,6 +20,8 @@ export const loginUser = async (email: string, password: string) => {
     localStorage.setItem(TOKEN_KEY, data.token);
   }
 
+  // your backend currently returns { token } only
+  // so we defensively store user id if ever added later
   if (data.user && data.user.id) {
     localStorage.setItem(USER_ID_KEY, String(data.user.id));
   }
@@ -46,7 +48,7 @@ export const getUserTier = async () => {
 
   try {
     const data = await apiRequest(
-      "/premium-content",
+      "/api/subscription",
       "GET",
       undefined,
       token
