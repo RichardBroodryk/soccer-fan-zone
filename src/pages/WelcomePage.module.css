@@ -79,10 +79,22 @@
   opacity: 0.92;
 }
 .loginButton {
-  margin-top: 10px;
-  background: transparent;
-  border: 1px solid #ccc;
-  color: #fff;
-  padding: 10px 14px;
+  margin-top: 0.6rem;
+
+  /* match other buttons */
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+
+  /* visual hierarchy */
+  background: #111111;
+  color: #ffffff;
+  border: none;
+
   cursor: pointer;
+  width: 100%;
+  display: block;
+}
+
+.loginButton:hover {
+  opacity: 0.92;
 }
