@@ -84,7 +84,7 @@ export default function FanzoneHubPage() {
         <div
           className={styles.featureCard}
           style={{ backgroundImage: `url(${myTeamsImg})` }}
-          onClick={() => navigate("/fanzone/my-teams")}
+          onClick={() => navigate("/my-teams")}
         >
           <div className={styles.featureOverlay} />
           <h2>My Teams</h2>

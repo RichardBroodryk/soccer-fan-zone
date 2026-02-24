@@ -99,6 +99,20 @@ import TransportPage from "./pages/TransportPage";
 import CalendarPage from "./pages/CalendarPage";
 import MerchPage from "./pages/MerchPage";
 
+// MERCH nation pages
+import SouthAfricaMerchPage from "./pages/merch/SouthAfricaMerchPage";
+import NewZealandMerchPage from "./pages/merch/NewZealandMerchPage";
+import EnglandMerchPage from "./pages/merch/EnglandMerchPage";
+import FranceMerchPage from "./pages/merch/FranceMerchPage";
+import WalesMerchPage from "./pages/merch/WalesMerchPage";
+import IrelandMerchPage from "./pages/merch/IrelandMerchPage";
+import ScotlandMerchPage from "./pages/merch/ScotlandMerchPage";
+import ItalyMerchPage from "./pages/merch/ItalyMerchPage";
+import AustraliaMerchPage from "./pages/merch/AustraliaMerchPage";
+import JapanMerchPage from "./pages/merch/JapanMerchPage";
+import FijiMerchPage from "./pages/merch/FijiMerchPage";
+import ArgentinaMerchPage from "./pages/merch/ArgentinaMerchPage";
+
 /* ================= ENGAGEMENT ================= */
 import MyTeamsPage from "./pages/MyTeamsPage";
 import MyTeamsManagePage from "./pages/MyTeamsManagePage";
@@ -109,6 +123,22 @@ import HeritageHub from "./pages/heritage/HeritageHub";
 import LegendsHub from "./pages/heritage/LegendsHub";
 import LegendsMen from "./pages/heritage/LegendsMen";
 import LegendsWomen from "./pages/heritage/LegendsWomen";
+import SquadsHub from "./pages/heritage/squads/SquadsHub";
+import ChampionsHub from "./pages/heritage/ChampionsHub";
+import CoachesSupportHub from "./pages/heritage/CoachesSupportHub";
+import OfficialsHub from "./pages/heritage/OfficialsHub";
+
+import SquadsMen from "./pages/heritage/squads/SquadsMen";
+import SquadsWomen from "./pages/heritage/squads/SquadsWomen";
+import ChampionsMen from "./pages/heritage/ChampionsMen";
+import ChampionsWomen from "./pages/heritage/ChampionsWomen";
+import HeadCoaches from "./pages/heritage/HeadCoaches";
+import AssistantCoaches from "./pages/heritage/AssistantCoaches";
+import SupportStaff from "./pages/heritage/SupportStaff";
+import OfficialsMen from "./pages/heritage/OfficialsMen";
+import OfficialsWomen from "./pages/heritage/OfficialsWomen";
+import OfficialsMenEras from "./pages/heritage/OfficialsMenEras";
+import OfficialsWomenEras from "./pages/heritage/OfficialsWomenEras";
 
 /* ================= LAYOUTS ================= */
 import FreemiumLayout from "./layouts/FreemiumLayout";
@@ -156,18 +186,12 @@ export default function App() {
           <Route path="/what-you-get/:tier" element={<WhatYouGetPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/access-pending" element={<AccessPendingPage />} />
-
           <Route path="/signup/free" element={<FreemiumSignupPage />} />
           <Route path="/signup/premium" element={<PremiumSignupPage />} />
           <Route path="/signup/super" element={<SuperPremiumSignupPage />} />
-
           <Route path="/home-free" element={<FreemiumHomePage />} />
-
           <Route path="/free/anthems" element={<NationalAnthemsDirectory />} />
-          <Route
-            path="/free/anthems/:nationId"
-            element={<NationalAnthemPage />}
-          />
+          <Route path="/free/anthems/:nationId" element={<NationalAnthemPage />} />
         </Route>
 
         {/* ================= PREMIUM ================= */}
@@ -180,116 +204,124 @@ export default function App() {
         >
           <Route path="/home" element={<HomePage />} />
 
+          {/* Anthems */}
           <Route path="/anthems" element={<NationalAnthemsDirectory />} />
           <Route path="/anthems/:nationId" element={<NationalAnthemPage />} />
 
-          {/* ✅ THESE ARE USED — DO NOT REMOVE */}
+          {/* Tournaments */}
           <Route path="/tournaments" element={<TournamentsHubPage />} />
           <Route path="/tournaments/men" element={<MensTournamentsPage />} />
-          <Route
-            path="/tournaments/women"
-            element={<WomensTournamentsPage />}
-          />
+          <Route path="/tournaments/women" element={<WomensTournamentsPage />} />
           <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
           <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
 
+          {/* Match center */}
           <Route path="/match/:id" element={<MatchPage />} />
-
           <Route path="/match-center" element={<MatchCenterPage />} />
           <Route path="/live-scores" element={<LiveScoresPage />} />
           <Route path="/fixtures" element={<FixturesPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/stats" element={<StatsPage />} />
 
+          {/* Stadiums */}
           <Route path="/stadiums" element={<StadiumHubPage />} />
           <Route path="/stadium/:slug" element={<StadiumPage />} />
-          <Route
-            path="/stadium/:slug/matchday"
-            element={<StadiumMatchdayPage />}
-          />
+          <Route path="/stadium/:slug/matchday" element={<StadiumMatchdayPage />} />
 
+          {/* Media */}
           <Route path="/media" element={<MediaHubPage />} />
           <Route path="/videos" element={<MatchVideosPage />} />
           <Route path="/podcasts" element={<PodcastsPage />} />
           <Route path="/greatest-hits" element={<GreatestHits />} />
           <Route path="/comments" element={<FanComments />} />
 
+          {/* Defining Moments */}
           <Route path="/defining-moments" element={<DefiningMomentsPage />} />
-          <Route
-            path="/moments/world-cup-turning-points"
-            element={<WorldCupTurningPoints />}
-          />
-          <Route
-            path="/moments/tactical-shifts"
-            element={<TacticalShifts />}
-          />
+          <Route path="/moments/world-cup-turning-points" element={<WorldCupTurningPoints />} />
+          <Route path="/moments/tactical-shifts" element={<TacticalShifts />} />
           <Route path="/moments/law-changes" element={<LawChanges />} />
-          <Route
-            path="/moments/calls-decisions"
-            element={<CallsAndDecisions />}
-          />
-          <Route
-            path="/moments/era-defining-rivalries"
-            element={<EraDefiningRivalries />}
-          />
-          <Route
-            path="/moments/cultural-moments"
-            element={<CulturalMoments />}
-          />
+          <Route path="/moments/calls-decisions" element={<CallsAndDecisions />} />
+          <Route path="/moments/era-defining-rivalries" element={<EraDefiningRivalries />} />
+          <Route path="/moments/cultural-moments" element={<CulturalMoments />} />
 
+          {/* Inside the Game */}
           <Route path="/inside-the-game" element={<InsideTheGameHubPage />} />
           <Route path="/inside-the-game/referees" element={<RefereeHub />} />
-          <Route
-            path="/inside-the-game/referees/breakdown"
-            element={<BreakdownRucksPage />}
-          />
-          <Route
-            path="/inside-the-game/referees/tmo"
-            element={<TMOReviewsPage />}
-          />
-          <Route
-            path="/inside-the-game/referees/law-updates"
-            element={<LawUpdatesPage />}
-          />
-          <Route
-            path="/inside-the-game/fantasy"
-            element={<FantasyLeagueHubPage />}
-          />
+          <Route path="/inside-the-game/referees/breakdown" element={<BreakdownRucksPage />} />
+          <Route path="/inside-the-game/referees/tmo" element={<TMOReviewsPage />} />
+          <Route path="/inside-the-game/referees/law-updates" element={<LawUpdatesPage />} />
+          <Route path="/inside-the-game/fantasy" element={<FantasyLeagueHubPage />} />
 
+          {/* Calendar & Merch */}
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/merch" element={<MerchPage />} />
+          <Route path="/merch/south-africa" element={<SouthAfricaMerchPage />} />
+          <Route path="/merch/new-zealand" element={<NewZealandMerchPage />} />
+          <Route path="/merch/england" element={<EnglandMerchPage />} />
+          <Route path="/merch/france" element={<FranceMerchPage />} />
+          <Route path="/merch/wales" element={<WalesMerchPage />} />
+          <Route path="/merch/ireland" element={<IrelandMerchPage />} />
+          <Route path="/merch/scotland" element={<ScotlandMerchPage />} />
+          <Route path="/merch/italy" element={<ItalyMerchPage />} />
+          <Route path="/merch/australia" element={<AustraliaMerchPage />} />
+          <Route path="/merch/japan" element={<JapanMerchPage />} />
+          <Route path="/merch/fiji" element={<FijiMerchPage />} />
+          <Route path="/merch/argentina" element={<ArgentinaMerchPage />} />
 
-          <Route path="/my-teams" element={<MyTeamsPage />} />
-          <Route path="/my-teams/manage" element={<MyTeamsManagePage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
+          {/* Matchday Journeys */}
+          <Route path="/matchday-journeys" element={<MatchdayJourneysPage />} />
+          <Route path="/matchday-planner" element={<MatchdayPlannerPage />} />
 
-          <Route path="/news" element={<NewsHubPage />} />
-          <Route path="/news/feed" element={<MyFeedPage />} />
-
-          <Route path="/fanzone" element={<FanzoneHubPage />} />
-          <Route path="/fanzone/loyalty" element={<LoyaltyPage />} />
-          <Route path="/fanzone/audio" element={<LiveMatchAudioPage />} />
-          <Route path="/fanzone/ppv" element={<PPVPage />} />
-
-          <Route
-            path="/matchday-journeys"
-            element={<MatchdayJourneysPage />}
-          />
-          <Route
-            path="/matchday-planner"
-            element={<MatchdayPlannerPage />}
-          />
-
+          {/* Travel */}
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/flights" element={<FlightsPage />} />
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/transport" element={<TransportPage />} />
 
+          {/* Engagement (Teams verified) */}
+          <Route path="/my-teams" element={<MyTeamsPage />} />
+          <Route path="/my-teams/manage" element={<MyTeamsManagePage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+
+          {/* News */}
+          <Route path="/news" element={<NewsHubPage />} />
+          <Route path="/news/feed" element={<MyFeedPage />} />
+
+          {/* Fanzone */}
+          <Route path="/fanzone" element={<FanzoneHubPage />} />
+          <Route path="/fanzone/loyalty" element={<LoyaltyPage />} />
+          <Route path="/fanzone/audio" element={<LiveMatchAudioPage />} />
+          <Route path="/fanzone/ppv" element={<PPVPage />} />
+
+          {/* Heritage */}
           <Route path="/heritage" element={<HeritageHub />} />
           <Route path="/heritage/legends" element={<LegendsHub />} />
           <Route path="/heritage/legends/men" element={<LegendsMen />} />
           <Route path="/heritage/legends/women" element={<LegendsWomen />} />
+          <Route path="/heritage/squads" element={<SquadsHub />} />
+          <Route path="/heritage/champions" element={<ChampionsHub />} />
+          <Route path="/heritage/coaches" element={<CoachesSupportHub />} />
+          <Route path="/heritage/officials" element={<OfficialsHub />} />
         </Route>
+
+        {/* Squads */}
+<Route path="/heritage/squads/men" element={<SquadsMen />} />
+<Route path="/heritage/squads/women" element={<SquadsWomen />} />
+
+{/* Champions */}
+<Route path="/heritage/champions/men" element={<ChampionsMen />} />
+<Route path="/heritage/champions/women" element={<ChampionsWomen />} />
+
+{/* Coaches */}
+<Route path="/heritage/coaches/head-coaches" element={<HeadCoaches />} />
+<Route path="/heritage/coaches/assistant-coaches" element={<AssistantCoaches />} />
+<Route path="/heritage/coaches/support-staff" element={<SupportStaff />} />
+
+{/* Officials */}
+<Route path="/heritage/officials/men" element={<OfficialsMen />} />
+<Route path="/heritage/officials/men/eras" element={<OfficialsMenEras />} />
+<Route path="/heritage/officials/women" element={<OfficialsWomen />} />
+<Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
 
         {/* ================= SUPER ================= */}
         <Route
