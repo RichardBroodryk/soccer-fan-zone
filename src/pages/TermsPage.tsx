@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./TermsPage.module.css";
 
 /**
- * TERMS PAGE — PRODUCTION ACCESS-PENDING MODE
+ * TERMS PAGE — CHECKOUT CONNECTED
  * Freemium: immediate access
- * Premium/Super: access pending
+ * Premium/Super: login → Paddle checkout
  */
 
 type Pricing = {
@@ -29,6 +29,8 @@ export default function TermsPage() {
   const country = state?.country;
   const pricing = state?.pricing;
 
+  const [loading, setLoading] = useState(false);
+
   // SAFETY: must arrive with context
   useEffect(() => {
     if (!tier || !country) {
@@ -36,10 +38,10 @@ export default function TermsPage() {
     }
   }, [tier, country, navigate]);
 
-  const acceptTerms = () => {
+  const acceptTerms = async () => {
     const acceptedAt = new Date().toISOString();
 
-    // FREEMIUM: immediate access
+    // ✅ FREEMIUM — immediate access
     if (tier === "freemium") {
       navigate("/home-free", {
         replace: true,
@@ -48,12 +50,48 @@ export default function TermsPage() {
       return;
     }
 
-    // PAID TIERS: access pending
-    if (tier === "premium" || tier === "super") {
-      navigate("/access-pending", {
-        replace: true,
-        state: { tier, country, pricing, acceptedAt },
+    // 🔐 CHECK AUTH
+    const token = localStorage.getItem("token");
+
+    // ❗ NOT LOGGED IN → go to login
+    if (!token) {
+      navigate("/login", {
+        state: { redirectAfterLogin: "checkout", tier, country, pricing },
       });
+      return;
+    }
+
+    // 💳 LOGGED IN → CREATE CHECKOUT
+    try {
+      setLoading(true);
+
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/payments/create-checkout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ tier }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok || !data.checkoutUrl) {
+        console.error("Checkout creation failed:", data);
+        alert("Unable to start payment. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      // 🚀 REDIRECT TO PADDLE
+      window.location.href = data.checkoutUrl;
+    } catch (err) {
+      console.error("Checkout error:", err);
+      alert("Payment service unavailable. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -119,47 +157,15 @@ export default function TermsPage() {
             )}
           </ul>
         </div>
-
-        <div className={styles.block}>
-          <h2>Content & Availability</h2>
-          <ul>
-            <li>Content availability may vary by region and rights.</li>
-            <li>
-              Advertising, where applicable, is served based on your selected
-              country.
-            </li>
-            <li>
-              Pricing and advertising for “Other (Global)” users are served on a
-              global basis.
-            </li>
-          </ul>
-        </div>
-
-        <div className={styles.block}>
-          <h2>General</h2>
-          <ul>
-            <li>
-              Access is personal and non-transferable except where explicitly
-              stated.
-            </li>
-            <li>
-              Abuse, redistribution, or circumvention of access controls may
-              result in termination.
-            </li>
-            <li>
-              These terms form a binding agreement between you and Rugby Anthem
-              Zone.
-            </li>
-          </ul>
-        </div>
       </section>
 
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
           onClick={acceptTerms}
+          disabled={loading}
         >
-          Accept Terms & Continue
+          {loading ? "Starting secure checkout…" : "Accept Terms & Continue"}
         </button>
 
         <p className={styles.notice}>
