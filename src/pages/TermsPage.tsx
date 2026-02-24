@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./TermsPage.module.css";
+import { getToken } from "../services/auth";
 
 /**
- * TERMS PAGE — CHECKOUT CONNECTED
+ * TERMS PAGE — CHECKOUT CONNECTED (FIXED)
  * Freemium: immediate access
- * Premium/Super: login → Paddle checkout
+ * Premium/Super: create checkout if logged in
  */
 
 type Pricing = {
@@ -31,7 +32,7 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
-  // SAFETY: must arrive with context
+  // Safety guard
   useEffect(() => {
     if (!tier || !country) {
       navigate("/welcome", { replace: true });
@@ -50,18 +51,16 @@ export default function TermsPage() {
       return;
     }
 
-    // 🔐 CHECK AUTH
-    const token = localStorage.getItem("token");
+    // 🔐 Check auth using CORRECT helper
+    const token = getToken();
 
-    // ❗ NOT LOGGED IN → go to login
     if (!token) {
-      navigate("/login", {
-        state: { redirectAfterLogin: "checkout", tier, country, pricing },
-      });
+      // User somehow not logged in — send to login
+      navigate("/login");
       return;
     }
 
-    // 💳 LOGGED IN → CREATE CHECKOUT
+    // 💳 Create Paddle checkout
     try {
       setLoading(true);
 
@@ -86,7 +85,7 @@ export default function TermsPage() {
         return;
       }
 
-      // 🚀 REDIRECT TO PADDLE
+      // 🚀 Redirect to Paddle
       window.location.href = data.checkoutUrl;
     } catch (err) {
       console.error("Checkout error:", err);
@@ -110,8 +109,7 @@ export default function TermsPage() {
               ? "Freemium"
               : isPremium
               ? "Premium"
-              : "Super Premium"}{" "}
-            member
+              : "Super Premium"}
           </strong>
           {country && (
             <>
@@ -165,7 +163,9 @@ export default function TermsPage() {
           onClick={acceptTerms}
           disabled={loading}
         >
-          {loading ? "Starting secure checkout…" : "Accept Terms & Continue"}
+          {loading
+            ? "Starting secure checkout…"
+            : "Accept Terms & Continue"}
         </button>
 
         <p className={styles.notice}>

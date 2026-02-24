@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumSignupPage.module.css";
-import { registerUser } from "../services/auth";
+import { registerUser, loginUser } from "../services/auth";
 
 const COUNTRIES = [
   "South Africa",
@@ -40,8 +40,13 @@ export default function FreemiumSignupPage() {
     setError("");
 
     try {
+      // ✅ Register user
       await registerUser(email, password);
 
+      // 🔥 CRITICAL: auto-login so Terms sees token
+      await loginUser(email, password);
+
+      // ✅ Continue to Terms
       navigate("/terms", {
         state: {
           tier: "freemium",

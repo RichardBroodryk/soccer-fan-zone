@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SuperPremiumSignupPage.module.css";
-import { registerUser } from "../services/auth";
+import { registerUser, loginUser } from "../services/auth";
 
 /**
- * SUPER PREMIUM COMMITMENT PAGE
+ * SUPER PREMIUM COMMITMENT PAGE — FIXED
  * Highest tier — ad-free, editorial-first access
+ * ✅ NOW AUTO-LOGS IN (matches Premium)
  */
 
 type Pricing = {
@@ -89,8 +90,13 @@ export default function SuperPremiumSignupPage() {
     setError("");
 
     try {
+      // ✅ 1. Register user
       await registerUser(email, password);
 
+      // 🔥 2. Auto-login (CRITICAL — matches Premium flow)
+      await loginUser(email, password);
+
+      // ✅ 3. Proceed to Terms (authenticated)
       navigate("/terms", {
         state: {
           tier: "super",
