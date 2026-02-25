@@ -18,9 +18,7 @@ import MusicIcon from "../components/icons/MusicIcon";
 
 /* ================= API ================= */
 
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  "https://rugby-anthem-backend-production.up.railway.app";
+import { API_BASE_URL } from "../config/api";
 
 /* ================= UTILS ================= */
 
@@ -77,7 +75,7 @@ export default function TournamentPage() {
 
       try {
         const res = await fetch(
-          `${API_BASE}/api/comments?tournament_id=${tournament.conceptId}`
+          `${API_BASE_URL}/api/comments?tournament_id=${tournament.conceptId}`
         );
 
         if (!res.ok) return;
@@ -239,7 +237,6 @@ export default function TournamentPage() {
           <p>Confirmed matches in this tournament.</p>
         </header>
 
-        {/* INTERNATIONAL TESTS → grouped by month */}
         {isInternationalTests ? (
           groupedMatches.map((group) => (
             <div key={group.label}>
@@ -251,9 +248,7 @@ export default function TournamentPage() {
                   away={match.away}
                   metaLeft={match.date}
                   metaRight={match.venue}
-                  state={
-                    match.score ? "final" : "upcoming"
-                  }
+                  state={match.score ? "final" : "upcoming"}
                   onClick={() =>
                     navigate(`/match/${match.id}`)
                   }

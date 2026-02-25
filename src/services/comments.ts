@@ -1,15 +1,18 @@
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  "https://rugby-anthem-backend-production.up.railway.app";
+import { API_BASE_URL } from "../config/api";
 
 export async function fetchTournamentComments(tournamentId: string) {
-  const res = await fetch(
-    `${API_BASE}/api/comments?tournament_id=${tournamentId}`
-  );
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/comments?tournament_id=${tournamentId}`
+    );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch tournament comments");
+    if (!res.ok) {
+      throw new Error("Failed to fetch tournament comments");
+    }
+
+    return await res.json();
+  } catch (err) {
+    console.error("fetchTournamentComments error:", err);
+    throw err;
   }
-
-  return res.json();
 }

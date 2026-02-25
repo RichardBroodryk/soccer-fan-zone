@@ -4,7 +4,7 @@ import styles from "./TermsPage.module.css";
 import { getToken } from "../services/auth";
 
 /**
- * TERMS PAGE — CHECKOUT CONNECTED (FIXED)
+ * TERMS PAGE — CHECKOUT CONNECTED (HARDENED)
  * Freemium: immediate access
  * Premium/Super: create checkout if logged in
  */
@@ -32,6 +32,10 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
+  // ✅ Safe API base (prevents undefined forever)
+  const API_BASE =
+    process.env.REACT_APP_API_URL || "http://localhost:4000";
+
   // Safety guard
   useEffect(() => {
     if (!tier || !country) {
@@ -51,11 +55,10 @@ export default function TermsPage() {
       return;
     }
 
-    // 🔐 Check auth using CORRECT helper
+    // 🔐 Check auth
     const token = getToken();
 
     if (!token) {
-      // User somehow not logged in — send to login
       navigate("/login");
       return;
     }
@@ -65,7 +68,7 @@ export default function TermsPage() {
       setLoading(true);
 
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/payments/create-checkout`,
+        `${API_BASE}/api/payments/create-checkout`,
         {
           method: "POST",
           headers: {

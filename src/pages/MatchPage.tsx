@@ -8,9 +8,7 @@ import styles from "./MatchPage.module.css";
 
 /* ================= API ================= */
 
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  "https://rugby-anthem-backend-production.up.railway.app";
+import { API_BASE_URL } from "../config/api";
 
 /* ================= TYPES ================= */
 
@@ -35,7 +33,7 @@ export default function MatchPage() {
 
     try {
       const res = await fetch(
-        `${API_BASE}/api/comments?match_id=${matchId}`
+        `${API_BASE_URL}/api/comments?match_id=${matchId}`
       );
 
       if (!res.ok) return;
@@ -62,7 +60,7 @@ export default function MatchPage() {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/api/comments`, {
+      const res = await fetch(`${API_BASE_URL}/api/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,9 +110,7 @@ export default function MatchPage() {
     ? "upcoming"
     : "live";
 
-  const stadium = stadiums.find(
-    (s) => s.name === venue
-  );
+  const stadium = stadiums.find((s) => s.name === venue);
 
   /* ================= RENDER ================= */
 
@@ -137,11 +133,7 @@ export default function MatchPage() {
 
       {/* STATUS */}
       <section className={styles.statusBar}>
-        <span
-          className={`${styles.status} ${
-            styles[matchStatus]
-          }`}
-        >
+        <span className={`${styles.status} ${styles[matchStatus]}`}>
           {matchStatus === "upcoming"
             ? "Upcoming"
             : matchStatus === "live"
@@ -154,22 +146,14 @@ export default function MatchPage() {
       <section className={styles.vsSection}>
         <div className={styles.team}>
           <Flag country={home.country} size="large" />
-          <span className={styles.teamName}>
-            {home.name}
-          </span>
+          <span className={styles.teamName}>{home.name}</span>
         </div>
 
         {matchStatus === "final" && score ? (
           <div className={styles.scoreBlock}>
-            <span className={styles.score}>
-              {score.home}
-            </span>
-            <span className={styles.scoreDivider}>
-              –
-            </span>
-            <span className={styles.score}>
-              {score.away}
-            </span>
+            <span className={styles.score}>{score.home}</span>
+            <span className={styles.scoreDivider}>–</span>
+            <span className={styles.score}>{score.away}</span>
           </div>
         ) : (
           <span className={styles.vs}>vs</span>
@@ -177,9 +161,7 @@ export default function MatchPage() {
 
         <div className={styles.team}>
           <Flag country={away.country} size="large" />
-          <span className={styles.teamName}>
-            {away.name}
-          </span>
+          <span className={styles.teamName}>{away.name}</span>
         </div>
       </section>
 
@@ -190,9 +172,7 @@ export default function MatchPage() {
         {stadium ? (
           <button
             className={styles.venueLink}
-            onClick={() =>
-              navigate(`/stadium/${stadium.slug}`)
-            }
+            onClick={() => navigate(`/stadium/${stadium.slug}`)}
           >
             🏟 {stadium.name}
           </button>
@@ -209,9 +189,7 @@ export default function MatchPage() {
 
         <div className={styles.commentsPanel}>
           {comments.length > 0 ? (
-            comments.map((c) => (
-              <p key={c.id}>“{c.content}”</p>
-            ))
+            comments.map((c) => <p key={c.id}>“{c.content}”</p>)
           ) : (
             <p>No reactions yet.</p>
           )}

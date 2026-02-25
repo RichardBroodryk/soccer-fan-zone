@@ -1,2 +1,4 @@
+// src/config/api.ts
+
 export const API_BASE_URL =
-  "https://rugby-anthem-backend-production.up.railway.app";
+  process.env.REACT_APP_API_URL || "http://localhost:4000";

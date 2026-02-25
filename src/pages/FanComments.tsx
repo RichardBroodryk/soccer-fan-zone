@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./FanComments.module.css";
 
 import { tournaments2026 } from "../data/tournamentMeta";
+import { API_BASE_URL } from "../config/api";
 
 // ================= API TYPE =================
 type ApiComment = {
@@ -39,10 +40,6 @@ type TournamentCommentThread = {
   lastActivityAt: string;
 };
 
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  "https://rugby-anthem-backend-production.up.railway.app";
-
 export default function FanComments() {
   const navigate = useNavigate();
   const [threads, setThreads] = useState<TournamentCommentThread[]>([]);
@@ -55,7 +52,7 @@ export default function FanComments() {
 
         for (const tournament of tournaments2026) {
           const res = await fetch(
-            `${API_BASE}/api/comments?tournament_id=${tournament.conceptId}`
+            `${API_BASE_URL}/api/comments?tournament_id=${tournament.conceptId}`
           );
 
           if (!res.ok) continue;
@@ -82,9 +79,7 @@ export default function FanComments() {
 
         // Remove duplicate tournament threads
         const uniqueThreads = Array.from(
-          new Map(
-            results.map((t) => [t.tournamentId, t])
-          ).values()
+          new Map(results.map((t) => [t.tournamentId, t])).values()
         );
 
         setThreads(uniqueThreads);
