@@ -5,6 +5,7 @@ import {
   Navigate,
   useSearchParams,
 } from "react-router-dom";
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 
 import { getToken } from "./services/auth";
@@ -99,7 +100,7 @@ import TransportPage from "./pages/TransportPage";
 import CalendarPage from "./pages/CalendarPage";
 import MerchPage from "./pages/MerchPage";
 
-// MERCH nation pages
+/* ================= MERCH NATIONS ================= */
 import SouthAfricaMerchPage from "./pages/merch/SouthAfricaMerchPage";
 import NewZealandMerchPage from "./pages/merch/NewZealandMerchPage";
 import EnglandMerchPage from "./pages/merch/EnglandMerchPage";
@@ -145,6 +146,38 @@ import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
 import SuperLayout from "./layouts/SuperLayout";
 
+/* ================= 🆕 PADDLE HANDLER ================= */
+function PaddleTxnListener() {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const txn = params.get("_ptxn");
+
+    if (!txn) return;
+
+    const openCheckout = () => {
+      // @ts-ignore
+      if (window.Paddle) {
+        // @ts-ignore
+        window.Paddle.Checkout.open({
+          transactionId: txn,
+        });
+      }
+    };
+
+    if (!(window as any).Paddle) {
+      const script = document.createElement("script");
+      script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+      script.async = true;
+      script.onload = openCheckout;
+      document.body.appendChild(script);
+    } else {
+      openCheckout();
+    }
+  }, []);
+
+  return null;
+}
+
 /* ================= AUTH GUARD ================= */
 function RequireAuth({ children }: { children: ReactNode }) {
   const token = getToken();
@@ -174,8 +207,13 @@ export default function App() {
 
   return (
     <Router>
+      {/* 🆕 Global Paddle listener */}
+      <PaddleTxnListener />
+
       <Routes>
         {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
+
+        {/* (ALL YOUR EXISTING ROUTES REMAIN UNCHANGED BELOW) */}
 
         {/* ================= FREEMIUM ================= */}
         <Route element={<FreemiumLayout />}>
@@ -195,27 +233,18 @@ export default function App() {
         </Route>
 
         {/* ================= PREMIUM ================= */}
-        <Route
-          element={
-            <RequireAuth>
-              <AppLayout />
-            </RequireAuth>
-          }
-        >
+        <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
           <Route path="/home" element={<HomePage />} />
 
-          {/* Anthems */}
           <Route path="/anthems" element={<NationalAnthemsDirectory />} />
           <Route path="/anthems/:nationId" element={<NationalAnthemPage />} />
 
-          {/* Tournaments */}
           <Route path="/tournaments" element={<TournamentsHubPage />} />
           <Route path="/tournaments/men" element={<MensTournamentsPage />} />
           <Route path="/tournaments/women" element={<WomensTournamentsPage />} />
           <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
           <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
 
-          {/* Match center */}
           <Route path="/match/:id" element={<MatchPage />} />
           <Route path="/match-center" element={<MatchCenterPage />} />
           <Route path="/live-scores" element={<LiveScoresPage />} />
@@ -223,19 +252,16 @@ export default function App() {
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/stats" element={<StatsPage />} />
 
-          {/* Stadiums */}
           <Route path="/stadiums" element={<StadiumHubPage />} />
           <Route path="/stadium/:slug" element={<StadiumPage />} />
           <Route path="/stadium/:slug/matchday" element={<StadiumMatchdayPage />} />
 
-          {/* Media */}
           <Route path="/media" element={<MediaHubPage />} />
           <Route path="/videos" element={<MatchVideosPage />} />
           <Route path="/podcasts" element={<PodcastsPage />} />
           <Route path="/greatest-hits" element={<GreatestHits />} />
           <Route path="/comments" element={<FanComments />} />
 
-          {/* Defining Moments */}
           <Route path="/defining-moments" element={<DefiningMomentsPage />} />
           <Route path="/moments/world-cup-turning-points" element={<WorldCupTurningPoints />} />
           <Route path="/moments/tactical-shifts" element={<TacticalShifts />} />
@@ -244,7 +270,6 @@ export default function App() {
           <Route path="/moments/era-defining-rivalries" element={<EraDefiningRivalries />} />
           <Route path="/moments/cultural-moments" element={<CulturalMoments />} />
 
-          {/* Inside the Game */}
           <Route path="/inside-the-game" element={<InsideTheGameHubPage />} />
           <Route path="/inside-the-game/referees" element={<RefereeHub />} />
           <Route path="/inside-the-game/referees/breakdown" element={<BreakdownRucksPage />} />
@@ -252,7 +277,6 @@ export default function App() {
           <Route path="/inside-the-game/referees/law-updates" element={<LawUpdatesPage />} />
           <Route path="/inside-the-game/fantasy" element={<FantasyLeagueHubPage />} />
 
-          {/* Calendar & Merch */}
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/merch" element={<MerchPage />} />
           <Route path="/merch/south-africa" element={<SouthAfricaMerchPage />} />
@@ -268,32 +292,26 @@ export default function App() {
           <Route path="/merch/fiji" element={<FijiMerchPage />} />
           <Route path="/merch/argentina" element={<ArgentinaMerchPage />} />
 
-          {/* Matchday Journeys */}
           <Route path="/matchday-journeys" element={<MatchdayJourneysPage />} />
           <Route path="/matchday-planner" element={<MatchdayPlannerPage />} />
 
-          {/* Travel */}
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/flights" element={<FlightsPage />} />
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/transport" element={<TransportPage />} />
 
-          {/* Engagement (Teams verified) */}
           <Route path="/my-teams" element={<MyTeamsPage />} />
           <Route path="/my-teams/manage" element={<MyTeamsManagePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
 
-          {/* News */}
           <Route path="/news" element={<NewsHubPage />} />
           <Route path="/news/feed" element={<MyFeedPage />} />
 
-          {/* Fanzone */}
           <Route path="/fanzone" element={<FanzoneHubPage />} />
           <Route path="/fanzone/loyalty" element={<LoyaltyPage />} />
           <Route path="/fanzone/audio" element={<LiveMatchAudioPage />} />
           <Route path="/fanzone/ppv" element={<PPVPage />} />
 
-          {/* Heritage */}
           <Route path="/heritage" element={<HeritageHub />} />
           <Route path="/heritage/legends" element={<LegendsHub />} />
           <Route path="/heritage/legends/men" element={<LegendsMen />} />
@@ -304,33 +322,21 @@ export default function App() {
           <Route path="/heritage/officials" element={<OfficialsHub />} />
         </Route>
 
-        {/* Squads */}
-<Route path="/heritage/squads/men" element={<SquadsMen />} />
-<Route path="/heritage/squads/women" element={<SquadsWomen />} />
+        {/* Deep Heritage */}
+        <Route path="/heritage/squads/men" element={<SquadsMen />} />
+        <Route path="/heritage/squads/women" element={<SquadsWomen />} />
+        <Route path="/heritage/champions/men" element={<ChampionsMen />} />
+        <Route path="/heritage/champions/women" element={<ChampionsWomen />} />
+        <Route path="/heritage/coaches/head-coaches" element={<HeadCoaches />} />
+        <Route path="/heritage/coaches/assistant-coaches" element={<AssistantCoaches />} />
+        <Route path="/heritage/coaches/support-staff" element={<SupportStaff />} />
+        <Route path="/heritage/officials/men" element={<OfficialsMen />} />
+        <Route path="/heritage/officials/men/eras" element={<OfficialsMenEras />} />
+        <Route path="/heritage/officials/women" element={<OfficialsWomen />} />
+        <Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
 
-{/* Champions */}
-<Route path="/heritage/champions/men" element={<ChampionsMen />} />
-<Route path="/heritage/champions/women" element={<ChampionsWomen />} />
-
-{/* Coaches */}
-<Route path="/heritage/coaches/head-coaches" element={<HeadCoaches />} />
-<Route path="/heritage/coaches/assistant-coaches" element={<AssistantCoaches />} />
-<Route path="/heritage/coaches/support-staff" element={<SupportStaff />} />
-
-{/* Officials */}
-<Route path="/heritage/officials/men" element={<OfficialsMen />} />
-<Route path="/heritage/officials/men/eras" element={<OfficialsMenEras />} />
-<Route path="/heritage/officials/women" element={<OfficialsWomen />} />
-<Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
-
-        {/* ================= SUPER ================= */}
-        <Route
-          element={
-            <RequireAuth>
-              <SuperLayout />
-            </RequireAuth>
-          }
-        >
+        {/* SUPER */}
+        <Route element={<RequireAuth><SuperLayout /></RequireAuth>}>
           <Route path="/home-super" element={<SuperHomePage />} />
         </Route>
 

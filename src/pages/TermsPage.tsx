@@ -89,7 +89,8 @@ export default function TermsPage() {
       }
 
       // 🚀 Redirect to Paddle
-      window.location.href = data.checkoutUrl;
+      // 🚀 Redirect to Paddle
+window.location.href = data.checkoutUrl;
     } catch (err) {
       console.error("Checkout error:", err);
       alert("Payment service unavailable. Please try again.");
