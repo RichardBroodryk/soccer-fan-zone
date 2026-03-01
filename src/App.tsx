@@ -163,8 +163,9 @@ function PaddleTxnListener() {
       try {
         // ⭐ REQUIRED: initialize Paddle Billing
         // @ts-ignore
-        window.Paddle.Initialize({token: live_2bfb17d9fcf0a48f769b6021d1b,
-        });
+       window.Paddle.Initialize({
+  token: PADDLE_CLIENT_TOKEN,
+});
 
         // ⭐ open checkout for the transaction
         // @ts-ignore
