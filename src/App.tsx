@@ -146,7 +146,7 @@ import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
 import SuperLayout from "./layouts/SuperLayout";
 
-/* ================= 🆕 PADDLE HANDLER (HARDENED) ================= */
+/* ================= 🆕 PADDLE HANDLER (FINAL) ================= */
 function PaddleTxnListener() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -155,51 +155,27 @@ function PaddleTxnListener() {
 
     const PADDLE_CLIENT_TOKEN = "live_2bfb17d9fcf0a48f769b6021d1b";
 
-    const loadPaddleAndOpen = async () => {
-      // 🔹 load script if not already present
-      if (!(window as any).Paddle) {
-        await new Promise<void>((resolve, reject) => {
-          const existing = document.querySelector(
-            'script[src="https://cdn.paddle.com/paddle/v2/paddle.js"]'
-          );
+    // @ts-ignore
+    if (!(window as any).Paddle) {
+      console.error("RAZ: Paddle not loaded globally");
+      return;
+    }
 
-          if (existing) {
-            existing.addEventListener("load", () => resolve());
-            return;
-          }
+    try {
+      // @ts-ignore
+      (window as any).Paddle.Initialize({
+        token: PADDLE_CLIENT_TOKEN,
+      });
 
-          const script = document.createElement("script");
-          script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-          script.async = true;
-          script.onload = () => resolve();
-          script.onerror = () => reject(new Error("Failed to load Paddle"));
-          document.body.appendChild(script);
-        });
-      }
+      // @ts-ignore
+      (window as any).Paddle.Checkout.open({
+        transactionId: txn,
+      });
 
-      // 🔹 wait a tick to ensure global is ready
-      await new Promise((r) => setTimeout(r, 50));
-
-      // 🔹 final safety check
-      if (!(window as any).Paddle) {
-        console.error("Paddle failed to initialize");
-        return;
-      }
-
-      try {
-        (window as any).Paddle.Initialize({
-          token: PADDLE_CLIENT_TOKEN,
-        });
-
-        (window as any).Paddle.Checkout.open({
-          transactionId: txn,
-        });
-      } catch (err) {
-        console.error("Paddle init/open error:", err);
-      }
-    };
-
-    loadPaddleAndOpen();
+      console.log("RAZ: Paddle checkout opened for", txn);
+    } catch (err) {
+      console.error("RAZ Paddle init/open error:", err);
+    }
   }, []);
 
   return null;

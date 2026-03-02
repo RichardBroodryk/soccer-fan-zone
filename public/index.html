@@ -21,32 +21,8 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- ✅ Paddle Billing v2 Loader (RAZ) -->
+    <!-- ✅ Paddle Billing v2 Loader (GLOBAL ONLY — no init here) -->
     <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
-    <script>
-      window.Paddle &&
-        window.Paddle.Initialize({
-          token: "live_2bfb17d9fcf0a48f769b6021d1b",
-        });
-
-      // ✅ AUTO-OPEN CHECKOUT WHEN BACKEND REDIRECTS
-      (function () {
-        try {
-          const params = new URLSearchParams(window.location.search);
-          const txn = params.get("_ptxn");
-
-          if (txn && window.Paddle) {
-            console.log("RAZ → Opening Paddle checkout:", txn);
-
-            window.Paddle.Checkout.open({
-              transactionId: txn,
-            });
-          }
-        } catch (err) {
-          console.error("RAZ Paddle auto-open failed:", err);
-        }
-      })();
-    </script>
   </head>
 
   <body>
