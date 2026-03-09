@@ -2,15 +2,24 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./StatsPage.module.css";
 
-import { fetchEvents } from "../services/statscoreApi";
-
 import TeamComparisonTable from "../components/stats/TeamComparisonTable";
 import KeyPlayerStats from "../components/stats/KeyPlayerStats";
 import Flag from "../components/images/Flag";
 
 import heroBg from "../assets/images/raz/Stats3.png";
 
+import { getMatches } from "../data/matchesAdapter";
+
 /* ================= TYPES ================= */
+
+type MatchData = {
+  tournament: string;
+  date: string;
+  venue: string;
+  home: { name: string; country: string };
+  away: { name: string; country: string };
+  score?: { home: number; away: number };
+};
 
 type TeamStats = {
   team: string;
@@ -34,24 +43,20 @@ export default function StatsPage() {
   useEffect(() => {
     async function loadStats() {
       try {
-        const events = await fetchEvents();
+        const matches: MatchData[] = await getMatches();
 
         const map = new Map<string, TeamStats>();
 
-        events.forEach((event: any) => {
-          if (!event.participants || event.participants.length < 2) return;
+        matches.forEach((match) => {
+          if (!match.score) return;
 
-          const home = event.participants[0];
-          const away = event.participants[1];
+          const { home, away, score } = match;
 
-          const homeName = home.name;
-          const awayName = away.name;
-
-          const ensure = (name: string) => {
+          const ensure = (name: string, country: string) => {
             if (!map.has(name)) {
               map.set(name, {
                 team: name,
-                country: name.toLowerCase(),
+                country,
                 played: 0,
                 won: 0,
                 lost: 0,
@@ -63,25 +68,22 @@ export default function StatsPage() {
             return map.get(name)!;
           };
 
-          const homeTeam = ensure(homeName);
-          const awayTeam = ensure(awayName);
-
-          const homeScore = event.home_score ?? 0;
-          const awayScore = event.away_score ?? 0;
+          const homeTeam = ensure(home.name, home.country);
+          const awayTeam = ensure(away.name, away.country);
 
           homeTeam.played += 1;
           awayTeam.played += 1;
 
-          homeTeam.pointsFor += homeScore;
-          homeTeam.pointsAgainst += awayScore;
+          homeTeam.pointsFor += score.home;
+          homeTeam.pointsAgainst += score.away;
 
-          awayTeam.pointsFor += awayScore;
-          awayTeam.pointsAgainst += homeScore;
+          awayTeam.pointsFor += score.away;
+          awayTeam.pointsAgainst += score.home;
 
-          if (homeScore > awayScore) {
+          if (score.home > score.away) {
             homeTeam.won += 1;
             awayTeam.lost += 1;
-          } else if (awayScore > homeScore) {
+          } else if (score.away > score.home) {
             awayTeam.won += 1;
             homeTeam.lost += 1;
           }
@@ -178,8 +180,7 @@ export default function StatsPage() {
         </div>
       </section>
 
-      {/* EXISTING COMPONENTS */}
-
+      {/* MATCH COMPARISON */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Match Comparison</h2>
 
@@ -194,6 +195,7 @@ export default function StatsPage() {
         />
       </section>
 
+      {/* KEY PLAYER STATS */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Key Player Stats</h2>
 

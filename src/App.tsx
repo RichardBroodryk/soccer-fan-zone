@@ -146,6 +146,8 @@ import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
 import SuperLayout from "./layouts/SuperLayout";
 
+import StatsApiDebugPage from "./pages/StatsApiDebugPage";
+
 /* ================= 🆕 PADDLE HANDLER ================= */
 function PaddleTxnListener() {
   useEffect(() => {
@@ -343,6 +345,8 @@ export default function App() {
         <Route path="/heritage/officials/men/eras" element={<OfficialsMenEras />} />
         <Route path="/heritage/officials/women" element={<OfficialsWomen />} />
         <Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
+
+        <Route path="/stats-debug" element={<StatsApiDebugPage />} />
 
         {/* SUPER */}
         <Route element={<RequireAuth><SuperLayout /></RequireAuth>}>
