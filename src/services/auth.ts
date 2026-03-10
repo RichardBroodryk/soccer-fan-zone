@@ -3,11 +3,28 @@ import { apiRequest } from "./api";
 const TOKEN_KEY = "raz_token";
 const USER_ID_KEY = "raz_user_id";
 
+/**
+ * REGISTER USER
+ * Allows the flow to continue if the backend returns
+ * "User already exists".
+ */
 export const registerUser = async (email: string, password: string) => {
-  return apiRequest("/api/register", "POST", {
-    email,
-    password,
-  });
+  try {
+    return await apiRequest("/api/register", "POST", {
+      email,
+      password,
+    });
+  } catch (err) {
+    // apiRequest throws Error(data.error)
+    if (err instanceof Error) {
+      if (err.message === "User already exists") {
+        // allow flow to continue
+        return { email };
+      }
+    }
+
+    throw err;
+  }
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -20,8 +37,8 @@ export const loginUser = async (email: string, password: string) => {
     localStorage.setItem(TOKEN_KEY, data.token);
   }
 
-  // your backend currently returns { token } only
-  // so we defensively store user id if ever added later
+  // backend currently returns only { token }
+  // but we support future user object
   if (data.user && data.user.id) {
     localStorage.setItem(USER_ID_KEY, String(data.user.id));
   }
