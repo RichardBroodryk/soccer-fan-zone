@@ -150,7 +150,7 @@ export default function TermsPage() {
       setLoading(true);
 
       const res = await fetch(
-        `${API_BASE_URL}/api/payments/create-checkout`,
+        `${API_BASE_URL}/api/payments`,
         {
           method: "POST",
           headers: {

@@ -1,19 +1,12 @@
 import { apiRequest } from "./api";
-import { getUserId } from "./auth";
 
-export const createPaymentSession = async (plan: "premium" | "super") => {
-  const userId = getUserId();
-
-  if (!userId) {
-    throw new Error("User not logged in");
-  }
+export const createPaymentSession = async (tier: "premium" | "super") => {
 
   const data = await apiRequest(
-    "/api/payments/create-session",
+    "/api/payments",
     "POST",
     {
-      userId: Number(userId),
-      plan: plan === "super" ? "super_premium" : "premium",
+      tier
     }
   );
 
