@@ -28,10 +28,6 @@ const CheckoutPage = () => {
 
       if (transactionId) {
 
-       window.Paddle.Checkout.open({
-  transaction_id: transactionId
-});
-
       }
 
     };
