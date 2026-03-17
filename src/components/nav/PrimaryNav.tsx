@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import styles from "./PrimaryNav.module.css";
 
 import logo from "../../assets/images/ui/raz-logo.png";
@@ -8,130 +8,187 @@ type PrimaryNavProps = {
   variant: "freemium" | "premium" | "super";
 };
 
+const ACTIVE_TIER_KEY = "raz_active_tier";
+const AVATAR_KEY = "raz_avatar";
+
 export default function PrimaryNav({ variant }: PrimaryNavProps) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
 
-  // 🔒 HARD EXIT — FREEMIUM NEVER SEES NAV
+  const [avatar, setAvatar] = useState<string | null>(
+    localStorage.getItem(AVATAR_KEY)
+  );
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  /* STORE ACTIVE TIER */
+  useEffect(() => {
+    if (variant === "super") {
+      sessionStorage.setItem(ACTIVE_TIER_KEY, "super");
+    }
+
+    if (variant === "premium") {
+      sessionStorage.setItem(ACTIVE_TIER_KEY, "premium");
+    }
+  }, [variant]);
+
+  /* SYNC AVATAR */
+  useEffect(() => {
+    function syncAvatar() {
+      setAvatar(localStorage.getItem(AVATAR_KEY));
+    }
+
+    window.addEventListener("storage", syncAvatar);
+
+    return () => window.removeEventListener("storage", syncAvatar);
+  }, []);
+
+  /* CLOSE DROPDOWN WHEN CLICKING OUTSIDE */
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /* DETERMINE HOME ROUTE */
+  const storedTier = sessionStorage.getItem(ACTIVE_TIER_KEY);
+  const homeRoute = storedTier === "super" ? "/home-super" : "/home";
+
+  /* FREEMIUM NAV HIDDEN */
   if (variant === "freemium") {
     return null;
   }
 
-  const homeRoute = variant === "super" ? "/home-super" : "/home";
-  const isSuper = variant === "super";
-
-  // 🔑 CANONICAL ROUTE (SHARED ACROSS TIERS)
-  const anthemsRoute = "/anthems";
+  function handleLogout() {
+    localStorage.removeItem("raz_avatar");
+    sessionStorage.clear();
+    navigate("/welcome");
+  }
 
   return (
     <>
       <nav className={styles.nav}>
-        {/* LOGO */}
-        <NavLink to={homeRoute} className={styles.logoLink}>
-          <img src={logo} alt="Rugby Anthem Zone" className={styles.logo} />
-        </NavLink>
+        {/* LEFT SIDE */}
+        <div className={styles.left}>
+          <NavLink to={homeRoute} className={styles.logoLink}>
+            <img
+              src={logo}
+              alt="Rugby Anthem Zone"
+              className={styles.logo}
+            />
+          </NavLink>
 
-        {/* DESKTOP LINKS */}
-        <div className={styles.links}>
-          <NavLink to={anthemsRoute}>Anthems</NavLink>
-          <NavLink to="/tournaments">Tournaments</NavLink>
-          <NavLink to="/match-center">Match Center</NavLink>
-          <NavLink to="/matchday-journeys">Matchday Journeys</NavLink>
-          <NavLink to="/media">The Rugby Studio</NavLink>
-          <NavLink to="/fanzone">Fanzone</NavLink>
-
-          {isSuper && <NavLink to="/heritage">Heritage</NavLink>}
+          <button
+            className={styles.homeButton}
+            onClick={() => navigate(homeRoute)}
+            aria-label="Home"
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M3 10.5L12 3l9 7.5" />
+              <path d="M5 10v10h14V10" />
+            </svg>
+          </button>
         </div>
 
-        {/* ACTIONS */}
-        <div className={styles.actions}>
+        {/* RIGHT SIDE */}
+        <div className={styles.actions} ref={menuRef}>
           <button
-            className={styles.exit}
-            onClick={() => navigate("/welcome")}
+            className={styles.profileButton}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Profile menu"
           >
-            Welcome
+            {avatar ? (
+              <img
+                src={avatar}
+                alt="Profile"
+                className={styles.navAvatar}
+              />
+            ) : (
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="7" r="4" />
+                <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+              </svg>
+            )}
           </button>
 
-          <button
-            className={styles.hamburger}
-            aria-label="Open menu"
-            onClick={() => setOpen(true)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
+          {menuOpen && (
+            <div className={styles.dropdown}>
+              <button onClick={() => navigate("/profile")}>
+                Profile
+              </button>
+
+              <button onClick={() => navigate("/my-teams")}>
+                My Teams
+              </button>
+
+              <button onClick={() => navigate("/notifications")}>
+                Notifications
+              </button>
+
+              <div className={styles.divider} />
+
+              <button onClick={() => setLogoutConfirm(true)}>
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </nav>
 
-      {/* OVERLAY */}
-      {open && (
-        <div
-          className={styles.overlay}
-          onClick={() => setOpen(false)}
-        />
-      )}
+      {/* LOGOUT CONFIRM MODAL */}
+      {logoutConfirm && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Confirm Logout</h3>
 
-      {/* DRAWER */}
-      <aside className={`${styles.drawer} ${open ? styles.open : ""}`}>
-        <header className={styles.drawerHeader}>
-          <img src={logo} alt="Rugby Anthem Zone" />
-          <button onClick={() => setOpen(false)}>✕</button>
-        </header>
+            <p>
+              Are you sure you want to log out of Rugby Anthem Zone?
+            </p>
 
-        <nav className={styles.drawerNav}>
-          <NavLink to={anthemsRoute} onClick={() => setOpen(false)}>
-            Anthems
-          </NavLink>
-          <NavLink to="/tournaments" onClick={() => setOpen(false)}>
-            Tournaments
-          </NavLink>
-          <NavLink to="/match-center" onClick={() => setOpen(false)}>
-            Match Center
-          </NavLink>
-          <NavLink to="/matchday-journeys" onClick={() => setOpen(false)}>
-            Matchday Journeys
-          </NavLink>
-          <NavLink to="/media" onClick={() => setOpen(false)}>
-            The Rugby Studio
-          </NavLink>
-          <NavLink to="/fanzone" onClick={() => setOpen(false)}>
-            Fanzone
-          </NavLink>
-
-          {isSuper && (
-            <>
-              <NavLink to="/heritage" onClick={() => setOpen(false)}>
-                Heritage
-              </NavLink>
-              <NavLink
-                to="/defining-moments"
-                onClick={() => setOpen(false)}
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancel}
+                onClick={() => setLogoutConfirm(false)}
               >
-                Defining Rugby Moments
-              </NavLink>
-            </>
-          )}
+                Cancel
+              </button>
 
-          <div className={styles.divider} />
-
-          <NavLink to="/news" onClick={() => setOpen(false)}>
-            News
-          </NavLink>
-          <NavLink to="/inside-the-game" onClick={() => setOpen(false)}>
-            Inside the Game
-          </NavLink>
-          <NavLink to="/calendar" onClick={() => setOpen(false)}>
-            Calendar
-          </NavLink>
-          <NavLink to="/stadiums" onClick={() => setOpen(false)}>
-            Stadiums
-          </NavLink>
-          <NavLink to="/merch" onClick={() => setOpen(false)}>
-            Merch
-          </NavLink>
-        </nav>
-      </aside>
+              <button
+                className={styles.confirm}
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

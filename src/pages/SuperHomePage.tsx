@@ -2,6 +2,7 @@ import styles from "./SuperHomePage.module.css";
 
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
+import InfoBar from "../components/navigation/InfoBar";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 /* DATA */
@@ -51,6 +52,8 @@ export default function SuperHomePage() {
   return (
     <main className={styles.page}>
       <HeroCard variant="super" />
+
+      <InfoBar variant="super" />
 
       {/* 🔥 SUPER MASTER RAIL */}
       <section className={styles.railSection}>

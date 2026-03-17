@@ -2,6 +2,7 @@ import styles from "./HomePage.module.css";
 
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
+import InfoBar from "../components/navigation/InfoBar";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 import { tournaments2026 } from "../data/tournamentMeta";
@@ -47,6 +48,8 @@ export default function HomePage() {
   return (
   <main className={styles.page}>
     <HeroCard variant="premium" />
+
+    <InfoBar variant="premium" />
 
     {/* 🔥 PRIMARY CONTENT RAIL — ALL HUBS */}
     <section className={styles.railSection}>

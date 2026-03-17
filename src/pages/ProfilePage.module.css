@@ -1,0 +1,210 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 32px 24px 80px;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  display: grid;
+  grid-template-columns: 220px 1fr 220px;
+  gap: 32px;
+  align-items: center;
+}
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* SUPER MEMBER AVATAR RING */
+.superAvatar {
+  border: 3px solid #c8102e;
+  padding: 3px;
+  border-radius: 50%;
+}
+
+.avatarPlaceholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.uploadButton {
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.userInfo h1 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.email {
+  color: #6b7280;
+}
+
+.headerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.headerActions button {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ================= MEMBER BADGE ================= */
+
+.memberBadge {
+  display: inline-block;
+  margin-top: 8px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  letter-spacing: 0.5px;
+}
+
+.premiumBadge {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.superBadge {
+  background: #c8102e;
+  color: white;
+}
+
+/* ================= SECTIONS ================= */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* ================= GRID ================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.card::before {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 40px;
+  background: #c8102e;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin-bottom: 8px;
+}
+
+.card button {
+  margin-top: 12px;
+}
+
+/* HERO IMAGE INSIDE CARDS */
+
+.cardHero {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+/* ================= FAN STATS ================= */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.stat {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  background: #f1f5f9;
+}
+
+.statValue {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+
+  .header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+}

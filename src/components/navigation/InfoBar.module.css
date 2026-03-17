@@ -1,0 +1,61 @@
+.bar {
+  width: 100%;
+  padding: 12px 24px;
+  box-sizing: border-box;
+
+  background: #fafafa;
+  border-bottom: 1px solid #e6e6e6;
+
+  /* tighten space with hero above */
+  margin-top: -36px;
+}
+
+.grid {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px 18px;
+}
+
+.link {
+  position: relative;
+
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+
+  padding: 6px 4px;
+
+  transition: color 0.18s ease;
+}
+
+/* subtle hover colour */
+.link:hover {
+  color: #c8102e;
+}
+
+/* subtle professional underline animation */
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+
+  width: 0%;
+  height: 2px;
+
+  background: #c8102e;
+
+  transition: width 0.18s ease;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.link.active {
+  color: #c8102e;
+}

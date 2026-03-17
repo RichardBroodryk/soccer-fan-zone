@@ -12,6 +12,7 @@ import styles from "./AppLayout.module.css";
 type TierVariant = "freemium" | "premium" | "super";
 
 const DEV_TIER_KEY = "raz_dev_tier";
+const ACTIVE_TIER_KEY = "raz_active_tier";
 
 export default function AppLayout() {
   const location = useLocation();
@@ -29,7 +30,6 @@ export default function AppLayout() {
     ) {
       sessionStorage.setItem(DEV_TIER_KEY, tierParam);
       setDevTier(tierParam);
-      console.info(`[DEV MODE] Tier override set: ${tierParam}`);
       return;
     }
 
@@ -44,17 +44,22 @@ export default function AppLayout() {
     }
   }, [location.search]);
 
-  /* ================= TIER RESOLUTION ================= */
-  const resolvedTier: TierVariant =
-    devTier ??
-    (location.pathname.startsWith("/home-super") ||
-    location.pathname.startsWith("/heritage")
-      ? "super"
-      : "premium");
+  /* ================= ACTIVE TIER TRACKING ================= */
+  useEffect(() => {
+  if (location.pathname.startsWith("/home-super")) {
+    sessionStorage.setItem(ACTIVE_TIER_KEY, "super");
+  } else if (location.pathname === "/home") {
+    sessionStorage.setItem(ACTIVE_TIER_KEY, "premium");
+  }
+}, [location.pathname]);
 
-  /* ================= NAV RULE =================
-     Freemium NEVER sees PrimaryNav
-  ============================================== */
+  const storedTier =
+    (sessionStorage.getItem(ACTIVE_TIER_KEY) as TierVariant | null) ?? null;
+
+  /* ================= TIER RESOLUTION ================= */
+  const resolvedTier: TierVariant = devTier ?? storedTier ?? "premium";
+
+  /* ================= NAV RULE ================= */
   const shouldShowPrimaryNav = resolvedTier !== "freemium";
 
   /* ================= UTILITY PAGE DETECTION ================= */
