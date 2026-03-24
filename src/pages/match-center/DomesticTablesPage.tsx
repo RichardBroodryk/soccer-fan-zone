@@ -1,3 +1,5 @@
+// src/pages/match-center/DomesticTablesPage.tsx
+
 import { useNavigate } from "react-router-dom";
 import styles from "./DomesticTablesPage.module.css";
 
@@ -28,26 +30,30 @@ export default function DomesticTablesPage() {
         </button>
       </div>
 
-      {/* TITLE (MOVED OUT OF HERO) */}
+      {/* TITLE */}
       <section className={styles.section}>
         <h1 className={styles.title}>
           Domestic League Tables
         </h1>
       </section>
 
-      {/* GRID */}
+      {/* ================= MEN ================= */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          Select a Competition
+        <h2 className={styles.blockTitle}>
+          Men's Top Domestic Leagues
         </h2>
+
+        <h3 className={styles.sectionTitle}>
+          Select a Competition
+        </h3>
 
         <div className={styles.grid}>
           {domesticLeagues.map((league) => (
             <div
-              key={league.id}
+              key={`men-${league.id}`}
               className={styles.card}
               onClick={() =>
-                navigate(`/match-center/domestic/${league.id}`)
+                navigate(`/match-center/domestic/${league.id}-men`)
               }
             >
               <img
@@ -57,6 +63,38 @@ export default function DomesticTablesPage() {
               />
               <div className={styles.name}>
                 {league.name}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ================= WOMEN ================= */}
+      <section className={styles.section}>
+        <h2 className={styles.blockTitle}>
+          Women's Top Domestic Leagues
+        </h2>
+
+        <h3 className={styles.sectionTitle}>
+          Select a Competition
+        </h3>
+
+        <div className={styles.grid}>
+          {domesticLeagues.map((league) => (
+            <div
+              key={`women-${league.id}`}
+              className={styles.card}
+              onClick={() =>
+                navigate(`/match-center/domestic/${league.id}-women`)
+              }
+            >
+              <img
+                src={league.logo}
+                alt={league.name}
+                className={styles.logo}
+              />
+              <div className={styles.name}>
+                {league.name} (Women)
               </div>
             </div>
           ))}

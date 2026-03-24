@@ -1,4 +1,7 @@
-// src/data/tables2026.ts
+// --------------------------------------------------
+// RAZ SYSTEM — TABLES 2026 (MEN + WOMEN)
+// Phase 4.4 — GENDER STRUCTURED
+// --------------------------------------------------
 
 export type LeagueTableRow = {
   position: number;
@@ -10,7 +13,11 @@ export type LeagueTableRow = {
 };
 
 export const tables2026: Record<string, LeagueTableRow[]> = {
-  urc: [
+  // ==================================================
+  // URC
+  // ==================================================
+
+  "urc-men": [
     { position: 1, team: "Leinster", coach: "Leo Cullen", pointsFor: 410, pointsAgainst: 210, leaguePoints: 58 },
     { position: 2, team: "Stormers", coach: "John Dobson", pointsFor: 380, pointsAgainst: 250, leaguePoints: 52 },
     { position: 3, team: "Ulster", coach: "Dan McFarland", pointsFor: 360, pointsAgainst: 270, leaguePoints: 48 },
@@ -21,40 +28,22 @@ export const tables2026: Record<string, LeagueTableRow[]> = {
     { position: 8, team: "Edinburgh", coach: "Sean Everitt", pointsFor: 300, pointsAgainst: 310, leaguePoints: 38 },
   ],
 
-  epcr: [
-    { position: 1, team: "Toulon", coach: "Pierre Mignoni", pointsFor: 200, pointsAgainst: 120, leaguePoints: 20 },
-    { position: 2, team: "Lyon", coach: "Karim Ghezal", pointsFor: 190, pointsAgainst: 130, leaguePoints: 18 },
-    { position: 3, team: "Bath", coach: "Johann van Graan", pointsFor: 180, pointsAgainst: 140, leaguePoints: 16 },
-    { position: 4, team: "Connacht", coach: "Pete Wilkins", pointsFor: 170, pointsAgainst: 150, leaguePoints: 14 },
-    { position: 5, team: "Cardiff", coach: "Matt Sherratt", pointsFor: 160, pointsAgainst: 155, leaguePoints: 12 },
-    { position: 6, team: "Zebre", coach: "Massimo Brunello", pointsFor: 150, pointsAgainst: 160, leaguePoints: 10 },
-    { position: 7, team: "Newcastle Falcons", coach: "Alex Codling", pointsFor: 140, pointsAgainst: 170, leaguePoints: 8 },
-    { position: 8, team: "Perpignan", coach: "Franck Azema", pointsFor: 130, pointsAgainst: 180, leaguePoints: 6 },
+  "urc-women": [
+    { position: 1, team: "Leinster Women", coach: "Ben Gissing", pointsFor: 360, pointsAgainst: 210, leaguePoints: 56 },
+    { position: 2, team: "Munster Women", coach: "Denis Fogarty", pointsFor: 340, pointsAgainst: 230, leaguePoints: 52 },
+    { position: 3, team: "Ulster Women", coach: "Neal Doak", pointsFor: 320, pointsAgainst: 250, leaguePoints: 48 },
+    { position: 4, team: "Connacht Women", coach: "Colin Boyle", pointsFor: 300, pointsAgainst: 260, leaguePoints: 46 },
+    { position: 5, team: "Edinburgh Women", coach: "Claire Cruikshank", pointsFor: 290, pointsAgainst: 270, leaguePoints: 44 },
+    { position: 6, team: "Glasgow Women", coach: "Chris Laidlaw", pointsFor: 280, pointsAgainst: 280, leaguePoints: 42 },
+    { position: 7, team: "Stormers Women", coach: "Louis Koen", pointsFor: 260, pointsAgainst: 300, leaguePoints: 38 },
+    { position: 8, team: "Bulls Women", coach: "Nollis Marais", pointsFor: 250, pointsAgainst: 310, leaguePoints: 36 },
   ],
 
-  investec: [
-    { position: 1, team: "La Rochelle", coach: "Ronan O'Gara", pointsFor: 300, pointsAgainst: 200, leaguePoints: 28 },
-    { position: 2, team: "Leinster", coach: "Leo Cullen", pointsFor: 290, pointsAgainst: 210, leaguePoints: 26 },
-    { position: 3, team: "Saracens", coach: "Mark McCall", pointsFor: 280, pointsAgainst: 220, leaguePoints: 24 },
-    { position: 4, team: "Toulouse", coach: "Ugo Mola", pointsFor: 270, pointsAgainst: 230, leaguePoints: 22 },
-    { position: 5, team: "Exeter Chiefs", coach: "Rob Baxter", pointsFor: 260, pointsAgainst: 240, leaguePoints: 20 },
-    { position: 6, team: "Munster", coach: "Graham Rowntree", pointsFor: 250, pointsAgainst: 250, leaguePoints: 18 },
-    { position: 7, team: "Racing 92", coach: "Stuart Lancaster", pointsFor: 240, pointsAgainst: 260, leaguePoints: 16 },
-    { position: 8, team: "Harlequins", coach: "Danny Wilson", pointsFor: 230, pointsAgainst: 270, leaguePoints: 14 },
-  ],
+  // ==================================================
+  // PREMIERSHIP / PREMIER 15s
+  // ==================================================
 
-  super: [
-    { position: 1, team: "Crusaders", coach: "Rob Penney", pointsFor: 420, pointsAgainst: 250, leaguePoints: 60 },
-    { position: 2, team: "Blues", coach: "Vern Cotter", pointsFor: 400, pointsAgainst: 270, leaguePoints: 56 },
-    { position: 3, team: "Chiefs", coach: "Clayton McMillan", pointsFor: 390, pointsAgainst: 280, leaguePoints: 54 },
-    { position: 4, team: "Brumbies", coach: "Stephen Larkham", pointsFor: 370, pointsAgainst: 300, leaguePoints: 50 },
-    { position: 5, team: "Hurricanes", coach: "Clark Laidlaw", pointsFor: 360, pointsAgainst: 310, leaguePoints: 48 },
-    { position: 6, team: "Reds", coach: "Les Kiss", pointsFor: 340, pointsAgainst: 320, leaguePoints: 44 },
-    { position: 7, team: "Waratahs", coach: "Darren Coleman", pointsFor: 330, pointsAgainst: 330, leaguePoints: 42 },
-    { position: 8, team: "Fijian Drua", coach: "Mick Byrne", pointsFor: 320, pointsAgainst: 340, leaguePoints: 40 },
-  ],
-
-  premiership: [
+  "premiership-men": [
     { position: 1, team: "Saracens", coach: "Mark McCall", pointsFor: 410, pointsAgainst: 260, leaguePoints: 62 },
     { position: 2, team: "Leicester Tigers", coach: "Dan McKellar", pointsFor: 390, pointsAgainst: 280, leaguePoints: 58 },
     { position: 3, team: "Bath", coach: "Johann van Graan", pointsFor: 370, pointsAgainst: 300, leaguePoints: 54 },
@@ -65,7 +54,48 @@ export const tables2026: Record<string, LeagueTableRow[]> = {
     { position: 8, team: "Bristol Bears", coach: "Pat Lam", pointsFor: 320, pointsAgainst: 350, leaguePoints: 44 },
   ],
 
-  top14: [
+  "premiership-women": [
+    { position: 1, team: "Saracens Women", coach: "Alex Austerberry", pointsFor: 400, pointsAgainst: 200, leaguePoints: 60 },
+    { position: 2, team: "Harlequins Women", coach: "Amy Turner", pointsFor: 380, pointsAgainst: 220, leaguePoints: 56 },
+    { position: 3, team: "Exeter Chiefs Women", coach: "Susie Appleby", pointsFor: 360, pointsAgainst: 240, leaguePoints: 52 },
+    { position: 4, team: "Bristol Bears Women", coach: "Dave Ward", pointsFor: 340, pointsAgainst: 260, leaguePoints: 50 },
+    { position: 5, team: "Gloucester-Hartpury", coach: "Sean Lynn", pointsFor: 330, pointsAgainst: 270, leaguePoints: 48 },
+    { position: 6, team: "Loughborough Lightning", coach: "Nathan Smith", pointsFor: 310, pointsAgainst: 290, leaguePoints: 44 },
+    { position: 7, team: "Sale Sharks Women", coach: "Tom Hudson", pointsFor: 290, pointsAgainst: 310, leaguePoints: 40 },
+    { position: 8, team: "Leicester Tigers Women", coach: "Tom Hudson", pointsFor: 270, pointsAgainst: 330, leaguePoints: 36 },
+  ],
+
+  // ==================================================
+  // SUPER RUGBY
+  // ==================================================
+
+  "super-men": [
+    { position: 1, team: "Crusaders", coach: "Rob Penney", pointsFor: 420, pointsAgainst: 250, leaguePoints: 60 },
+    { position: 2, team: "Blues", coach: "Vern Cotter", pointsFor: 400, pointsAgainst: 270, leaguePoints: 56 },
+    { position: 3, team: "Chiefs", coach: "Clayton McMillan", pointsFor: 390, pointsAgainst: 280, leaguePoints: 54 },
+    { position: 4, team: "Brumbies", coach: "Stephen Larkham", pointsFor: 370, pointsAgainst: 300, leaguePoints: 50 },
+    { position: 5, team: "Hurricanes", coach: "Clark Laidlaw", pointsFor: 360, pointsAgainst: 310, leaguePoints: 48 },
+    { position: 6, team: "Reds", coach: "Les Kiss", pointsFor: 340, pointsAgainst: 320, leaguePoints: 44 },
+    { position: 7, team: "Waratahs", coach: "Darren Coleman", pointsFor: 330, pointsAgainst: 330, leaguePoints: 42 },
+    { position: 8, team: "Fijian Drua", coach: "Mick Byrne", pointsFor: 320, pointsAgainst: 340, leaguePoints: 40 },
+  ],
+
+  "super-women": [
+    { position: 1, team: "Blues Women", coach: "Ruahei Demant", pointsFor: 300, pointsAgainst: 180, leaguePoints: 50 },
+    { position: 2, team: "Chiefs Manawa", coach: "Crystal Kaua", pointsFor: 280, pointsAgainst: 200, leaguePoints: 46 },
+    { position: 3, team: "Matatu", coach: "Whitney Hansen", pointsFor: 260, pointsAgainst: 210, leaguePoints: 44 },
+    { position: 4, team: "Hurricanes Poua", coach: "Fusi Feaunati", pointsFor: 240, pointsAgainst: 230, leaguePoints: 40 },
+    { position: 5, team: "Brumbies Women", coach: "Scott Fava", pointsFor: 220, pointsAgainst: 250, leaguePoints: 36 },
+    { position: 6, team: "Waratahs Women", coach: "Mike Ruthven", pointsFor: 210, pointsAgainst: 260, leaguePoints: 34 },
+    { position: 7, team: "Reds Women", coach: "Andrew Fraser", pointsFor: 200, pointsAgainst: 270, leaguePoints: 32 },
+    { position: 8, team: "Fijiana Drua", coach: "Mosese Rauluni", pointsFor: 190, pointsAgainst: 280, leaguePoints: 30 },
+  ],
+
+  // ==================================================
+  // TOP 14 / ELITE 1
+  // ==================================================
+
+  "top14-men": [
     { position: 1, team: "Toulouse", coach: "Ugo Mola", pointsFor: 500, pointsAgainst: 300, leaguePoints: 70 },
     { position: 2, team: "La Rochelle", coach: "Ronan O'Gara", pointsFor: 480, pointsAgainst: 320, leaguePoints: 66 },
     { position: 3, team: "Clermont", coach: "Christophe Urios", pointsFor: 460, pointsAgainst: 340, leaguePoints: 62 },
@@ -76,14 +106,14 @@ export const tables2026: Record<string, LeagueTableRow[]> = {
     { position: 8, team: "Castres", coach: "Jeremy Davidson", pointsFor: 410, pointsAgainst: 390, leaguePoints: 52 },
   ],
 
-  japan: [
-    { position: 1, team: "Panasonic Wild Knights", coach: "Robbie Deans", pointsFor: 420, pointsAgainst: 210, leaguePoints: 58 },
-    { position: 2, team: "Kubota Spears", coach: "Frans Ludeke", pointsFor: 400, pointsAgainst: 230, leaguePoints: 54 },
-    { position: 3, team: "Suntory Sungoliath", coach: "Kosei Ono", pointsFor: 380, pointsAgainst: 250, leaguePoints: 50 },
-    { position: 4, team: "Toyota Verblitz", coach: "Ian Foster", pointsFor: 360, pointsAgainst: 270, leaguePoints: 48 },
-    { position: 5, team: "Ricoh Black Rams", coach: "Tabai Matson", pointsFor: 340, pointsAgainst: 290, leaguePoints: 44 },
-    { position: 6, team: "Kobelco Steelers", coach: "Dave Rennie", pointsFor: 330, pointsAgainst: 300, leaguePoints: 42 },
-    { position: 7, team: "NEC Green Rockets", coach: "Wayne Pivac", pointsFor: 320, pointsAgainst: 310, leaguePoints: 40 },
-    { position: 8, team: "Honda Heat", coach: "Kieran Crowley", pointsFor: 300, pointsAgainst: 330, leaguePoints: 36 },
+  "top14-women": [
+    { position: 1, team: "Toulouse Women", coach: "Gaelle Mignot", pointsFor: 420, pointsAgainst: 210, leaguePoints: 62 },
+    { position: 2, team: "Montpellier Women", coach: "Vincent Gomis", pointsFor: 400, pointsAgainst: 230, leaguePoints: 58 },
+    { position: 3, team: "Bordeaux Women", coach: "David Ortiz", pointsFor: 380, pointsAgainst: 250, leaguePoints: 54 },
+    { position: 4, team: "Lyon Women", coach: "Romain Buffin", pointsFor: 360, pointsAgainst: 260, leaguePoints: 52 },
+    { position: 5, team: "Stade Français Women", coach: "Pauline Bourdon", pointsFor: 340, pointsAgainst: 280, leaguePoints: 48 },
+    { position: 6, team: "Clermont Women", coach: "Fabrice Ribeyrolles", pointsFor: 320, pointsAgainst: 300, leaguePoints: 44 },
+    { position: 7, team: "Grenoble Women", coach: "Nicolas Bach", pointsFor: 300, pointsAgainst: 320, leaguePoints: 40 },
+    { position: 8, team: "Blagnac Women", coach: "Cedric Garcia", pointsFor: 280, pointsAgainst: 340, leaguePoints: 36 },
   ],
 };

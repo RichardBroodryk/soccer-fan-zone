@@ -403,9 +403,10 @@ export default function App() {
         <Route path="/heritage/officials/women" element={<OfficialsWomen />} />
         <Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
 
-        <Route path="/stats-debug" element={<StatsApiDebugPage />} />
+       {/* ================= DEBUG (BYPASS SYSTEM) ================= */}
+<Route path="/debug/api" element={<StatsApiDebugPage />} />
 
-        <Route path="/checkout" element={<CheckoutPage />} />
+<Route path="/checkout" element={<CheckoutPage />} />
 
         {/* SUPER */}
         <Route element={<RequireAuth><SuperLayout /></RequireAuth>}>

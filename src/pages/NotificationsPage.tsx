@@ -1,5 +1,5 @@
 // ==================================================
-// NOTIFICATIONS PAGE — CLEAN + INTELLIGENT
+// NOTIFICATIONS PAGE — INTELLIGENCE UPGRADED (PHASE 4.4)
 // ==================================================
 
 import { useEffect, useState, useMemo } from "react";
@@ -11,6 +11,8 @@ import { teamsMeta, TeamMeta } from "../data/teamsMeta";
 
 import { getMatches } from "../data/matchesAdapter";
 import { MatchData } from "../data/matches2026";
+
+import { calculateImportance } from "../contracts/importanceEngine";
 
 /* ================= TYPES ================= */
 
@@ -132,11 +134,10 @@ export default function NotificationsPage() {
   /* ================= LOAD MATCHES ================= */
 
   useEffect(() => {
-    // 🔥 INTERNATIONAL ONLY (DEFAULT)
     getMatches().then(setMatches);
   }, []);
 
-  /* ================= DERIVE ================= */
+  /* ================= DERIVED ================= */
 
   const teamNames = useMemo(
     () => teams.map((t) => t.name),
@@ -146,6 +147,11 @@ export default function NotificationsPage() {
   const generatedNotifications: GeneratedNotification[] =
     useMemo(() => {
       return matches
+        .map((m) => ({
+          ...m,
+          // 🔥 PERSONALISED IMPORTANCE
+          importance: calculateImportance(m, teamNames),
+        }))
         .filter((m) => {
           // 🔥 MUST INVOLVE USER TEAM
           const involvesTeam =
@@ -154,7 +160,7 @@ export default function NotificationsPage() {
 
           if (!involvesTeam) return false;
 
-          // 🔥 INTELLIGENCE FILTER
+          // 🔥 INTELLIGENT FILTER
           return shouldNotify(m);
         })
         .map((m) => ({
@@ -173,7 +179,7 @@ export default function NotificationsPage() {
           sub: m.tournament,
         }))
         .sort((a, b) => b.importance - a.importance)
-        .slice(0, 8); // 🔥 tighter list
+        .slice(0, 8);
     }, [matches, teamNames]);
 
   /* ================= PUSH ================= */

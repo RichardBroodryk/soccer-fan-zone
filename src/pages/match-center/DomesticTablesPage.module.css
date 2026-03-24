@@ -110,3 +110,8 @@
   font-size: 0.9rem;
   font-weight: 700;
 }
+.blockTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}

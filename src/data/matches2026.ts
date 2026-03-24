@@ -1,287 +1,204 @@
-// ==================================================
-// MATCHES 2026 — AUTHORITATIVE DATASET + TYPES
-// Rugby Anthem Zone
-// ==================================================
+// --------------------------------------------------
+// RAZ SYSTEM — MATCHES 2026 (AUTHORITATIVE)
+// Phase 4.2 — ID-BASED + INTELLIGENCE
+// --------------------------------------------------
 
-/* ================= TYPES ================= */
+export interface MatchTeam {
+  name: string;
+  country: string;
+}
 
-export type MatchState =
-  | "live"
-  | "starting"
-  | "today"
-  | "upcoming"
-  | "final";
+export interface MatchScore {
+  home: number;
+  away: number;
+}
 
 export interface MatchData {
   id: number;
+
+  // 🔥 CORE CONTRACT
+  competitionId: string;
+
+  // UI support (kept intentionally)
   tournament: string;
+
   date: string;
   venue: string;
 
-  home: {
-    name: string;
-    country: string;
-  };
+  home: MatchTeam;
+  away: MatchTeam;
 
-  away: {
-    name: string;
-    country: string;
-  };
+  score?: MatchScore;
 
-  score?: {
-    home: number;
-    away: number;
-  };
-
-  // 🔥 SYSTEM INTELLIGENCE (ADAPTER FILLS THESE)
-  state?: MatchState;
-  importance?: number;
+  // 🔥 SYSTEM INTELLIGENCE
+  state?: "upcoming" | "starting" | "live" | "final";
+  importance?: number; // 0–100
 }
 
-/* ================= DATA ================= */
+// --------------------------------------------------
+// 🔥 MATCH DATA
+// --------------------------------------------------
 
 export const matches2026: MatchData[] = [
   // ==================================================
-  // SIX NATIONS 2026
+  // 🌍 SIX NATIONS
   // ==================================================
 
   {
-    id: 101,
+    id: 1,
+    competitionId: "six-nations",
     tournament: "Six Nations 2026",
-    date: "2026-02-05",
-    venue: "Stade de France",
-    home: { name: "France", country: "france" },
-    away: { name: "Ireland", country: "ireland" },
-    score: { home: 36, away: 14 },
-  },
-  {
-    id: 102,
-    tournament: "Six Nations 2026",
-    date: "2026-02-07",
-    venue: "Stadio Olimpico",
-    home: { name: "Italy", country: "italy" },
-    away: { name: "Scotland", country: "scotland" },
-    score: { home: 18, away: 15 },
-  },
-  {
-    id: 103,
-    tournament: "Six Nations 2026",
-    date: "2026-02-07",
+    date: "2026-02-07T14:00:00Z",
     venue: "Twickenham",
     home: { name: "England", country: "england" },
-    away: { name: "Wales", country: "wales" },
-    score: { home: 48, away: 7 },
-  },
-
-  {
-    id: 104,
-    tournament: "Six Nations 2026",
-    date: "2026-02-14",
-    venue: "Aviva Stadium",
-    home: { name: "Ireland", country: "ireland" },
-    away: { name: "Italy", country: "italy" },
-    score: { home: 20, away: 13 },
-  },
-  {
-    id: 105,
-    tournament: "Six Nations 2026",
-    date: "2026-02-14",
-    venue: "Murrayfield",
-    home: { name: "Scotland", country: "scotland" },
-    away: { name: "England", country: "england" },
-    score: { home: 31, away: 20 },
-  },
-  {
-    id: 106,
-    tournament: "Six Nations 2026",
-    date: "2026-02-15",
-    venue: "Principality Stadium",
-    home: { name: "Wales", country: "wales" },
     away: { name: "France", country: "france" },
-    score: { home: 12, away: 54 },
-  },
-
-  {
-    id: 107,
-    tournament: "Six Nations 2026",
-    date: "2026-02-21",
-    venue: "Twickenham",
-    home: { name: "England", country: "england" },
-    away: { name: "Ireland", country: "ireland" },
-    score: { home: 21, away: 42 },
+    score: { home: 24, away: 21 },
+    state: "final",
+    importance: 90,
   },
   {
-    id: 108,
+    id: 2,
+    competitionId: "six-nations",
     tournament: "Six Nations 2026",
-    date: "2026-02-21",
-    venue: "Principality Stadium",
-    home: { name: "Wales", country: "wales" },
-    away: { name: "Scotland", country: "scotland" },
-    score: { home: 23, away: 26 },
-  },
-  {
-    id: 109,
-    tournament: "Six Nations 2026",
-    date: "2026-02-22",
-    venue: "Stade Pierre-Mauroy",
-    home: { name: "France", country: "france" },
-    away: { name: "Italy", country: "italy" },
-    score: { home: 33, away: 8 },
-  },
-
-  {
-    id: 110,
-    tournament: "Six Nations 2026",
-    date: "2026-03-06",
+    date: "2026-02-08T15:00:00Z",
     venue: "Aviva Stadium",
     home: { name: "Ireland", country: "ireland" },
     away: { name: "Wales", country: "wales" },
-    score: { home: 27, away: 17 },
+    state: "final",
+    importance: 85,
   },
   {
-    id: 111,
+    id: 3,
+    competitionId: "six-nations",
     tournament: "Six Nations 2026",
-    date: "2026-03-07",
+    date: "2026-02-14T16:00:00Z",
     venue: "Murrayfield",
     home: { name: "Scotland", country: "scotland" },
-    away: { name: "France", country: "france" },
-    score: { home: 50, away: 40 },
-  },
-  {
-    id: 112,
-    tournament: "Six Nations 2026",
-    date: "2026-03-07",
-    venue: "Stadio Olimpico",
-    home: { name: "Italy", country: "italy" },
-    away: { name: "England", country: "england" },
-    score: { home: 23, away: 18 },
-  },
-
-  {
-    id: 113,
-    tournament: "Six Nations 2026",
-    date: "2026-03-14",
-    venue: "Aviva Stadium",
-    home: { name: "Ireland", country: "ireland" },
-    away: { name: "Scotland", country: "scotland" },
-    score: { home: 43, away: 21 },
-  },
-  {
-    id: 114,
-    tournament: "Six Nations 2026",
-    date: "2026-03-14",
-    venue: "Principality Stadium",
-    home: { name: "Wales", country: "wales" },
     away: { name: "Italy", country: "italy" },
-    score: { home: 31, away: 17 },
-  },
-  {
-    id: 115,
-    tournament: "Six Nations 2026",
-    date: "2026-03-14",
-    venue: "Stade de France",
-    home: { name: "France", country: "france" },
-    away: { name: "England", country: "england" },
-    score: { home: 48, away: 46 },
+    state: "live",
+    importance: 75,
   },
 
   // ==================================================
-  // NATIONS CHAMPIONSHIP 2026 — JULY
+  // 🌍 INTERNATIONAL TESTS (HYBRID)
   // ==================================================
 
   {
-    id: 201,
-    tournament: "Nations Championship 2026",
-    date: "2026-07-03",
-    venue: "Christchurch",
-    home: { name: "New Zealand", country: "new-zealand" },
-    away: { name: "France", country: "france" },
-  },
-  {
-    id: 202,
-    tournament: "Nations Championship 2026",
-    date: "2026-07-03",
-    venue: "Sydney",
-    home: { name: "Australia", country: "australia" },
-    away: { name: "Ireland", country: "ireland" },
-  },
-  {
-    id: 203,
-    tournament: "Nations Championship 2026",
-    date: "2026-07-03",
-    venue: "Johannesburg",
-    home: { name: "South Africa", country: "south-africa" },
-    away: { name: "England", country: "england" },
-  },
-  {
-    id: 204,
-    tournament: "Nations Championship 2026",
-    date: "2026-07-03",
-    venue: "Cordoba",
-    home: { name: "Argentina", country: "argentina" },
-    away: { name: "Scotland", country: "scotland" },
-  },
-
-  // ==================================================
-  // INTERNATIONAL TESTS
-  // ==================================================
-
-  {
-    id: 301,
-    tournament: "Men's International Tests 2026",
-    date: "2026-08-08",
-    venue: "Hanazono Rugby Stadium",
-    home: { name: "Japan", country: "japan" },
-    away: { name: "Australia", country: "australia" },
-  },
-  {
-    id: 302,
-    tournament: "Men's International Tests 2026",
-    date: "2026-10-10",
-    venue: "Eden Park",
-    home: { name: "New Zealand", country: "new-zealand" },
-    away: { name: "Australia", country: "australia" },
-  },
-
-  // ==================================================
-  // RIVAL TOUR — SA vs NZ
-  // ==================================================
-
-  {
-    id: 401,
-    tournament: "Men's SA vs NZ Rival Tour 2026",
-    date: "2026-08-22",
+    id: 10,
+    competitionId: "international-tests",
+    tournament: "International Tests 2026",
+    date: "2026-07-10T16:00:00Z",
     venue: "Loftus Versfeld",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
+    state: "starting",
+    importance: 95,
   },
   {
-    id: 402,
-    tournament: "Men's SA vs NZ Rival Tour 2026",
-    date: "2026-09-12",
-    venue: "M&T Bank Stadium",
+    id: 11,
+    competitionId: "international-tests",
+    tournament: "International Tests 2026",
+    date: "2026-07-17T16:00:00Z",
+    venue: "Ellis Park",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
+    state: "upcoming",
+    importance: 92,
   },
 
   // ==================================================
-  // WOMEN
+  // 🌏 PACIFIC NATIONS CUP
   // ==================================================
 
   {
-    id: 501,
-    tournament: "Women's International Tests 2026",
-    date: "2026-03-27",
-    venue: "Canberra",
-    home: { name: "Australia", country: "australia" },
+    id: 20,
+    competitionId: "pacific-nations-cup",
+    tournament: "Pacific Nations Cup 2026",
+    date: "2026-08-15T10:00:00Z",
+    venue: "Tokyo Stadium",
+    home: { name: "Japan", country: "japan" },
     away: { name: "Fiji", country: "fiji" },
+    state: "upcoming",
+    importance: 80,
   },
+
+  // ==================================================
+  // 🌍 RUGBY CHAMPIONSHIP
+  // ==================================================
+
   {
-    id: 601,
-    tournament: "Women's SA vs NZ Rival Tour 2026",
-    date: "2026-09-05",
-    venue: "Johannesburg",
-    home: { name: "South Africa", country: "south-africa" },
+    id: 30,
+    competitionId: "rugby-championship",
+    tournament: "Rugby Championship 2026",
+    date: "2026-09-05T15:00:00Z",
+    venue: "Sydney",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "Argentina", country: "argentina" },
+    state: "upcoming",
+    importance: 85,
+  },
+
+  // ==================================================
+  // 🌍 WORLD CUP (EXAMPLE FIXTURE)
+  // ==================================================
+
+  {
+    id: 40,
+    competitionId: "world-cup",
+    tournament: "World Cup 2026",
+    date: "2026-10-10T18:00:00Z",
+    venue: "Stade de France",
+    home: { name: "France", country: "france" },
     away: { name: "New Zealand", country: "new-zealand" },
+    state: "upcoming",
+    importance: 100,
+  },
+
+  // ==================================================
+  // 🏉 DOMESTIC — TOP 14
+  // ==================================================
+
+  {
+    id: 50,
+    competitionId: "top-14",
+    tournament: "Top 14 2026",
+    date: "2026-09-01T18:00:00Z",
+    venue: "Paris",
+    home: { name: "Toulouse", country: "france" },
+    away: { name: "Clermont", country: "france" },
+    state: "live",
+    importance: 60,
+  },
+
+  // ==================================================
+  // 🏉 DOMESTIC — PREMIERSHIP
+  // ==================================================
+
+  {
+    id: 60,
+    competitionId: "premiership",
+    tournament: "Premiership Rugby 2026",
+    date: "2026-09-03T18:45:00Z",
+    venue: "London",
+    home: { name: "Saracens", country: "england" },
+    away: { name: "Leicester Tigers", country: "england" },
+    state: "upcoming",
+    importance: 65,
+  },
+
+  // ==================================================
+  // 🏉 DOMESTIC — URC
+  // ==================================================
+
+  {
+    id: 70,
+    competitionId: "urc",
+    tournament: "United Rugby Championship 2026",
+    date: "2026-09-10T17:00:00Z",
+    venue: "Cape Town",
+    home: { name: "Stormers", country: "south-africa" },
+    away: { name: "Leinster", country: "ireland" },
+    state: "upcoming",
+    importance: 75,
   },
 ];

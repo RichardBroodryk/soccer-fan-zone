@@ -39,9 +39,7 @@ export async function resolveCalendarMatches(
   options?: ResolveOptions
 ): Promise<CalendarMatch[]> {
   try {
-    const matches = await getMatches({
-      leagueId: options?.leagueId,
-    });
+    const matches = await getMatches({ type: "international" });
 
     return matches.map((m) => {
       const dateObj = new Date(m.date);
