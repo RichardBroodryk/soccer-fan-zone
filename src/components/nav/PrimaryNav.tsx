@@ -2,7 +2,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import styles from "./PrimaryNav.module.css";
 
-import logo from "../../assets/images/ui/raz-logo.png";
+// 🔥 REPLACED LOGO (use splash logo)
+import logo from "../../assets/images/raz/raz-splash.png";
 
 type PrimaryNavProps = {
   variant: "freemium" | "premium" | "super";
@@ -41,11 +42,10 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     }
 
     window.addEventListener("storage", syncAvatar);
-
     return () => window.removeEventListener("storage", syncAvatar);
   }, []);
 
-  /* CLOSE DROPDOWN WHEN CLICKING OUTSIDE */
+  /* CLOSE DROPDOWN */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -57,7 +57,6 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -111,6 +110,27 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
 
         {/* RIGHT SIDE */}
         <div className={styles.actions} ref={menuRef}>
+          
+          {/* 🔍 NEW SEARCH ICON (NO LOGIC YET) */}
+          <button
+            className={styles.iconButton}
+            onClick={() => navigate("/search")} // placeholder route
+            aria-label="Search"
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.3-4.3" />
+            </svg>
+          </button>
+
+          {/* PROFILE */}
           <button
             className={styles.profileButton}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -161,7 +181,7 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
         </div>
       </nav>
 
-      {/* LOGOUT CONFIRM MODAL */}
+      {/* LOGOUT MODAL */}
       {logoutConfirm && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
