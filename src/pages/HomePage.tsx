@@ -43,19 +43,7 @@ import calendarImage from "../assets/images/raz/calendar-hero.jpg";
 import merchImage from "../assets/images/raz/Merch.png";
 
 export default function HomePage() {
-     // 🔥 RAZ DEBUG BLOCK START (REMOVE AFTER TESTING)
-  useEffect(() => {
-    console.log("RAZ DEBUG: Triggering matches fetch...");
 
-    getMatches()
-      .then((data) => {
-        console.log("RAZ DEBUG: MATCHES RECEIVED:", data);
-      })
-      .catch((err) => {
-        console.error("RAZ DEBUG: ERROR:", err);
-      });
-  }, []);
-  // 🔥 RAZ DEBUG BLOCK END
   const featuredTournament =
     tournaments2026.find((t) => t.status === "active") ??
     tournaments2026.find((t) => t.status === "upcoming") ??

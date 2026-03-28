@@ -130,13 +130,13 @@ export async function getMatches(options?: {
     options?.gender
   );
 
-  if (backendData && backendData.length > 0) {
-    console.log("RAZ: USING BACKEND DATA");
-    data = backendData;
-  } else {
-    console.log("RAZ: USING FALLBACK DATA");
-    data = matches2026;
-  }
+if (!backendData || backendData.length === 0) {
+  console.log("RAZ: FALLBACK ACTIVATED");
+  data = matches2026;
+} else {
+  console.log("RAZ: USING BACKEND DATA");
+  data = backendData;
+}
 
   let filtered = data
     .filter(isValidStructure)
