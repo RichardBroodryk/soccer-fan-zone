@@ -35,6 +35,15 @@ export default function NationalAnthemPage() {
   const mascot = MASCOTS[nation.id];
   const haka = nation.anthem.haka;
 
+  // 🔥 SPLIT HELPERS FOR CLEAN DISPLAY
+  const formatLyrics = (text: string) => {
+    return text.split("\n").map((line, i) => (
+      <span key={i} className={styles.line}>
+        {line || "\u00A0"}
+      </span>
+    ));
+  };
+
   return (
     <main className={styles.page}>
       {/* HEADER */}
@@ -79,7 +88,6 @@ export default function NationalAnthemPage() {
             </ul>
           </div>
 
-          {/* PLAYER */}
           <div
             className={styles.audioPlaceholder}
             style={{ borderColor: accentColor }}
@@ -107,7 +115,10 @@ export default function NationalAnthemPage() {
             >
               📜 Lyrics (Original)
             </div>
-            <pre>{nation.anthem.lyrics.original}</pre>
+
+            <div className={styles.lyricsBlock}>
+              {formatLyrics(nation.anthem.lyrics.original)}
+            </div>
           </section>
 
           {/* ENGLISH */}
@@ -121,7 +132,10 @@ export default function NationalAnthemPage() {
             >
               🌍 English Translation
             </div>
-            <pre>{nation.anthem.lyrics.english}</pre>
+
+            <div className={styles.lyricsBlock}>
+              {formatLyrics(nation.anthem.lyrics.english)}
+            </div>
           </section>
 
           {/* HISTORY */}
@@ -133,9 +147,14 @@ export default function NationalAnthemPage() {
               className={styles.sectionHeader}
               style={{ backgroundColor: `${accentColor}14` }}
             >
-              📖 History
+              📖 History & Rugby Context
             </div>
-            <p>{nation.anthem.history}</p>
+
+            <div className={styles.textBlock}>
+              {nation.anthem.history.split("\n").map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
           </section>
 
           {/* FACTS */}
@@ -149,14 +168,15 @@ export default function NationalAnthemPage() {
             >
               💡 Key Facts
             </div>
-            <ul>
+
+            <ul className={styles.factsList}>
               {nation.anthem.facts.map((fact, i) => (
                 <li key={i}>{fact}</li>
               ))}
             </ul>
           </section>
 
-          {/* 🖤 HAKA — ONLY IF EXISTS */}
+          {/* HAKA */}
           {haka && (
             <section
               className={styles.contentSection}
@@ -169,22 +189,22 @@ export default function NationalAnthemPage() {
                 🖤 Haka
               </div>
 
-              {/* KA MATE FIRST */}
-              <div style={{ marginBottom: "24px" }}>
+              <div className={styles.hakaBlock}>
                 <h4>{haka.kaMate.title}</h4>
                 <p>{haka.kaMate.description}</p>
+                <div className={styles.lyricsBlock}>
+                  {formatLyrics(haka.kaMate.original)}
+                </div>
+                <p className={styles.translation}>{haka.kaMate.english}</p>
 
-                <pre>{haka.kaMate.original}</pre>
-                <p>{haka.kaMate.english}</p>
-              </div>
-
-              {/* KAPA O PANGO SECOND */}
-              <div>
                 <h4>{haka.kapaOPango.title}</h4>
                 <p>{haka.kapaOPango.description}</p>
-
-                <pre>{haka.kapaOPango.original}</pre>
-                <p>{haka.kapaOPango.english}</p>
+                <div className={styles.lyricsBlock}>
+                  {formatLyrics(haka.kapaOPango.original)}
+                </div>
+                <p className={styles.translation}>
+                  {haka.kapaOPango.english}
+                </p>
               </div>
             </section>
           )}
