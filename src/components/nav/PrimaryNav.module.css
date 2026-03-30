@@ -25,10 +25,14 @@
 .logoLink {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .logo {
-  height: 36px;
+  height: 100%;
+  max-height: 70px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* HOME BUTTON */
@@ -57,6 +61,26 @@
   align-items: center;
 }
 
+/* ICON BUTTON (SEARCH ETC) */
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  color: #0f172a;
+}
+
+.iconButton:hover {
+  color: #c8102e;
+}
+
 /* PROFILE BUTTON */
 .profileButton {
   display: flex;
@@ -76,14 +100,8 @@
 .profileButton:hover {
   color: #c8102e;
 }
+
 /* USER AVATAR */
-.navAvatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-/* AVATAR */
 .navAvatar {
   width: 28px;
   height: 28px;
@@ -92,7 +110,6 @@
 }
 
 /* DROPDOWN MENU */
-
 .dropdown {
   position: absolute;
   right: 20px;
@@ -137,8 +154,8 @@
   background: #e5e7eb;
   margin: 6px 0;
 }
-/* LOGOUT MODAL */
 
+/* LOGOUT MODAL */
 .modalOverlay {
   position: fixed;
   inset: 0;

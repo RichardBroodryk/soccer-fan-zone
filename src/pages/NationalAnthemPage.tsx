@@ -33,16 +33,14 @@ export default function NationalAnthemPage() {
 
   const accentColor = nation.colors[0];
   const mascot = MASCOTS[nation.id];
+  const haka = nation.anthem.haka;
 
   return (
     <main className={styles.page}>
       {/* HEADER */}
       <header className={styles.header}>
         <div className={styles.titleRow}>
-          <span
-            className={styles.titleText}
-            style={{ color: accentColor }}
-          >
+          <span className={styles.titleText} style={{ color: accentColor }}>
             {nation.name}
           </span>
 
@@ -53,10 +51,7 @@ export default function NationalAnthemPage() {
           />
 
           {mascot && (
-            <span
-              className={styles.titleText}
-              style={{ color: accentColor }}
-            >
+            <span className={styles.titleText} style={{ color: accentColor }}>
               {mascot}
             </span>
           )}
@@ -84,7 +79,7 @@ export default function NationalAnthemPage() {
             </ul>
           </div>
 
-          {/* ANTHEM PLAYER */}
+          {/* PLAYER */}
           <div
             className={styles.audioPlaceholder}
             style={{ borderColor: accentColor }}
@@ -101,6 +96,7 @@ export default function NationalAnthemPage() {
 
         {/* RIGHT */}
         <article className={styles.rightColumn}>
+          {/* ORIGINAL */}
           <section
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
@@ -114,6 +110,7 @@ export default function NationalAnthemPage() {
             <pre>{nation.anthem.lyrics.original}</pre>
           </section>
 
+          {/* ENGLISH */}
           <section
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
@@ -127,6 +124,7 @@ export default function NationalAnthemPage() {
             <pre>{nation.anthem.lyrics.english}</pre>
           </section>
 
+          {/* HISTORY */}
           <section
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
@@ -140,6 +138,7 @@ export default function NationalAnthemPage() {
             <p>{nation.anthem.history}</p>
           </section>
 
+          {/* FACTS */}
           <section
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
@@ -156,6 +155,39 @@ export default function NationalAnthemPage() {
               ))}
             </ul>
           </section>
+
+          {/* 🖤 HAKA — ONLY IF EXISTS */}
+          {haka && (
+            <section
+              className={styles.contentSection}
+              style={{ borderColor: accentColor }}
+            >
+              <div
+                className={styles.sectionHeader}
+                style={{ backgroundColor: `${accentColor}14` }}
+              >
+                🖤 Haka
+              </div>
+
+              {/* KA MATE FIRST */}
+              <div style={{ marginBottom: "24px" }}>
+                <h4>{haka.kaMate.title}</h4>
+                <p>{haka.kaMate.description}</p>
+
+                <pre>{haka.kaMate.original}</pre>
+                <p>{haka.kaMate.english}</p>
+              </div>
+
+              {/* KAPA O PANGO SECOND */}
+              <div>
+                <h4>{haka.kapaOPango.title}</h4>
+                <p>{haka.kapaOPango.description}</p>
+
+                <pre>{haka.kapaOPango.original}</pre>
+                <p>{haka.kapaOPango.english}</p>
+              </div>
+            </section>
+          )}
         </article>
       </section>
     </main>
