@@ -5,93 +5,125 @@ import styles from "./FanComments.module.css";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { API_BASE_URL } from "../config/api";
 
-// ================= API TYPE =================
-type ApiComment = {
-  id: number;
-  tournament_id: string | null;
-  match_id: string | null;
-  video_id: number | null;
-  content: string;
-  match_phase: "pre" | "live" | "post" | null;
-  created_at: string;
-  email: string;
-};
+import commentsImg from "../assets/images/raz/Commentsmainpage.png";
 
-// ================= CANONICAL TYPES =================
-type CommentAuthor = {
-  displayName: string;
-  role?: "fan" | "verified";
-};
+/* ================= TIME ================= */
+function getTimeMeta(dateString: string) {
+  const now = new Date().getTime();
+  const then = new Date(dateString).getTime();
+  const diff = Math.floor((now - then) / 1000);
 
-type MatchPhase = "pre" | "live" | "post";
+  if (diff < 60) return { label: "Just now", fresh: true };
+  if (diff < 120) return { label: "1 min ago", fresh: true };
+  if (diff < 3600)
+    return { label: `${Math.floor(diff / 60)} min ago`, fresh: false };
+  if (diff < 86400)
+    return { label: `${Math.floor(diff / 3600)} hr ago`, fresh: false };
 
-type TournamentComment = {
-  id: string;
-  tournamentId: string;
-  text: string;
-  createdAt: string;
-  author: CommentAuthor;
-  matchPhase?: MatchPhase;
-};
+  return { label: `${Math.floor(diff / 86400)} day ago`, fresh: false };
+}
 
-type TournamentCommentThread = {
-  tournamentId: string;
-  comments: TournamentComment[];
-  lastActivityAt: string;
-};
+/* ================= FEED ================= */
+function buildGlobalFeed(threads: any[]) {
+  if (!threads || threads.length === 0) return [];
+
+  return threads
+    .flatMap((t) =>
+      t.comments.map((c: any) => ({
+        ...c,
+        tournamentId: t.tournamentId,
+      }))
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() -
+        new Date(a.createdAt).getTime()
+    );
+}
 
 export default function FanComments() {
   const navigate = useNavigate();
-  const [threads, setThreads] = useState<TournamentCommentThread[]>([]);
+
+  const [threads, setThreads] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    async function loadComments() {
-      try {
-        const results: TournamentCommentThread[] = [];
+  const [newComment, setNewComment] = useState("");
+  const [posting, setPosting] = useState(false);
 
-        for (const tournament of tournaments2026) {
-          const res = await fetch(
-            `${API_BASE_URL}/api/comments?tournament_id=${tournament.conceptId}`
-          );
+  async function loadComments() {
+    try {
+      setRefreshing(true);
 
-          if (!res.ok) continue;
+      const results: any[] = [];
 
-          const apiComments: ApiComment[] = await res.json();
-
-          if (apiComments.length > 0) {
-            results.push({
-              tournamentId: tournament.conceptId,
-              comments: apiComments.map((c) => ({
-                id: String(c.id),
-                tournamentId: c.tournament_id || "",
-                text: c.content,
-                createdAt: c.created_at,
-                author: {
-                  displayName: c.email,
-                },
-                matchPhase: c.match_phase || undefined,
-              })),
-              lastActivityAt: apiComments[0].created_at,
-            });
-          }
-        }
-
-        // Remove duplicate tournament threads
-        const uniqueThreads = Array.from(
-          new Map(results.map((t) => [t.tournamentId, t])).values()
+      for (const t of tournaments2026) {
+        const res = await fetch(
+          `${API_BASE_URL}/api/comments?tournament_id=${t.conceptId}`
         );
 
-        setThreads(uniqueThreads);
-      } catch (err) {
-        console.error("Failed to load fan comments", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+        if (!res.ok) continue;
 
+        const data = await res.json();
+
+        if (data.length > 0) {
+          results.push({
+            tournamentId: t.conceptId,
+            comments: data.map((c: any) => ({
+              id: String(c.id),
+              tournamentId: c.tournament_id || "",
+              text: c.content,
+              createdAt: c.created_at,
+              matchPhase: c.match_phase,
+            })),
+          });
+        }
+      }
+
+      setThreads(results);
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setRefreshing(false), 400);
+    }
+  }
+
+  useEffect(() => {
     loadComments();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(loadComments, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  async function handlePost() {
+    if (!newComment.trim()) return;
+
+    try {
+      setPosting(true);
+
+      await fetch(`${API_BASE_URL}/api/comments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: newComment,
+          match_id: null,
+          tournament_id: null,
+        }),
+      });
+
+      setNewComment("");
+      loadComments();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setPosting(false);
+    }
+  }
+
+  const feed = buildGlobalFeed(threads);
 
   if (loading) {
     return <p className={styles.page}>Loading fan comments…</p>;
@@ -99,37 +131,87 @@ export default function FanComments() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <h1>Fan Comments</h1>
-        <p>Community discussion across major tournaments.</p>
+      {/* HERO */}
+      <header className={styles.hero}>
+        <img
+          src={commentsImg}
+          alt="Fan comments rugby discussion"
+          className={styles.heroImage}
+        />
+        <div className={styles.heroText}>
+          <h1>Fan Comments</h1>
+          <p>The global rugby conversation — reactions, debate, and opinion.</p>
+        </div>
       </header>
 
-      <section className={styles.section}>
-        {threads.map((thread) => {
-          const tournament = tournaments2026.find(
-            (t) => t.conceptId === thread.tournamentId
-          );
+      <div className={styles.contentColumn}>
+        {/* BACK */}
+        <div className={styles.backWrap}>
+          <button
+            className={styles.back}
+            onClick={() => navigate("/media")}
+          >
+            ← Back to The Rugby Studio
+          </button>
+        </div>
 
-          if (!tournament) return null;
+        {/* 🔄 SYSTEM STATUS */}
+        {refreshing && (
+          <div className={styles.refreshing}>Updating…</div>
+        )}
 
-          return (
-            <div key={thread.tournamentId} className={styles.thread}>
-              <h3
-                className={styles.threadTitle}
-                onClick={() => navigate(tournament.route)}
+        {/* INPUT */}
+        <div className={styles.inputWrap}>
+          <textarea
+            className={styles.textarea}
+            placeholder="Join the global rugby conversation..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+
+          <button
+            className={styles.postBtn}
+            onClick={handlePost}
+            disabled={posting}
+          >
+            {posting ? "Posting..." : "Post Comment"}
+          </button>
+        </div>
+
+        {/* FEED */}
+        {feed.length === 0 ? (
+          <p className={styles.empty}>
+            No live comments — be the first to start the conversation.
+          </p>
+        ) : (
+          feed.map((c, index) => {
+            const time = getTimeMeta(c.createdAt);
+            const isNewest = index === 0;
+
+            return (
+              <div
+                key={c.id}
+                className={`${styles.commentBlock} ${
+                  isNewest ? styles.newest : ""
+                }`}
               >
-                {tournament.name} {tournament.year}
-              </h3>
+                <div className={styles.commentHeader}>
+                  <span className={styles.metaRight}>
+                    {time.fresh && (
+                      <span className={styles.activeNow}>
+                        ● Active now
+                      </span>
+                    )}
+                    {time.label}
+                  </span>
+                </div>
 
-              {thread.comments.map((c) => (
-                <p key={c.id} className={styles.comment}>
-                  “{c.text}”
-                </p>
-              ))}
-            </div>
-          );
-        })}
-      </section>
+                <p className={styles.comment}>“{c.text}”</p>
+              </div>
+            );
+          })
+        )}
+      </div>
     </main>
   );
 }
