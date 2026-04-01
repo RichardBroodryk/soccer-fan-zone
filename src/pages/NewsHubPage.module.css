@@ -202,3 +202,34 @@
     grid-template-columns: 1fr;
   }
 }
+/* LINKS */
+
+.card a,
+.featuredCard a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card a:hover h3,
+.featuredCard a:hover h3 {
+  text-decoration: underline;
+}
+
+/* LOADING STATE */
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.95rem;
+  padding: 40px 0;
+}
+/* LIVE BADGE */
+
+.live {
+  margin-left: 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #dc2626;
+  letter-spacing: 0.12em;
+}

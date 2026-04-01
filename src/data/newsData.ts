@@ -1,11 +1,12 @@
 /* ================= NEWS DATA — CANONICAL ================= */
 
 export type NewsItem = {
-  id: number;
+  id: number | string;
   title: string;
   excerpt: string;
   source: string;
   time: string;
+  url: string; // ✅ REQUIRED
   category: string;
   tags: string[];
   featured?: boolean;
@@ -19,6 +20,7 @@ export const newsData: NewsItem[] = [
       "New Zealand Rugby confirms leadership changes ahead of the next international cycle.",
     source: "NZ Rugby",
     time: "2 hours ago",
+    url: "#", // ✅ FIX ADDED
     category: "breaking",
     tags: ["New Zealand", "All Blacks", "Coaching"],
     featured: true,
@@ -30,6 +32,7 @@ export const newsData: NewsItem[] = [
       "Key forward expected to miss upcoming championship fixtures.",
     source: "Team Medical",
     time: "5 hours ago",
+    url: "#", // ✅ FIX ADDED
     category: "injuries",
     tags: ["South Africa", "Springboks", "Injury"],
   },
@@ -40,6 +43,7 @@ export const newsData: NewsItem[] = [
       "Sources suggest talks are underway with French clubs.",
     source: "Transfer Desk",
     time: "1 day ago",
+    url: "#", // ✅ FIX ADDED
     category: "transfers",
     tags: ["England", "Transfers"],
     featured: true,
