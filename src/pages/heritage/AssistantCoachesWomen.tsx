@@ -35,23 +35,21 @@ const groups: NationGroup[] = [
       {
         name: "Simon Kneebone",
         role: "Forwards Coach",
-        bio:
-          "Leads set-piece and forward systems within the Black Ferns’ high-performance structure.",
+        bio: "Leads set-piece execution and forward systems within the Black Ferns’ high-performance structure.",
       },
       {
         name: "Tony Christie",
         role: "Attack Coach",
-        bio:
-          "Shapes attacking identity and continuity in one of the world’s leading women’s teams.",
+        bio: "Shapes attacking identity and continuity across the backline.",
       },
       {
         name: "Riki Flutey",
         role: "Defence Coach",
-        bio:
-          "Responsible for defensive organisation and backline alignment.",
+        bio: "Drives defensive organisation, alignment, and phase discipline.",
       },
     ],
   },
+
   {
     nation: "England",
     flag: england,
@@ -59,59 +57,65 @@ const groups: NationGroup[] = [
       {
         name: "Louis Deacon",
         role: "Forwards Coach",
-        bio:
-          "Oversees forward platform and set-piece execution for the Red Roses.",
+        bio: "Oversees forward platform and set-piece execution within England’s dominant system.",
       },
       {
         name: "Emily Scarratt",
         role: "Attack Coach",
-        bio:
-          "Leads attacking development and backline structure within England’s dominant system.",
+        bio: "Leads attacking development and backline cohesion following an elite playing career.",
       },
       {
         name: "Sarah Hunter",
         role: "Defence Coach",
-        bio:
-          "Former captain contributing leadership and defensive clarity.",
+        bio: "Former captain providing leadership and defensive clarity.",
       },
     ],
   },
+
   {
     nation: "Ireland",
     flag: ireland,
     coaches: [
       {
         name: "Alex Codling",
-        role: "Assistant Coach",
-        bio:
-          "Supports Ireland’s forward and contact-area development.",
+        role: "Forwards Coach",
+        bio: "Supports forward development and contact-area efficiency.",
       },
       {
         name: "Denis Fogarty",
         role: "Scrum Coach",
-        bio:
-          "Specialist in scrum and lineout throwing systems.",
+        bio: "Specialist in scrum stability and lineout throwing systems.",
       },
       {
         name: "James Scaysbrook",
         role: "Defence Coach",
-        bio:
-          "Focuses on defensive organisation and breakdown efficiency.",
+        bio: "Leads defensive systems and breakdown organisation.",
+      },
+      {
+        name: "Gareth Steenson",
+        role: "Kicking Coach",
+        bio: "Supports tactical kicking strategy and game management.",
       },
     ],
   },
+
   {
     nation: "France",
     flag: france,
     coaches: [
       {
-        name: "High-Performance Unit",
-        role: "Assistant Structure",
-        bio:
-          "France’s women’s programme operates within a structured national performance system with specialist coaching roles.",
+        name: "Gérald Bastide",
+        role: "Defence & Skills",
+        bio: "Supports defensive structure and individual skill development.",
+      },
+      {
+        name: "Florent Wieczorek",
+        role: "Forwards / Attack Support",
+        bio: "Contributes to forward systems and attacking integration.",
       },
     ],
   },
+
   {
     nation: "South Africa",
     flag: southAfrica,
@@ -119,23 +123,21 @@ const groups: NationGroup[] = [
       {
         name: "Laurian Johannes-Haupt",
         role: "Assistant Coach",
-        bio:
-          "Part of South Africa’s core coaching group during their modern competitive rise.",
+        bio: "Supports tactical preparation and team structure.",
       },
       {
         name: "Franzel September",
         role: "Assistant Coach",
-        bio:
-          "Supports tactical preparation and player development.",
+        bio: "Contributes to player development and system alignment.",
       },
       {
         name: "Bafana Nhleko",
-        role: "Skills / Support Coach",
-        bio:
-          "Contributes to skills development and structural alignment.",
+        role: "Skills Coach",
+        bio: "Enhances individual skill execution and cohesion.",
       },
     ],
   },
+
   {
     nation: "Scotland",
     flag: scotland,
@@ -143,11 +145,11 @@ const groups: NationGroup[] = [
       {
         name: "Performance Unit",
         role: "Assistant Structure",
-        bio:
-          "Scotland’s assistant coaching group operates within a developing high-performance framework.",
+        bio: "Developing high-performance coaching framework supporting international competitiveness.",
       },
     ],
   },
+
   {
     nation: "Australia",
     flag: australia,
@@ -155,11 +157,11 @@ const groups: NationGroup[] = [
       {
         name: "Wallaroos Coaching Unit",
         role: "Assistant Structure",
-        bio:
-          "Australia’s assistant coaching structure continues to evolve alongside the professionalisation of the women’s game.",
+        bio: "Evolving support structure aligned with increasing professionalism.",
       },
     ],
   },
+
   {
     nation: "Wales",
     flag: wales,
@@ -167,11 +169,11 @@ const groups: NationGroup[] = [
       {
         name: "WRU Performance Group",
         role: "Assistant Structure",
-        bio:
-          "Regional and national pathway coaches contribute to Wales’ international programme.",
+        bio: "Integrated pathway and national coaching system supporting performance growth.",
       },
     ],
   },
+
   {
     nation: "Italy",
     flag: italy,
@@ -179,11 +181,11 @@ const groups: NationGroup[] = [
       {
         name: "FIR Coaching Group",
         role: "Assistant Structure",
-        bio:
-          "Supports Italy’s tactical development and international competitiveness.",
+        bio: "Supports tactical development and cohesion within Italy’s programme.",
       },
     ],
   },
+
   {
     nation: "Fiji",
     flag: fiji,
@@ -191,11 +193,11 @@ const groups: NationGroup[] = [
       {
         name: "Fijiana Development Unit",
         role: "Assistant Structure",
-        bio:
-          "Focused on player development and international pathway integration.",
+        bio: "Focused on player development and pathway integration.",
       },
     ],
   },
+
   {
     nation: "Japan",
     flag: japan,
@@ -203,11 +205,11 @@ const groups: NationGroup[] = [
       {
         name: "JRFU Development Staff",
         role: "Assistant Structure",
-        bio:
-          "Supports Japan’s structured growth within the international women’s game.",
+        bio: "Supports structured growth, discipline, and tactical clarity.",
       },
     ],
   },
+
   {
     nation: "Argentina",
     flag: argentina,
@@ -215,8 +217,7 @@ const groups: NationGroup[] = [
       {
         name: "Emerging Programme Staff",
         role: "Assistant Structure",
-        bio:
-          "Argentina’s women’s programme continues to develop within regional and international pathways.",
+        bio: "Supports Argentina’s developing programme through pathway integration.",
       },
     ],
   },
@@ -250,9 +251,9 @@ export default function AssistantCoachesWomen() {
       <section className={styles.intro}>
         <h2>High-Performance Support Structures</h2>
         <p>
-          Assistant coaches in the women’s game operate within rapidly advancing
-          high-performance environments, contributing to tactical clarity,
-          player development, and international competitiveness.
+          Assistant coaches operate within rapidly advancing high-performance
+          environments, shaping tactical clarity, player development, and
+          international competitiveness.
         </p>
       </section>
 

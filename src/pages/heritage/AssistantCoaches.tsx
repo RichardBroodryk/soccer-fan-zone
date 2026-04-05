@@ -32,197 +32,114 @@ const groups: NationGroup[] = [
     nation: "South Africa",
     flag: southAfrica,
     coaches: [
-      {
-        name: "Mzwandile Stick",
-        role: "Attack & Backs Coach",
-        bio: "Central to South Africa’s attacking structure and continuity across multiple World Cup cycles.",
-      },
-      {
-        name: "Deon Davids",
-        role: "Forwards Coach",
-        bio: "Responsible for forward systems, maul dominance, and pack cohesion.",
-      },
-      {
-        name: "Daan Human",
-        role: "Scrum Coach",
-        bio: "One of the leading scrum specialists in the modern international game.",
-      },
-      {
-        name: "Jerry Flannery",
-        role: "Defence Coach",
-        bio: "Driving defensive organisation and breakdown efficiency.",
-      },
+      { name: "Tony Brown", role: "Attack Coach", bio: "Drives attacking evolution while complementing South Africa’s physical identity." },
+      { name: "Mzwandile Stick", role: "Backline & Skills Coach", bio: "Core figure in continuity, skills, and player development." },
+      { name: "Deon Davids", role: "Forwards Coach", bio: "Leads forward cohesion, breakdown systems, and pack dominance." },
+      { name: "Daan Human", role: "Scrum Coach", bio: "World-leading scrum specialist underpinning set-piece superiority." },
+      { name: "Jerry Flannery", role: "Defence Coach", bio: "Adds defensive structure and European tactical perspective." },
+      { name: "Felix Jones", role: "Tactical & Defence", bio: "Strategic planner integrating analysis, defence, and overall systems." },
     ],
   },
-  {
-    nation: "Ireland",
-    flag: ireland,
-    coaches: [
-      {
-        name: "Simon Easterby",
-        role: "Defence Coach",
-        bio: "Architect of Ireland’s structured and aggressive defensive systems.",
-      },
-      {
-        name: "Andrew Goodman",
-        role: "Attack Coach",
-        bio: "Leads Ireland’s attacking framework and backline development.",
-      },
-      {
-        name: "Paul O'Connell",
-        role: "Forwards Coach",
-        bio: "Former captain bringing leadership and set-piece expertise.",
-      },
-      {
-        name: "John Fogarty",
-        role: "Scrum Coach",
-        bio: "Specialist in scrum stability and technical precision.",
-      },
-    ],
-  },
-  {
-    nation: "France",
-    flag: france,
-    coaches: [
-      {
-        name: "Shaun Edwards",
-        role: "Defence Coach",
-        bio: "Widely regarded as the leading defensive coach in world rugby.",
-      },
-      {
-        name: "William Servat",
-        role: "Forwards Coach",
-        bio: "Oversees France’s powerful forward unit and set-piece.",
-      },
-      {
-        name: "Laurent Sempéré",
-        role: "Set-Piece Coach",
-        bio: "Supports scrum and lineout structure within the French system.",
-      },
-    ],
-  },
-  {
-    nation: "England",
-    flag: england,
-    coaches: [
-      {
-        name: "Richard Wigglesworth",
-        role: "Attack Coach",
-        bio: "Driving England’s attacking clarity and tactical structure.",
-      },
-      {
-        name: "Joe El-Abd",
-        role: "Defence Coach",
-        bio: "Responsible for England’s defensive organisation.",
-      },
-      {
-        name: "Andrew Strawbridge",
-        role: "Forwards Coach",
-        bio: "Focuses on set-piece and forward platform.",
-      },
-    ],
-  },
-  {
-    nation: "Scotland",
-    flag: scotland,
-    coaches: [
-      {
-        name: "Lee Radford",
-        role: "Defence Coach",
-        bio: "Leads Scotland’s defensive systems and organisation.",
-      },
-    ],
-  },
+
   {
     nation: "New Zealand",
     flag: newZealand,
     coaches: [
-      {
-        name: "Jason Ryan",
-        role: "Forwards Coach",
-        bio: "Key figure in forward development and physical dominance.",
-      },
-      {
-        name: "Attack & Defence Unit",
-        role: "Staff Transition Phase",
-        bio: "Coaching structure evolving under the 2026 appointment cycle.",
-      },
+      { name: "Neil Barnes", role: "Senior Assistant", bio: "Provides leadership, lineout expertise, and strategic continuity." },
+      { name: "Jason Ryan", role: "Forwards Coach", bio: "Maintains physical edge and pack cohesion." },
+      { name: "Tana Umaga", role: "Defence Coach", bio: "Brings defensive insight and cultural leadership." },
+      { name: "Mike Blair", role: "Attack Coach", bio: "Leads creative attacking systems and backline execution." },
     ],
   },
+
+  {
+    nation: "Ireland",
+    flag: ireland,
+    coaches: [
+      { name: "Simon Easterby", role: "Defence Coach", bio: "Architect of aggressive defensive systems." },
+      { name: "Andrew Goodman", role: "Attack Coach", bio: "Leads attacking framework and backline structure." },
+      { name: "Paul O'Connell", role: "Forwards Coach", bio: "Shapes forward identity and leadership culture." },
+      { name: "John Fogarty", role: "Scrum Coach", bio: "Ensures technical excellence in set-piece." },
+    ],
+  },
+
+  {
+    nation: "France",
+    flag: france,
+    coaches: [
+      { name: "Shaun Edwards", role: "Defence Coach", bio: "Globally respected defensive strategist." },
+      { name: "William Servat", role: "Forwards Coach", bio: "Leads forward power and set-piece systems." },
+      { name: "Laurent Sempéré", role: "Set-Piece Coach", bio: "Supports scrum and lineout execution." },
+    ],
+  },
+
+  {
+    nation: "England",
+    flag: england,
+    coaches: [
+      { name: "Richard Wigglesworth", role: "Attack / Defence", bio: "Versatile coach shaping tactical structure." },
+      { name: "Joe El-Abd", role: "Defence Coach", bio: "Drives defensive organisation and discipline." },
+      { name: "Andrew Strawbridge", role: "Forwards Coach", bio: "Leads set-piece and forward systems." },
+    ],
+  },
+
+  {
+    nation: "Scotland",
+    flag: scotland,
+    coaches: [
+      { name: "Lee Radford", role: "Defence Coach", bio: "Leads defensive organisation and resilience." },
+    ],
+  },
+
   {
     nation: "Australia",
     flag: australia,
     coaches: [
-      {
-        name: "Laurie Fisher",
-        role: "Forwards Coach",
-        bio: "Highly experienced forwards specialist in international rugby.",
-      },
-      {
-        name: "Mike Cron",
-        role: "Scrum Coach",
-        bio: "Renowned scrum expert with global coaching experience.",
-      },
+      { name: "Laurie Fisher", role: "Forwards Coach", bio: "Experienced forward strategist." },
+      { name: "Mike Cron", role: "Scrum Coach", bio: "Renowned global scrum expert." },
     ],
   },
+
   {
     nation: "Argentina",
     flag: argentina,
     coaches: [
-      {
-        name: "Andrés Bordoy",
-        role: "Scrum Coach",
-        bio: "Leads Argentina’s scrum and forward technical systems.",
-      },
+      { name: "Andrés Bordoy", role: "Scrum Coach", bio: "Leads scrum systems and forward identity." },
     ],
   },
+
   {
     nation: "Italy",
     flag: italy,
     coaches: [
-      {
-        name: "Germán Fernández",
-        role: "Assistant Coach",
-        bio: "Supports Italy’s tactical development and team structure.",
-      },
+      { name: "Germán Fernández", role: "Assistant Coach", bio: "Supports tactical structure and development." },
     ],
   },
+
   {
     nation: "Wales",
     flag: wales,
     coaches: [
-      {
-        name: "Danny Wilson",
-        role: "Forwards Coach",
-        bio: "Responsible for pack development and set-piece structure.",
-      },
-      {
-        name: "Matt Sherratt",
-        role: "Attack Coach",
-        bio: "Leads attacking systems and backline organisation.",
-      },
+      { name: "Danny Wilson", role: "Forwards Coach", bio: "Leads pack and set-piece systems." },
+      { name: "Matt Sherratt", role: "Attack Coach", bio: "Drives attacking organisation." },
     ],
   },
+
   {
     nation: "Fiji",
     flag: fiji,
     coaches: [
-      {
-        name: "Ifereimi Rawaqa",
-        role: "Forwards Coach",
-        bio: "Focuses on physicality and contact area performance.",
-      },
+      { name: "Ifereimi Rawaqa", role: "Forwards Coach", bio: "Focuses on physicality and contact dominance." },
     ],
   },
+
   {
     nation: "Japan",
     flag: japan,
     coaches: [
-      {
-        name: "Attack & Development Unit",
-        role: "Assistant Structure",
-        bio: "Japan’s coaching system emphasises development and tactical cohesion.",
-      },
+      { name: "Neal Hatley", role: "Forwards Coach", bio: "Leads scrum and forward systems." },
+      { name: "Gary Gold", role: "Defence Coach", bio: "Brings international defensive expertise." },
+      { name: "Victor Matfield", role: "Lineout Consultant", bio: "Provides elite lineout and forward insight." },
     ],
   },
 ];
@@ -232,35 +149,18 @@ export default function AssistantCoaches() {
 
   return (
     <main className={styles.page}>
-      {/* HERO */}
       <section className={styles.hero}>
         <h1>Assistant Coaches — Men’s Game</h1>
         <p className={styles.heroSub}>
-          Specialist coaches responsible for defence, attack, set-piece, and
-          tactical execution at international level.
+          Specialist coaches responsible for defence, attack, set-piece, and tactical execution.
         </p>
       </section>
 
-      {/* BACK */}
       <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/heritage/coaches")}
-        >
+        <button className={styles.back} onClick={() => navigate("/heritage/coaches")}>
           ← Back to Coaches & Support
         </button>
       </div>
-
-      {/* INTRO */}
-      <section className={styles.intro}>
-        <h2>The Engine Room of Modern Teams</h2>
-        <p>
-          Assistant coaches translate vision into performance. They design
-          systems, prepare units, and shape match-day execution — often working
-          beyond the spotlight, yet fundamental to sustained international
-          success.
-        </p>
-      </section>
 
       {groups.map((group) => (
         <section key={group.nation} className={styles.nationSection}>

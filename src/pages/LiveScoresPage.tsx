@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LiveScoresPage.module.css";
 
 import { getMatches } from "../data/matchesAdapter";
-import { MatchData } from "../data/matches2026";
+import type { MatchData } from "../data/matches/matches2026Men";
 
 import LiveScoreRow from "../components/match/LiveScoreRow";
 

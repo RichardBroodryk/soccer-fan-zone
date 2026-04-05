@@ -1,7 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./StadiumPage.module.css";
 
-import { matches2026 } from "../data/matches2026";
+/* ✅ DATA */
+import { matches2026 } from "../data/matches";
+import type { MatchData } from "../data/matches/matches2026Men";
+
 import { stadiums } from "../data/stadiums";
 
 import MatchRow from "../components/match/MatchRow";
@@ -40,21 +43,32 @@ export default function StadiumPage() {
   /* DATA */
   const heroImage = getStadiumHero(slug, fallbackHero);
   const gallery = getStadiumGallery(slug);
-  const seating = getStadiumSeating(slug);
+  const seating = getStadiumSeating(slug) || [];
   const meta = getStadiumMeta(slug);
   const experience = getStadiumExperience(slug);
 
+  /* ✅ SAFE GALLERY */
   const galleryImages = [
     gallery?.inside,
     gallery?.outside,
     gallery?.crowds,
     gallery?.aerial,
-  ].filter(Boolean);
+  ].filter((img): img is string => Boolean(img));
 
   const now = new Date();
+
+  /* ✅ MATCH FILTER */
   const upcomingMatches = matches2026
-    .filter((m) => m.venue === stadium.name && new Date(m.date) >= now)
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    .filter(
+      (m: MatchData) =>
+        m.venue === stadium.name &&
+        new Date(m.date) >= now
+    )
+    .sort(
+      (a: MatchData, b: MatchData) =>
+        new Date(a.date).getTime() -
+        new Date(b.date).getTime()
+    );
 
   return (
     <main className={styles.page}>
@@ -79,7 +93,7 @@ export default function StadiumPage() {
 
         {upcomingMatches.length > 0 ? (
           <div className={styles.matches}>
-            {upcomingMatches.map((m) => (
+            {upcomingMatches.map((m: MatchData) => (
               <MatchRow
                 key={m.id}
                 home={m.home}
@@ -98,7 +112,9 @@ export default function StadiumPage() {
         <div className={styles.ctaWrap}>
           <button
             className={styles.primary}
-            onClick={() => navigate(`/stadium/${stadium.slug}/matchday`)}
+            onClick={() =>
+              navigate(`/stadium/${stadium.slug}/matchday`)
+            }
           >
             Plan your matchday
           </button>
@@ -110,10 +126,26 @@ export default function StadiumPage() {
         <h2 className={styles.sectionTitle}>Stadium intelligence</h2>
 
         <div className={styles.intelGrid}>
-          {meta.capacity && <div className={styles.intelCard}>Capacity: {meta.capacity}</div>}
-          {meta.altitude && <div className={styles.intelCard}>Altitude: {meta.altitude}m</div>}
-          {meta.pitch && <div className={styles.intelCard}>Pitch: {meta.pitch}</div>}
-          {meta.roof && <div className={styles.intelCard}>Roof: {meta.roof}</div>}
+          {meta.capacity && (
+            <div className={styles.intelCard}>
+              Capacity: {meta.capacity}
+            </div>
+          )}
+          {meta.altitude && (
+            <div className={styles.intelCard}>
+              Altitude: {meta.altitude}m
+            </div>
+          )}
+          {meta.pitch && (
+            <div className={styles.intelCard}>
+              Pitch: {meta.pitch}
+            </div>
+          )}
+          {meta.roof && (
+            <div className={styles.intelCard}>
+              Roof: {meta.roof}
+            </div>
+          )}
         </div>
 
         {experience.arrivalTip && (
@@ -144,7 +176,9 @@ export default function StadiumPage() {
           {seating.map((zone, i) => (
             <div key={i} className={styles.seatCard}>
               <h3>{zone.name}</h3>
-              <p>{zone.type} · {zone.view}</p>
+              <p>
+                {zone.type} · {zone.view}
+              </p>
             </div>
           ))}
         </div>

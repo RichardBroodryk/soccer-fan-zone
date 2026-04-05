@@ -2,7 +2,13 @@ import { useNavigate } from "react-router-dom";
 import styles from "./SuperMatchCenterPage.module.css";
 
 import MatchCenterNav from "../components/match/MatchCenterNav";
-import { matches2026 } from "../data/matches2026";
+
+/* ✅ FIXED IMPORT */
+import { matches2026 } from "../data/matches";
+
+/* ✅ TYPE */
+import type { MatchData } from "../data/matches/matches2026Men";
+
 import Flag from "../components/images/Flag";
 
 export default function SuperMatchCenterPage() {
@@ -47,7 +53,7 @@ export default function SuperMatchCenterPage() {
           </div>
         ) : (
           <div className={styles.liveGrid}>
-            {matches2026.map((match) => (
+            {matches2026.map((match: MatchData) => (
               <div
                 key={match.id}
                 className={styles.matchCard}

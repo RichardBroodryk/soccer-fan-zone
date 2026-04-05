@@ -1,6 +1,8 @@
 import { FC } from "react";
 import styles from "./MatchCard.module.css";
-import { MatchData } from "../../data/matches2026";
+
+/* ✅ IMPORT TYPE FROM ONE SOURCE */
+import type { MatchData } from "../../data/matches/matches2026Men";
 
 interface MatchCardProps {
   match: MatchData;

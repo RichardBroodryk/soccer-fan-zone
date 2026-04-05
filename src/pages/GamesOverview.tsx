@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import Flag from "../components/images/Flag";
-import { matches2026 } from "../data/matches2026";
+
+/* ✅ FIXED IMPORT */
+import { matches2026 } from "../data/matches";
+
+/* ✅ TYPE IMPORT (SAFE) */
+import type { MatchData } from "../data/matches/matches2026Men";
 
 import styles from "./GamesOverview.module.css";
 
@@ -18,7 +23,7 @@ export default function GamesOverview() {
       </section>
 
       <main className={styles.list}>
-        {matches2026.map((match) => (
+        {matches2026.map((match: MatchData) => (
           <article
             key={match.id}
             className={styles.card}

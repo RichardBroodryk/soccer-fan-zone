@@ -1,37 +1,99 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 
 import Flag from "../components/images/Flag";
 import TeamComparisonTable from "../components/stats/TeamComparisonTable";
 
-import { getMatches } from "../data/matchesAdapter";
-import { MatchData } from "../data/matches2026";
-
+import type { MatchData } from "../data/matches/matches2026Men";
+import { matches2026 } from "../data/matches";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { stadiums } from "../data/stadiums";
 import { matchDetails2026 } from "../data/matchDetails2026";
 
 import styles from "./MatchPage.module.css";
+
 import { API_BASE_URL } from "../config/api";
 
-/* ================= MATCH STATE ================= */
+/* ================= ICONS ================= */
 
-function getMatchState(dateStr: string, hasScore?: boolean) {
-  const now = new Date();
-  const matchDate = new Date(dateStr);
-
-  if (hasScore) return "final";
-
-  const diff = (matchDate.getTime() - now.getTime()) / (1000 * 60);
-
-  if (diff < 0 && diff > -120) return "live";
-  if (diff >= 0 && diff <= 60) return "starting";
-  if (matchDate.toDateString() === now.toDateString()) return "today";
-
-  return "upcoming";
+function TryIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <ellipse cx="12" cy="12" rx="6" ry="3" />
+    </svg>
+  );
 }
 
-/* ================= PAGE ================= */
+function KickIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M4 20L20 4" />
+      <circle cx="8" cy="16" r="2" />
+    </svg>
+  );
+}
+
+function YellowCardIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="7" y="5" width="10" height="14" rx="1" />
+    </svg>
+  );
+}
+
+function RedCardIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="7" y="5" width="10" height="14" rx="1" />
+      <line x1="7" y1="5" x2="17" y2="19" />
+    </svg>
+  );
+}
+
+function getTimelineIcon(label: string) {
+  const text = label.toLowerCase();
+
+  if (text.includes("try")) return <TryIcon className={styles.timelineIcon} />;
+  if (text.includes("conversion")) return <KickIcon className={styles.timelineIcon} />;
+  if (text.includes("yellow")) return <YellowCardIcon className={styles.timelineIcon} />;
+  if (text.includes("red")) return <RedCardIcon className={styles.timelineIcon} />;
+
+  return null;
+}
+
+/* ================= TYPES ================= */
+
+type Player = {
+  number: number;
+  name: string;
+  position?: string;
+};
+
+type MatchStats = {
+  timeline: {
+    minute: string;
+    label: string;
+  }[];
+
+  lineups: {
+    homeStarting: Player[];
+    homeBench: Player[];
+    awayStarting: Player[];
+    awayBench: Player[];
+  };
+};
+
+/* ==================================================
+   🔥 STATE RESOLVER (GLOBAL — NO FAKE LIVE)
+   ================================================== */
+
+function resolveState(match: MatchData): "final" | "upcoming" {
+  if (match.score) return "final";
+
+  return new Date(match.date) > new Date()
+    ? "upcoming"
+    : "final";
+}
 
 export default function MatchPage() {
   const { id } = useParams<{ id: string }>();
@@ -39,26 +101,16 @@ export default function MatchPage() {
 
   const matchId = id ? Number(id) : NaN;
 
-  const [matches, setMatches] = useState<MatchData[]>([]);
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<MatchStats | null>(null);
   const [comments, setComments] = useState<any[]>([]);
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(true);
 
-  /* ================= LOAD MATCHES ================= */
+  /* ==================================================
+     🔒 SINGLE SOURCE OF TRUTH
+     ================================================== */
 
-  useEffect(() => {
-    async function load() {
-      const data = await getMatches();
-      setMatches(data);
-      setLoading(false);
-    }
-    load();
-  }, []);
-
-  const match = useMemo(
-    () => matches.find((m) => m.id === matchId),
-    [matches, matchId]
+  const match = matches2026.find(
+    (m: MatchData) => m.id === matchId
   );
 
   /* ================= LOAD STATS ================= */
@@ -66,38 +118,41 @@ export default function MatchPage() {
   useEffect(() => {
     async function loadStats() {
       try {
-        const res = await fetch(
-          `${API_BASE_URL}/api/stats/match/${matchId}`
-        );
-
+        const res = await fetch(`${API_BASE_URL}/api/stats/match/${matchId}`);
         if (res.ok) {
           setStats(await res.json());
           return;
         }
-      } catch {}
+      } catch {
+        console.warn("API stats unavailable");
+      }
 
-      const local = matchDetails2026.find(
-        (m) => m.matchId === matchId
-      );
-
+      const local = matchDetails2026.find((m) => m.matchId === matchId);
       if (local) setStats(local);
     }
 
-    if (matchId) loadStats();
+    if (!isNaN(matchId)) loadStats();
   }, [matchId]);
 
-  /* ================= COMMENTS ================= */
+  /* ================= LOAD COMMENTS ================= */
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/comments?match_id=${matchId}`)
-      .then((r) => r.json())
-      .then(setComments)
-      .catch(() => {});
+    async function loadComments() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/comments?match_id=${matchId}`);
+        if (!res.ok) return;
+        setComments(await res.json());
+      } catch {
+        console.error("Failed to load comments");
+      }
+    }
+
+    if (!isNaN(matchId)) loadComments();
   }, [matchId]);
 
   async function postComment() {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Login required");
+    if (!token) return alert("Please log in to post.");
 
     await fetch(`${API_BASE_URL}/api/comments`, {
       method: "POST",
@@ -105,25 +160,10 @@ export default function MatchPage() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        match_id: matchId,
-        content: text,
-      }),
+      body: JSON.stringify({ match_id: matchId, content: text }),
     });
 
     setText("");
-  }
-
-  /* ================= STATES ================= */
-
-  if (loading) {
-    return (
-      <main className={styles.page}>
-        <p style={{ textAlign: "center", padding: 40 }}>
-          Loading match...
-        </p>
-      </main>
-    );
   }
 
   if (!match) {
@@ -134,73 +174,87 @@ export default function MatchPage() {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const tournament = tournaments2026.find(
-  (t) => t.matchKey === match.tournament
-);
+  /* ==================================================
+     🔒 TOURNAMENT RESOLUTION (INSTANCE ONLY)
+     ================================================== */
 
-  const stadium = stadiums.find(
-    (s) => s.name === match.venue
+  const instanceId =
+    (match as { tournamentInstanceId?: string }).tournamentInstanceId;
+
+  const tournament = tournaments2026.find(
+    (t) => t.instanceId === instanceId
   );
 
-  const status = getMatchState(match.date, !!match.score);
+  const backToTournament = tournament
+    ? tournament.route
+    : "/tournaments";
 
-  /* ================= PAGE ================= */
+  const { home, away, score, venue, date } = match;
+
+  const stadium = stadiums.find((s) => s.name === venue);
+
+  /* 🔒 FIXED STATUS */
+  const status = resolveState(match);
+
+  const matchStats = [
+    { label: "Possession", home: "58%", away: "42%" },
+    { label: "Territory", home: "61%", away: "39%" },
+    { label: "Tries", home: score ? score.home : 0, away: score ? score.away : 0 },
+    { label: "Tackles Made", home: 142, away: 167 },
+    { label: "Missed Tackles", home: 9, away: 21 },
+    { label: "Penalties Conceded", home: 8, away: 11 },
+  ];
 
   return (
     <main className={styles.page}>
-      {/* BACK */}
       <nav className={styles.backNav}>
-        <button onClick={() => navigate("/match-center")}>
-          ← Back to Match Center
+        <button onClick={() => navigate(backToTournament)}>
+          ← Back to {tournament ? `${tournament.name} ${tournament.year}` : "Tournaments"}
         </button>
       </nav>
 
-      {/* HEADER */}
       <header className={styles.tournamentHeader}>
         <h1>{match.tournament}</h1>
       </header>
 
-      {/* STATUS */}
       <section className={styles.statusBar}>
-        <span className={`${styles.status} ${styles[status]}`}>
-          {status}
-        </span>
+        <span className={`${styles.status} ${styles[status]}`}>{status}</span>
       </section>
 
-      {/* TEAMS */}
       <section className={styles.vsSection}>
         <div className={styles.team}>
-          <Flag country={match.home.country} size="large" />
-          <span>{match.home.name}</span>
+          <Flag country={home.country} size="large" />
+          <span className={styles.teamName}>{home.name}</span>
         </div>
 
-        {match.score ? (
+        {score ? (
           <div className={styles.scoreBlock}>
-            {match.score.home} – {match.score.away}
+            <span className={styles.score}>{score.home}</span>
+            <span className={styles.scoreDivider}>–</span>
+            <span className={styles.score}>{score.away}</span>
           </div>
         ) : (
           <span className={styles.vs}>vs</span>
         )}
 
         <div className={styles.team}>
-          <Flag country={match.away.country} size="large" />
-          <span>{match.away.name}</span>
+          <Flag country={away.country} size="large" />
+          <span className={styles.teamName}>{away.name}</span>
         </div>
       </section>
 
-      {/* META */}
       <section className={styles.meta}>
-        <span>{match.date}</span>
+        <span>📅 {date}</span>
 
-        {stadium && (
+        {stadium ? (
           <button
-            onClick={() =>
-              navigate(`/stadium/${stadium.slug}`)
-            }
+            className={styles.venueLink}
+            onClick={() => navigate(`/stadium/${stadium.slug}`)}
           >
-            {stadium.name}
+            🏟 {stadium.name}
           </button>
+        ) : (
+          <span>🏟 Venue TBC</span>
         )}
       </section>
 
@@ -208,26 +262,53 @@ const tournament = tournaments2026.find(
       {stats?.timeline && (
         <section className={styles.timeline}>
           <h2>Match Timeline</h2>
-
-          {stats.timeline.map((e: any, i: number) => (
-            <p key={i}>
-              {e.minute} — {e.label}
-            </p>
-          ))}
+          <ul className={styles.timelineList}>
+            {stats.timeline.map((e, i) => (
+              <li key={i} className={styles.timelineItem}>
+                <span className={styles.minute}>{e.minute}</span>
+                <span className={styles.label}>
+                  {getTimelineIcon(e.label)}
+                  {e.label}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
-      {/* STATS */}
+      {/* LINEUPS */}
+      {stats?.lineups && (
+        <section className={styles.lineups}>
+          <h2>Lineups</h2>
+          <div className={styles.lineupGrid}>
+            <div className={styles.teamLineup}>
+              <h3>{home.name}</h3>
+              <ul>
+                {stats.lineups.homeStarting.map((p) => (
+                  <li key={p.number}>{p.name}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={styles.teamLineup}>
+              <h3>{away.name}</h3>
+              <ul>
+                {stats.lineups.awayStarting.map((p) => (
+                  <li key={p.number}>{p.name}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* TEAM STATS */}
       <section className={styles.section}>
         <h2>Team Stats</h2>
-
         <TeamComparisonTable
-          home={match.home}
-          away={match.away}
-          stats={[
-            { label: "Tries", home: 4, away: 2 },
-            { label: "Possession", home: "60%", away: "40%" },
-          ]}
+          home={{ name: home.name, country: home.country }}
+          away={{ name: away.name, country: away.country }}
+          stats={matchStats}
         />
       </section>
 
@@ -235,16 +316,18 @@ const tournament = tournaments2026.find(
       <section className={styles.section}>
         <h2>Fan Reactions</h2>
 
-        {comments.map((c) => (
-          <p key={c.id}>{c.content}</p>
-        ))}
+        <div className={styles.commentsPanel}>
+          {comments.length > 0 ? (
+            comments.map((c) => <p key={c.id}>“{c.content}”</p>)
+          ) : (
+            <p>No reactions yet.</p>
+          )}
+        </div>
 
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-
-        <button onClick={postComment}>Post</button>
+        <div className={styles.commentInput}>
+          <textarea value={text} onChange={(e) => setText(e.target.value)} />
+          <button onClick={postComment}>Post</button>
+        </div>
       </section>
     </main>
   );

@@ -1,336 +1,164 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import styles from "./TournamentPage.module.css";
+import { useMemo } from "react";
+
+import Flag from "../components/images/Flag";
+import MatchRow from "../components/match/MatchRow";
 
 import { tournaments2026 } from "../data/tournamentMeta";
-import { matches2026 } from "../data/matches2026";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
-import MatchRow from "../components/match/MatchRow";
-import Flag from "../components/images/Flag";
-import MusicIcon from "../components/icons/MusicIcon";
+/* ✅ DATA SOURCE */
+import { matches2026 } from "../data/matches";
 
-import { API_BASE_URL } from "../config/api";
+/* ✅ TYPE */
+import type { MatchData } from "../data/matches/matches2026Men";
 
-/* ================= UTILS ================= */
+import styles from "./TournamentPage.module.css";
 
-function normalize(value: string) {
-  return value.toLowerCase().replace(/\s+/g, " ").trim();
+/* ==================================================
+   STATE RESOLVER (GLOBAL RULE — NO FAKE LIVE)
+   ================================================== */
+
+function resolveState(match: MatchData): "final" | "upcoming" {
+  if (match.score) return "final";
+
+  return new Date(match.date) > new Date()
+    ? "upcoming"
+    : "final";
 }
-
-function groupMatchesByMonth(matches: any[]) {
-  const map = new Map<string, any[]>();
-
-  matches.forEach((m) => {
-    const date = new Date(m.date);
-
-    const label = date.toLocaleString("en-GB", {
-      month: "long",
-      year: "numeric",
-    });
-
-    if (!map.has(label)) {
-      map.set(label, []);
-    }
-
-    map.get(label)!.push(m);
-  });
-
-  return Array.from(map.entries()).map(([label, matches]) => ({
-    label,
-    matches,
-  }));
-}
-
-/* ================= PAGE ================= */
 
 export default function TournamentPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const commentsRef = useRef<HTMLDivElement | null>(null);
-
-  const [comments, setComments] = useState<any[]>([]);
-
-  const openComments = location.state?.openComments === true;
 
   const tournament = tournaments2026.find(
     (t) => t.route === location.pathname
   );
 
-  useEffect(() => {
-    if (openComments && commentsRef.current) {
-      commentsRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  }, [openComments]);
+  /* ==================================================
+     🔥 LOCKED MATCH RESOLUTION (INSTANCE ONLY)
+     ================================================== */
 
-  useEffect(() => {
-    async function loadComments() {
-      if (!tournament) return;
+  const matches = useMemo((): MatchData[] => {
+    if (!tournament) return [];
 
-      try {
-        const res = await fetch(
-          `${API_BASE_URL}/api/comments?tournament_id=${tournament.conceptId}`
-        );
-
-        if (!res.ok) return;
-
-        const data = await res.json();
-        setComments(data);
-      } catch (err) {
-        console.error("Failed to load tournament comments", err);
-      }
-    }
-
-    loadComments();
+    return matches2026
+      .filter(
+        (m: MatchData) =>
+          (m as { tournamentInstanceId?: string })
+            .tournamentInstanceId === tournament.instanceId
+      )
+      .sort(
+        (a: MatchData, b: MatchData) =>
+          new Date(a.date).getTime() -
+          new Date(b.date).getTime()
+      );
   }, [tournament]);
 
   if (!tournament) {
-    return (
-      <main className={styles.error}>
-        <h2>Tournament not found</h2>
-      </main>
-    );
+    return <div className={styles.error}>Tournament not found</div>;
   }
 
   const visual = getTournamentVisual(tournament.conceptId);
 
-  const heroImage =
-    tournament.gender === "women"
-      ? visual?.heroImageWomen
-      : visual?.heroImageMen;
+  /* ================= TEAMS ================= */
 
-  /* ================= MATCH FILTER + SORT ================= */
-
-  const tournamentMatches = matches2026
-    .filter((m) => {
-      const matchTournament = normalize(m.tournament);
-      const key = normalize(tournament.matchKey);
-      const fallback = normalize(
-        `${tournament.name} ${tournament.year}`
-      );
-
-      return (
-        matchTournament === key ||
-        matchTournament === fallback
-      );
-    })
-    .sort(
-      (a, b) =>
-        new Date(a.date).getTime() -
-        new Date(b.date).getTime()
-    );
-
-  /* ================= BACK ROUTE ================= */
-
-  const backToIndex =
-    tournament.gender === "women"
-      ? "/tournaments/women"
-      : "/tournaments/men";
-
-  /* ================= FLAGS ================= */
-
-  const participatingCountries = Array.from(
-    new Set(
-      tournamentMatches.flatMap((m) => [
-        m.home.country,
-        m.away.country,
+  const teams = Array.from(
+    new Map(
+      matches.flatMap((m: MatchData) => [
+        [m.home.name, m.home],
+        [m.away.name, m.away],
       ])
-    )
-  ).sort();
-
-  /* ================= INTERNATIONAL TEST GROUPING ================= */
-
-  const isInternationalTests =
-    tournament.conceptId === "international-tests";
-
-  const groupedMatches = isInternationalTests
-    ? groupMatchesByMonth(tournamentMatches)
-    : [];
-
-  /* ================= HERO LAYOUT ================= */
-
-  const isTopText =
-    visual?.heroLayout === "top" ||
-    visual?.heroLayout === "contained";
-
-  const shouldBiasHero =
-    visual?.heroLayout === "contained" &&
-    tournament.conceptId !== "six-nations";
+    ).values()
+  );
 
   return (
     <main className={styles.page}>
       {/* ================= HERO ================= */}
-
-      <section
-        className={[
-          styles.hero,
-          visual?.heroLayout === "contained"
+      <header
+        className={`${styles.hero} ${
+          visual.heroLayout === "contained"
             ? styles.heroContained
-            : "",
-          visual?.heroLayout === "top"
-            ? styles.heroTop
-            : "",
-          shouldBiasHero ? styles.heroBiased : "",
-          tournament.conceptId === "svns-series"
-            ? styles.heroSVNS
-            : "",
-        ].join(" ")}
-        style={
-          heroImage
-            ? { backgroundImage: `url(${heroImage})` }
-            : undefined
-        }
+            : ""
+        }`}
+        style={{
+          backgroundImage: `url(${
+            tournament.gender === "women"
+              ? visual.heroImageWomen
+              : visual.heroImageMen
+          })`,
+        }}
       >
-        <div
-          className={[
-            styles.heroContent,
-            isTopText ? styles.heroTop : "",
-            shouldBiasHero
-              ? styles.heroContentLeft
-              : "",
-          ].join(" ")}
-        >
+        <div className={styles.heroContent}>
           <h1>
             {tournament.name} {tournament.year}
           </h1>
+          <p>{tournament.heroSubtitle}</p>
 
           <div className={styles.statusBadge}>
-            {tournament.status.toUpperCase()}
+            {tournament.status?.toUpperCase()}
           </div>
-
-          {tournament.heroSubtitle && (
-            <p>{tournament.heroSubtitle}</p>
-          )}
         </div>
-      </section>
+      </header>
 
-      {/* ================= BACK ================= */}
-
-      <nav className={styles.backNav}>
-        <button onClick={() => navigate(backToIndex)}>
-          ← Back to{" "}
-          {tournament.gender === "women"
-            ? "Women’s"
-            : "Men’s"}{" "}
-          Tournaments
+      {/* ================= BACK NAV ================= */}
+      <div className={styles.backNav}>
+        <button onClick={() => navigate("/tournaments")}>
+          ← Back to Tournaments
         </button>
-      </nav>
+      </div>
 
       {/* ================= ANTHEMS ================= */}
-
       <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2>Anthems</h2>
+          <p>Flags link to national anthems</p>
+        </div>
+
         <div className={styles.anthemsRow}>
-          <button
-            className={styles.anthemCard}
-            onClick={() => navigate("/anthems")}
-          >
-            <MusicIcon />
-
-            <div>
-              <strong>Anthems</strong>
-              <span>
-                The ritual before every contest
-              </span>
-            </div>
-          </button>
-
-          {participatingCountries.length > 0 && (
-            <div className={styles.flagsGrid}>
-              {participatingCountries.map((c) => (
-                <button
-                  key={c}
-                  className={styles.flagSlot}
-                  onClick={() =>
-                    navigate(`/anthems/${c}`)
-                  }
-                >
-                  <Flag country={c} />
-                </button>
-              ))}
-            </div>
-          )}
+          <div className={styles.flagsGrid}>
+            {teams.map((team) => (
+              <Flag
+                key={team.name}
+                country={team.country}
+                size="medium"
+              />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ================= FIXTURES ================= */}
-
+      {/* ================= MATCHES ================= */}
       <section className={styles.section}>
-        <header className={styles.sectionHeader}>
-          <h2>Fixtures</h2>
-          <p>
-            Confirmed matches in this tournament.
-          </p>
-        </header>
+        <div className={styles.sectionHeader}>
+          <h2>Matches</h2>
+          <p>All fixtures and results</p>
+        </div>
 
-        {isInternationalTests ? (
-          groupedMatches.map((group) => (
-            <div key={group.label}>
-              <h3>{group.label}</h3>
-
-              {group.matches.map((match: any) => (
-                <MatchRow
-                  key={match.id}
-                  home={match.home}
-                  away={match.away}
-                  metaLeft={match.date}
-                  metaRight={match.venue}
-                  state={
-                    match.score
-                      ? "final"
-                      : "upcoming"
-                  }
-                  onClick={() =>
-                    navigate(`/match/${match.id}`)
-                  }
-                />
-              ))}
-            </div>
-          ))
-        ) : tournamentMatches.length > 0 ? (
-          tournamentMatches.map((match) => (
+        {matches.length === 0 ? (
+          <div className={styles.emptyState}>
+            No matches available
+          </div>
+        ) : (
+          matches.map((match: MatchData) => (
             <MatchRow
               key={match.id}
               home={match.home}
               away={match.away}
+              state={resolveState(match)}
+              score={match.score}
               metaLeft={match.date}
               metaRight={match.venue}
-              state={
-                match.score ? "final" : "upcoming"
-              }
               onClick={() =>
                 navigate(`/match/${match.id}`)
               }
             />
           ))
-        ) : (
-          <div className={styles.emptyState}>
-            <p>No fixtures announced yet.</p>
-          </div>
         )}
       </section>
 
-      {/* ================= DISCUSSION ================= */}
-
-      <section
-        ref={commentsRef}
-        className={styles.section}
-      >
-        <header className={styles.sectionHeader}>
-          <h2>Fan Discussion</h2>
-        </header>
-
-        <div className={styles.commentsPanel}>
-          {comments.length > 0 ? (
-            comments.map((c) => (
-              <p key={c.id}>“{c.content}”</p>
-            ))
-          ) : (
-            <p>No discussion yet.</p>
-          )}
-        </div>
-      </section>
+      {/* ================= BOTTOM ADS ================= */}
+      {/* KEEP YOUR ADS COMPONENT HERE */}
     </main>
   );
 }

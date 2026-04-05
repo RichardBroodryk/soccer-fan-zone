@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import styles from "./ResultsPage.module.css";
 
 import { getMatches } from "../data/matchesAdapter";
-import { MatchData } from "../data/matches2026";
+import type { MatchData } from "../data/matches/matches2026Men";
 
 import MatchRow from "../components/match/MatchRow";
 

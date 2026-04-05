@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import styles from "./FixturesPage.module.css";
 
 import { getMatches } from "../data/matchesAdapter";
-import { MatchData } from "../data/matches2026";
+
+/* ✅ FIX: correct type import */
+import type { MatchData } from "../data/matches/matches2026Men";
 
 import FixtureRow from "../components/fixtures/FixtureRow";
 import FixturesSectionHero from "../components/fixtures/FixturesSectionHero";

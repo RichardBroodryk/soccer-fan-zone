@@ -1,0 +1,538 @@
+// --------------------------------------------------
+// RAZ SYSTEM — MATCHES 2026 MEN (FULL DATASET — NORMALIZED SAFE)
+// --------------------------------------------------
+
+export interface MatchTeam {
+  name: string;
+  country: string;
+}
+
+export interface MatchScore {
+  home: number;
+  away: number;
+}
+
+export interface MatchData {
+  id: number;
+  competitionId: string;
+  tournament: string;
+  date: string;
+  venue: string;
+  home: MatchTeam;
+  away: MatchTeam;
+  score?: MatchScore;
+  state?: "upcoming" | "starting" | "live" | "final";
+  importance?: number;
+  tournamentInstanceId?: string;
+}
+
+/* ================================================== */
+
+const SIX_NATIONS_2026 = "six-nations-2026";
+const NATIONS_CHAMPIONSHIP_2026 = "nations-championship-2026";
+const INTERNATIONAL_TESTS_2026 = "international-tests-2026";
+const PACIFIC_NATIONS_2026 = "pacific-nations-2026";
+const BLEDISLOE_2026 = "bledisloe-cup-2026";
+const SA_NZ_RIVAL_TOUR_2026 = "sa-nz-rival-tour-2026";
+
+/* ================================================== */
+
+export const matches2026Men: MatchData[] = [
+
+  // ================= SIX NATIONS =================
+  // (ALL 15 — COMPLETE)
+
+  {
+    id: 1001,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-05",
+    venue: "Paris",
+    home: { name: "France", country: "france" },
+    away: { name: "Ireland", country: "ireland" },
+    score: { home: 27, away: 20 },
+  },
+  {
+    id: 1002,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-06",
+    venue: "Rome",
+    home: { name: "Italy", country: "italy" },
+    away: { name: "Scotland", country: "scotland" },
+    score: { home: 18, away: 24 },
+  },
+  {
+    id: 1003,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-07",
+    venue: "London",
+    home: { name: "England", country: "england" },
+    away: { name: "Wales", country: "wales" },
+    score: { home: 30, away: 22 },
+  },
+
+  {
+    id: 1004,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-14",
+    venue: "Dublin",
+    home: { name: "Ireland", country: "ireland" },
+    away: { name: "Italy", country: "italy" },
+    score: { home: 35, away: 12 },
+  },
+  {
+    id: 1005,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-15",
+    venue: "Cardiff",
+    home: { name: "Wales", country: "wales" },
+    away: { name: "France", country: "france" },
+    score: { home: 19, away: 28 },
+  },
+  {
+    id: 1006,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-16",
+    venue: "Edinburgh",
+    home: { name: "Scotland", country: "scotland" },
+    away: { name: "England", country: "england" },
+    score: { home: 21, away: 25 },
+  },
+
+  {
+    id: 1007,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-21",
+    venue: "Rome",
+    home: { name: "Italy", country: "italy" },
+    away: { name: "Wales", country: "wales" },
+    score: { home: 17, away: 20 },
+  },
+  {
+    id: 1008,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-22",
+    venue: "London",
+    home: { name: "England", country: "england" },
+    away: { name: "France", country: "france" },
+    score: { home: 26, away: 24 },
+  },
+  {
+    id: 1009,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-02-23",
+    venue: "Dublin",
+    home: { name: "Ireland", country: "ireland" },
+    away: { name: "Scotland", country: "scotland" },
+    score: { home: 29, away: 18 },
+  },
+
+  {
+    id: 1010,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-03-07",
+    venue: "Paris",
+    home: { name: "France", country: "france" },
+    away: { name: "Italy", country: "italy" },
+    score: { home: 34, away: 10 },
+  },
+  {
+    id: 1011,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-03-08",
+    venue: "Edinburgh",
+    home: { name: "Scotland", country: "scotland" },
+    away: { name: "Wales", country: "wales" },
+    score: { home: 23, away: 19 },
+  },
+  {
+    id: 1012,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-03-09",
+    venue: "London",
+    home: { name: "England", country: "england" },
+    away: { name: "Ireland", country: "ireland" },
+    score: { home: 27, away: 26 },
+  },
+
+  {
+    id: 1013,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-03-14",
+    venue: "Cardiff",
+    home: { name: "Wales", country: "wales" },
+    away: { name: "England", country: "england" },
+    score: { home: 20, away: 33 },
+  },
+  {
+    id: 1014,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-03-14",
+    venue: "Rome",
+    home: { name: "Italy", country: "italy" },
+    away: { name: "France", country: "france" },
+    score: { home: 16, away: 31 },
+  },
+  {
+    id: 1015,
+    competitionId: "six-nations",
+    tournamentInstanceId: SIX_NATIONS_2026,
+    tournament: "Six Nations 2026",
+    date: "2026-03-14",
+    venue: "Dublin",
+    home: { name: "Ireland", country: "ireland" },
+    away: { name: "Scotland", country: "scotland" },
+    score: { home: 28, away: 17 },
+  },
+
+  // ================= NATIONS CHAMPIONSHIP =================
+
+  // ROUND 1
+  {
+    id: 3001,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-04",
+    venue: "Pretoria",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "England", country: "england" },
+  },
+  {
+    id: 3002,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-04",
+    venue: "Auckland",
+    home: { name: "New Zealand", country: "new-zealand" },
+    away: { name: "France", country: "france" },
+  },
+  {
+    id: 3003,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-04",
+    venue: "Sydney",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "Ireland", country: "ireland" },
+  },
+  {
+    id: 3004,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-04",
+    venue: "Tokyo",
+    home: { name: "Japan", country: "japan" },
+    away: { name: "Italy", country: "italy" },
+  },
+  {
+    id: 3005,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-04",
+    venue: "Suva",
+    home: { name: "Fiji", country: "fiji" },
+    away: { name: "Wales", country: "wales" },
+  },
+  {
+    id: 3006,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-04",
+    venue: "Buenos Aires",
+    home: { name: "Argentina", country: "argentina" },
+    away: { name: "Scotland", country: "scotland" },
+  },
+
+  // ---------- ROUND 2 ----------
+  {
+    id: 3010,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-11",
+    venue: "Wellington",
+    home: { name: "New Zealand", country: "new-zealand" },
+    away: { name: "Italy", country: "italy" },
+  },
+  {
+    id: 3011,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-11",
+    venue: "Melbourne",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "France", country: "france" },
+  },
+  {
+    id: 3012,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-11",
+    venue: "Osaka",
+    home: { name: "Japan", country: "japan" },
+    away: { name: "Ireland", country: "ireland" },
+  },
+  {
+    id: 3013,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-11",
+    venue: "Nadi",
+    home: { name: "Fiji", country: "fiji" },
+    away: { name: "England", country: "england" },
+  },
+  {
+    id: 3014,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-11",
+    venue: "Cape Town",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "Scotland", country: "scotland" },
+  },
+  {
+    id: 3015,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-11",
+    venue: "Cordoba",
+    home: { name: "Argentina", country: "argentina" },
+    away: { name: "Wales", country: "wales" },
+  },
+
+  // ---------- ROUND 3 ----------
+  {
+    id: 3020,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-18",
+    venue: "Tokyo",
+    home: { name: "Japan", country: "japan" },
+    away: { name: "France", country: "france" },
+  },
+  {
+    id: 3021,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-18",
+    venue: "Auckland",
+    home: { name: "New Zealand", country: "new-zealand" },
+    away: { name: "Ireland", country: "ireland" },
+  },
+  {
+    id: 3022,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-18",
+    venue: "Sydney",
+    home: { name: "Australia", country: "australia" },
+    away: { name: "Italy", country: "italy" },
+  },
+
+  // SEMI FINAL
+  {
+    id: 3101,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship Semi Final",
+    date: "2026-10-24",
+    venue: "London",
+    home: { name: "TBD", country: "tbd" },
+    away: { name: "TBD", country: "tbd" },
+  },
+
+  // FINAL
+  {
+    id: 3201,
+    competitionId: "nations-championship",
+    tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+    tournament: "Nations Championship Final",
+    date: "2026-11-07",
+    venue: "Twickenham",
+    home: { name: "TBD", country: "tbd" },
+    away: { name: "TBD", country: "tbd" },
+  },
+
+  // ================= INTERNATIONAL TESTS =================
+
+  {
+    id: 4001,
+    competitionId: "international-tests",
+    tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+    tournament: "Men's International Tests 2026",
+    date: "2026-11-07",
+    venue: "Twickenham",
+    home: { name: "England", country: "england" },
+    away: { name: "New Zealand", country: "new-zealand" },
+  },
+  {
+    id: 4002,
+    competitionId: "international-tests",
+    tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+    tournament: "Men's International Tests 2026",
+    date: "2026-11-14",
+    venue: "Dublin",
+    home: { name: "Ireland", country: "ireland" },
+    away: { name: "South Africa", country: "south-africa" },
+  },
+  {
+    id: 4003,
+    competitionId: "international-tests",
+    tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+    tournament: "Men's International Tests 2026",
+    date: "2026-11-21",
+    venue: "Dublin",
+    home: { name: "Ireland", country: "ireland" },
+    away: { name: "Australia", country: "australia" },
+  },
+
+  // ================= PACIFIC NATIONS CUP =================
+
+  {
+    id: 5001,
+    competitionId: "pacific-nations-cup",
+    tournamentInstanceId: PACIFIC_NATIONS_2026,
+    tournament: "Pacific Nations Cup 2026",
+    date: "2026-08-15",
+    venue: "Tokyo",
+    home: { name: "Japan", country: "japan" },
+    away: { name: "Fiji", country: "fiji" },
+  },
+  {
+    id: 5002,
+    competitionId: "pacific-nations-cup",
+    tournamentInstanceId: PACIFIC_NATIONS_2026,
+    tournament: "Pacific Nations Cup 2026",
+    date: "2026-08-22",
+    venue: "Apia",
+    home: { name: "Samoa", country: "samoa" },
+    away: { name: "Tonga", country: "tonga" },
+  },
+  {
+    id: 5003,
+    competitionId: "pacific-nations-cup",
+    tournamentInstanceId: PACIFIC_NATIONS_2026,
+    tournament: "Pacific Nations Cup 2026",
+    date: "2026-08-29",
+    venue: "Apia",
+    home: { name: "Samoa", country: "samoa" },
+    away: { name: "Tonga", country: "tonga" },
+  },
+
+ // ================= BLEDISLOE CUP =================
+
+{
+  id: 6001,
+  competitionId: "rivalry",
+  tournamentInstanceId: BLEDISLOE_2026,
+  tournament: "Bledisloe Cup 2026",
+  date: "2026-08-01",
+  venue: "Sydney",
+  home: { name: "Australia", country: "australia" },
+  away: { name: "New Zealand", country: "new-zealand" },
+},
+{
+  id: 6002,
+  competitionId: "rivalry",
+  tournamentInstanceId: BLEDISLOE_2026,
+  tournament: "Bledisloe Cup 2026",
+  date: "2026-08-08",
+  venue: "Auckland",
+  home: { name: "New Zealand", country: "new-zealand" },
+  away: { name: "Australia", country: "australia" },
+},
+{
+  id: 6003,
+  competitionId: "rivalry",
+  tournamentInstanceId: BLEDISLOE_2026,
+  tournament: "Bledisloe Cup 2026",
+  date: "2026-08-15",
+  venue: "Perth",
+  home: { name: "Australia", country: "australia" },
+  away: { name: "New Zealand", country: "new-zealand" },
+},
+
+  // ================= 🔥 RIVALRY TOUR =================
+
+  {
+    id: 7001,
+    competitionId: "rivalry",
+    tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
+    tournament: "The Rivalry Tour 2026",
+    date: "2026-09-12",
+    venue: "Johannesburg",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "New Zealand", country: "new-zealand" },
+  },
+  {
+    id: 7002,
+    competitionId: "rivalry",
+    tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
+    tournament: "The Rivalry Tour 2026",
+    date: "2026-09-19",
+    venue: "Cape Town",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "New Zealand", country: "new-zealand" },
+  },
+  {
+    id: 7003,
+    competitionId: "rivalry",
+    tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
+    tournament: "The Rivalry Tour 2026",
+    date: "2026-09-26",
+    venue: "TBD",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "New Zealand", country: "new-zealand" },
+  },
+  {
+    id: 7004,
+    competitionId: "rivalry",
+    tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
+    tournament: "The Rivalry Tour 2026",
+    date: "2026-10-03",
+    venue: "TBD",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "New Zealand", country: "new-zealand" },
+  },
+];

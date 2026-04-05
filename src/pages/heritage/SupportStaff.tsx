@@ -38,17 +38,25 @@ const groups: NationGroup[] = [
         role: "Head of Athletic Performance",
         era: "2020–Present",
         bio:
-          "Leads South Africa’s high-performance systems, underpinning physical dominance and durability across global campaigns.",
+          "Leads South Africa’s high-performance systems, underpinning physical dominance and durability.",
+      },
+      {
+        name: "Duane Vermeulen",
+        role: "Breakdown / Mobi-Unit Coach",
+        era: "2024–Present",
+        bio:
+          "Hybrid player-coach role focusing on breakdown excellence, leadership, and on-field tactical reinforcement.",
       },
       {
         name: "Medical Team",
         role: "Performance & Medical Unit",
         era: "2018–Present",
         bio:
-          "Integrated medical and conditioning team ensuring player welfare and recovery across extended international cycles.",
+          "Integrated medical and conditioning team ensuring player welfare and recovery.",
       },
     ],
   },
+
   {
     nation: "New Zealand",
     flag: newZealand,
@@ -58,10 +66,11 @@ const groups: NationGroup[] = [
         role: "Head of Athletic Performance",
         era: "2016–Present",
         bio:
-          "Central to maintaining the All Blacks’ conditioning standards across multiple international cycles.",
+          "Central to maintaining the All Blacks’ elite conditioning standards across cycles.",
       },
     ],
   },
+
   {
     nation: "Ireland",
     flag: ireland,
@@ -71,10 +80,11 @@ const groups: NationGroup[] = [
         role: "S&C & Analytics",
         era: "2018–Present",
         bio:
-          "A highly integrated system supporting Ireland’s consistency through conditioning, data, and preparation.",
+          "Integrated system supporting Ireland through conditioning, analytics, and preparation.",
       },
     ],
   },
+
   {
     nation: "England",
     flag: england,
@@ -84,10 +94,11 @@ const groups: NationGroup[] = [
         role: "High Performance Unit",
         era: "2018–Present",
         bio:
-          "Supports England through structured performance systems including S&C, analytics, and medical operations.",
+          "Supports England through structured performance systems including S&C and analytics.",
       },
     ],
   },
+
   {
     nation: "France",
     flag: france,
@@ -97,10 +108,11 @@ const groups: NationGroup[] = [
         role: "Performance Analysis",
         era: "2019–Present",
         bio:
-          "Provides detailed tactical analysis and opposition insight within France’s modern system.",
+          "Provides tactical analysis and opposition insight within France’s system.",
       },
     ],
   },
+
   {
     nation: "Wales",
     flag: wales,
@@ -114,6 +126,7 @@ const groups: NationGroup[] = [
       },
     ],
   },
+
   {
     nation: "Scotland",
     flag: scotland,
@@ -123,10 +136,11 @@ const groups: NationGroup[] = [
         role: "S&C & Analysis",
         era: "2018–Present",
         bio:
-          "Drives Scotland’s preparation and conditioning within an evolving high-performance structure.",
+          "Drives Scotland’s preparation and conditioning.",
       },
     ],
   },
+
   {
     nation: "Australia",
     flag: australia,
@@ -136,10 +150,11 @@ const groups: NationGroup[] = [
         role: "High Performance",
         era: "2018–Present",
         bio:
-          "Supports national teams through conditioning, analytics, and medical systems.",
+          "Supports national teams through conditioning and analytics systems.",
       },
     ],
   },
+
   {
     nation: "Argentina",
     flag: argentina,
@@ -149,10 +164,11 @@ const groups: NationGroup[] = [
         role: "Performance & Medical",
         era: "2019–Present",
         bio:
-          "Provides structural support to Argentina’s international programme across analysis and conditioning.",
+          "Provides structural support across analysis and conditioning.",
       },
     ],
   },
+
   {
     nation: "Italy",
     flag: italy,
@@ -162,23 +178,39 @@ const groups: NationGroup[] = [
         role: "High Performance",
         era: "2018–Present",
         bio:
-          "Supports Italy’s development through structured performance and analytics systems.",
+          "Supports Italy through structured performance systems.",
       },
     ],
   },
+
   {
     nation: "Japan",
     flag: japan,
     staff: [
       {
+        name: "Shoji Ito",
+        role: "Performance Staff",
+        era: "2019–Present",
+        bio:
+          "Supports structured development and tactical preparation.",
+      },
+      {
+        name: "Ippei Asada",
+        role: "Performance Staff",
+        era: "2019–Present",
+        bio:
+          "Contributes to conditioning and programme development.",
+      },
+      {
         name: "JRFU High Performance Team",
         role: "Performance & Conditioning",
         era: "2019–Present",
         bio:
-          "Supports Japan’s structured and disciplined approach to international rugby.",
+          "Supports Japan’s disciplined and structured system.",
       },
     ],
   },
+
   {
     nation: "Fiji",
     flag: fiji,
@@ -188,7 +220,7 @@ const groups: NationGroup[] = [
         role: "Development & Conditioning",
         era: "2018–Present",
         bio:
-          "Supports Fiji’s international programme with growing investment in conditioning and analytics.",
+          "Supports Fiji’s programme with growing investment in performance systems.",
       },
     ],
   },
@@ -199,33 +231,23 @@ export default function SupportStaff() {
 
   return (
     <main className={styles.page}>
-      {/* HERO */}
       <section className={styles.hero}>
         <h1>Support Staff — Men’s Game</h1>
         <p className={styles.heroSub}>
-          Performance, medical, and analytical leaders whose expertise underpinned
-          sustained international success.
+          Performance, medical, and analytical leaders underpinning elite rugby.
         </p>
       </section>
 
-      {/* BACK */}
       <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/heritage/coaches")}
-        >
+        <button className={styles.back} onClick={() => navigate("/heritage/coaches")}>
           ← Back to Coaches & Support
         </button>
       </div>
 
-      {/* INTRO */}
       <section className={styles.intro}>
         <h2>The Infrastructure of Elite Performance</h2>
         <p>
-          Modern international rugby is built on high-performance systems. From
-          conditioning and recovery to analytics and medical oversight, support
-          staff create the environment in which elite performance becomes
-          sustainable.
+          Conditioning, analytics, and medical systems create the foundation for sustained success.
         </p>
       </section>
 

@@ -14,10 +14,10 @@ import argentina from "../../assets/images/flags/argentina.jpg";
 import italy from "../../assets/images/flags/italy.jpg";
 import japan from "../../assets/images/flags/japan.jpg";
 
-/* IMAGES — MODERN (LOCKED ASSETS) */
+/* IMAGES */
 import farrell from "../../assets/images/coaches/men/modern/andy-farrell.jpg";
 import borthwick from "../../assets/images/coaches/men/modern/steve-borthwick.jpg";
-import robertson from "../../assets/images/coaches/men/modern/scott-robertson.jpg";
+import rennie from "../../assets/images/coaches/men/modern/dave-rennie.jpg";
 import erasmus from "../../assets/images/coaches/men/modern/rassie-erasmus.jpg";
 import galthie from "../../assets/images/coaches/men/modern/fabien-galthié.jpg";
 import townsend from "../../assets/images/coaches/men/modern/gregor-townsend.jpg";
@@ -67,35 +67,49 @@ export default function HeadCoaches() {
       <section className={styles.grid}>
         {[
           [farrell, ireland, "Andy Farrell", "Ireland", "2019–Present",
-            "Led Ireland to sustained consistency at the top of the world game, combining defensive steel with attacking evolution."],
+            "Defence-driven strategist transforming Ireland into one of the most consistent teams in world rugby."],
+
           [borthwick, england, "Steve Borthwick", "England", "2022–Present",
-            "Former England captain who transitioned into head coach with a focus on structure, discipline, and tournament management."],
-          [robertson, newZealand, "Scott Robertson", "New Zealand", "2024–Present",
-            "Appointed after unprecedented domestic success, bringing intensity and clarity to the All Blacks’ next cycle."],
+            "Structure-focused coach emphasising discipline, set-piece, and tournament control."],
+
+          [rennie, newZealand, "Dave Rennie", "New Zealand", "2026–Present",
+            "Experienced international coach leading the All Blacks into a new World Cup cycle with structured attacking systems."],
+
           [erasmus, southAfrica, "Rassie Erasmus", "South Africa", "2018–Present",
-            "Architect of South Africa’s modern era dominance, blending strategy, culture, and depth across multiple World Cups."],
+            "Architect of South Africa’s modern dominance, blending culture, strategy, and depth."],
+
           [galthie, france, "Fabien Galthié", "France", "2020–Present",
-            "Central figure in France’s resurgence, instilling identity, discipline, and long-term continuity."],
+            "Driving France’s structured resurgence through identity and long-term system continuity."],
+
           [townsend, scotland, "Gregor Townsend", "Scotland", "2017–Present",
-            "Oversaw Scotland’s evolution into a consistently competitive international side."],
+            "Attack-oriented coach bringing creativity and adaptability to Scotland’s game."],
+
           [gatland, wales, "Warren Gatland", "Wales", "2023–Present",
-            "Returned to lead Wales through transition, bringing proven international pedigree."],
+            "Proven international leader guiding Wales through transition cycles."],
+
           [foster, newZealand, "Ian Foster", "New Zealand", "2019–2023",
-            "Led the All Blacks through a challenging competitive cycle culminating in a World Cup final."],
+            "Led the All Blacks through a demanding cycle culminating in a World Cup final."],
+
           [cheika, australia, "Michael Cheika", "Australia / Argentina", "2014–2023",
-            "Guided multiple nations through high-pressure international campaigns, including World Cup finals."],
+            "High-intensity leader guiding teams through World Cup campaigns."],
+
+          [schmidt, australia, "Joe Schmidt", "Australia", "2024–2026",
+            "Stabilising Australia through a transitional phase before handing over to Les Kiss."],
+
           [contepomi, argentina, "Felipe Contepomi", "Argentina", "2023–Present",
-            "Former international captain now shaping Argentina’s modern tactical identity."],
+            "Shaping Argentina’s tactical evolution with structure and discipline."],
+
           [quesada, italy, "Gonzalo Quesada", "Italy", "2024–Present",
-            "Tasked with building continuity and competitiveness in Italy’s international programme."],
+            "Building Italy’s competitiveness through structured systems."],
+
           [crowley, italy, "Kieran Crowley", "Italy", "2021–2023",
-            "Oversaw Italy’s most competitive period of the professional era."],
+            "Oversaw Italy’s most competitive modern period."],
+
           [joseph, japan, "Jamie Joseph", "Japan", "2016–2023",
-            "Led Japan’s rise to global respect through discipline, conditioning, and clarity of purpose."],
-          [schmidt, australia, "Joe Schmidt", "Australia", "2024–Present",
-            "Highly respected tactician appointed to stabilise and rebuild Australia’s international fortunes."],
+            "Led Japan’s rise through discipline and tactical clarity."],
+
           [tandy, wales, "Steve Tandy", "Wales", "2025–Present",
-            "Appointed to lead Wales into a new competitive cycle with modern defensive foundations."]
+            "Defensive systems coach leading Wales into a new cycle."]
         ].map(([img, flag, name, nation, era, bio]) => (
           <article key={name as string} className={styles.card}>
             <img src={img as string} alt={name as string} className={styles.portrait} />
@@ -107,7 +121,7 @@ export default function HeadCoaches() {
         ))}
       </section>
 
-      {/* FOUNDATIONS ERA */}
+      {/* FOUNDATIONS ERA (RESTORED) */}
       <section className={styles.sectionMuted}>
         <h2>Professional Foundations (1991 → 2018)</h2>
         <p>
@@ -119,17 +133,17 @@ export default function HeadCoaches() {
       <section className={styles.textGrid}>
         {[
           ["Clive Woodward", "England", "1997–2004",
-            "Architect of England’s 2003 Rugby World Cup triumph, redefining preparation and professionalism."],
+            "Architect of England’s 2003 Rugby World Cup triumph."],
           ["Graham Henry", "New Zealand", "2004–2011",
-            "Led the All Blacks through renewal and redemption, culminating in the 2011 World Cup."],
+            "Led the All Blacks to World Cup success in 2011."],
           ["Jake White", "South Africa", "2004–2007",
-            "Guided South Africa to Rugby World Cup success through tactical discipline and squad depth."],
+            "Guided South Africa to Rugby World Cup victory."],
           ["Eddie Jones", "Australia / England", "2001–2017",
-            "One of the most influential figures of the professional era across multiple nations."],
+            "One of the most influential coaches across multiple nations."],
           ["Bernard Laporte", "France", "1999–2007",
-            "A defining French coach of the early professional period."],
+            "A defining French coach of the professional era."],
           ["Declan Kidney", "Ireland", "2008–2013",
-            "Led Ireland to historic Six Nations success and World Cup competitiveness."]
+            "Led Ireland to historic Six Nations success."]
         ].map(([name, nation, era, bio]) => (
           <article key={name} className={styles.textCard}>
             <h3>{name}</h3>

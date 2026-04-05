@@ -3,7 +3,9 @@
 // Phase 4.4 — SMART PRIORITIZATION
 // --------------------------------------------------
 
-import { MatchData } from "../data/matches2026";
+/* ✅ IMPORT TYPE ONLY (FIXED PATH) */
+import type { MatchData } from "../data/matches/matches2026Men";
+
 import { COMPETITIONS } from "./competitionRegistry";
 
 /**

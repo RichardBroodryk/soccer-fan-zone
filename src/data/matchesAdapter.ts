@@ -1,8 +1,13 @@
 // --------------------------------------------------
 // RAZ SYSTEM — MATCHES ADAPTER (ROLLS ROYCE)
+// UPDATED: Instance ID Preservation + Safe Fallback
 // --------------------------------------------------
 
-import { MatchData, matches2026 } from "./matches2026";
+/* ✅ FIX: IMPORT TYPE */
+import type { MatchData } from "./matches/matches2026Men";
+
+/* ✅ DATA SOURCE */
+import { matches2026 } from "./matches";
 
 import { COMPETITIONS } from "../contracts/competitionRegistry";
 import { calculateImportance } from "../contracts/importanceEngine";
@@ -10,6 +15,9 @@ import { LEAGUE_COMPETITION_MAP } from "../contracts/leagueCompetitionMap";
 import { LEAGUE_API_MAP } from "../contracts/leagueApiMap";
 
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
+
+/* 🔥 TOURNAMENT META */
+import { tournaments2026 } from "./tournamentMeta";
 
 /* ==================================================
    VALIDATION
@@ -66,6 +74,29 @@ function matchesLeague(
 }
 
 /* ==================================================
+   🔥 TOURNAMENT RESOLVER (FALLBACK ONLY)
+   ================================================== */
+
+function resolveTournamentInstanceId(
+  match: MatchData
+): string | undefined {
+  if (!match.tournament) return undefined;
+
+  const normalize = (str: string) =>
+    str.toLowerCase().replace(/\s+/g, "");
+
+  const matchKey = normalize(match.tournament);
+
+  const found = tournaments2026.find((t) => {
+    if (!t.matchKey) return false;
+
+    return normalize(t.matchKey) === matchKey;
+  });
+
+  return found?.instanceId;
+}
+
+/* ==================================================
    BACKEND FETCH
    ================================================== */
 
@@ -87,25 +118,24 @@ async function fetchFromBackend(
     }
 
     const BASE =
-  process.env.REACT_APP_API_BASE ||
-  process.env.REACT_APP_API_URL ||
-  "https://rugby-anthem-backend.fly.dev/api/rugby";
+      process.env.REACT_APP_API_BASE ||
+      process.env.REACT_APP_API_URL ||
+      "https://rugby-anthem-backend.fly.dev/api/rugby";
 
-  console.log("RAZ BASE URL:", BASE);
+    console.log("RAZ BASE URL:", BASE);
 
     const res = await fetch(
-  `${BASE}/fixtures?league=${entry.id}&season=2026`
-);
+      `${BASE}/fixtures?league=${entry.id}&season=2026`
+    );
 
-if (!res.ok) {
-  const text = await res.text();
-  console.error("RAZ BACKEND ERROR:", res.status, text);
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("RAZ BACKEND ERROR:", res.status, text);
 
-  // 🔥 DO NOT THROW — RETURN NULL → FALLBACK
-  return null;
-}
+      return null;
+    }
 
-const apiData = await res.json();
+    const apiData = await res.json();
 
     return convertApiSportsFixtures(apiData);
   } catch (err) {
@@ -130,13 +160,14 @@ export async function getMatches(options?: {
     options?.gender
   );
 
-if (!backendData || backendData.length === 0) {
-  console.log("RAZ: FALLBACK ACTIVATED");
-  data = matches2026;
-} else {
-  console.log("RAZ: USING BACKEND DATA");
-  data = backendData;
-}
+  /* 🔒 RULE: FALLBACK IS CORE */
+  if (!backendData || backendData.length === 0) {
+    console.log("RAZ: FALLBACK ACTIVATED");
+    data = matches2026;
+  } else {
+    console.log("RAZ: USING BACKEND DATA");
+    data = backendData;
+  }
 
   let filtered = data
     .filter(isValidStructure)
@@ -162,8 +193,23 @@ if (!backendData || backendData.length === 0) {
       new Date(b.date).getTime()
   );
 
-  return filtered.map((match) => ({
-    ...match,
-    importance: calculateImportance(match),
-  }));
+  /* ==================================================
+     🔥 FINAL NORMALIZATION (FIXED)
+     ================================================== */
+
+  return filtered.map((match) => {
+    /* ✅ CRITICAL FIX:
+       - Preserve existing instanceId
+       - Only fallback if missing
+    */
+    const tournamentInstanceId =
+      match.tournamentInstanceId ||
+      resolveTournamentInstanceId(match);
+
+    return {
+      ...match,
+      tournamentInstanceId,
+      importance: calculateImportance(match),
+    };
+  });
 }

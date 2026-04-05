@@ -59,31 +59,31 @@ export default function HeadCoachesWomen() {
       <section className={styles.grid}>
         {[
           [bunting, newZealand, "Allan Bunting", "New Zealand", "2022–Present",
-            "Led the Black Ferns into a new era following World Cup success, focusing on continuity and high-performance culture."],
+            "Leading the Black Ferns through a post-World Cup cycle, maintaining high-performance standards while evolving attacking identity and squad depth."],
 
           [mitchell, england, "John Mitchell", "England", "2023–Present",
-            "Appointed to guide England’s dominant Red Roses through the next World Cup cycle."],
+            "Experienced international coach leading England’s dominant Red Roses, refining structure and performance consistency ahead of the next World Cup cycle."],
 
           [yapp, australia, "Jo Yapp", "Australia", "2024–Present",
-            "Tasked with rebuilding and elevating the Wallaroos within an increasingly competitive global landscape."],
+            "Driving Australia’s rebuild through structured systems and improved international competitiveness."],
 
           [debruin, southAfrica, "Swys de Bruin", "South Africa", "2023–Present",
-            "Driving South Africa’s rise with structured systems and long-term development pathways."],
+            "Driving South Africa’s rise through structured systems and alignment with national high-performance pathways."],
 
-          [ratier, france, "François Ratier", "France", "2017–Present",
-            "A key figure in France’s sustained competitiveness and tactical evolution in the women’s game."],
+          [ratier, france, "François Ratier", "France", "2025–Present",
+            "Leading France’s programme through structured systems and sustained international competitiveness."],
 
           [bemand, ireland, "Scott Bemand", "Ireland", "2023–Present",
-            "Leading Ireland’s rebuild with emphasis on structure and player development."],
+            "Leading Ireland’s rebuild through structured systems, player pathways, and renewed international competitiveness."],
 
           [roselli, italy, "Fabio Roselli", "Italy", "2021–Present",
-            "Guiding Italy through steady progression and growing international competitiveness."],
+            "Overseeing Italy’s steady progression through tactical clarity and system development."],
 
           [lynn, wales, "Sean Lynn", "Wales", "2024–Present",
-            "Appointed to lead Wales through a new phase of performance growth and consistency."],
+            "Leading Wales into a new performance cycle focused on structure and consistency."],
 
           [fukofuka, japan, "Sione Fukofuka", "Japan", "2022–Present",
-            "Developing Japan’s tactical identity and international competitiveness."]
+            "Developing Japan’s tactical identity through structured systems and disciplined execution."]
         ].map(([img, flag, name, nation, era, bio]) => (
           <article key={name as string} className={styles.card}>
             <img src={img as string} alt={name as string} className={styles.portrait} />
@@ -110,13 +110,13 @@ export default function HeadCoachesWomen() {
             "Returned to lead the Black Ferns to Rugby World Cup success, redefining performance standards."],
 
           ["Simon Middleton", "England", "2015–2023",
-            "Oversaw one of the most dominant periods in women’s rugby history with sustained winning runs."],
+            "Oversaw one of the most dominant periods in women’s rugby history, establishing sustained excellence."],
 
           ["Gary Street", "England", "2007–2015",
-            "Led England to World Cup success and helped establish early professional standards."],
+            "Led England to World Cup success while shaping early professional standards."],
 
           ["Brian Evans", "New Zealand", "1994–2002",
-            "Instrumental in building the Black Ferns’ early dominance on the global stage."]
+            "Instrumental in establishing the Black Ferns’ early dominance and long-term identity."]
         ].map(([name, nation, era, bio]) => (
           <article key={name} className={styles.textCard}>
             <h3>{name}</h3>

@@ -9,7 +9,7 @@ import Flag from "../components/images/Flag";
 import heroBg from "../assets/images/raz/Stats3.png";
 
 import { getMatches } from "../data/matchesAdapter";
-import { MatchData } from "../data/matches2026";
+import type { MatchData } from "../data/matches/matches2026Men";
 
 /* ================= TYPES ================= */
 
