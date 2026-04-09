@@ -1,6 +1,8 @@
 /* UPDATED:
    - Men’s tournament rows now use men’s hero image when logo is not present
    - Fixes standalone international tests image
+   - Rankings strip added (non-destructive)
+   - FIX: Rankings strip moved inside section container (layout consistency)
 */
 
 import { useNavigate } from "react-router-dom";
@@ -33,10 +35,8 @@ export default function MensTournamentsPage() {
         name: t.name,
         year: t.year,
         description:
-          t.heroSubtitle ??
-          "International rugby competition",
-        logo:
-          visual?.heroImageMen || visual?.logo,
+          t.heroSubtitle ?? "International rugby competition",
+        logo: visual?.heroImageMen || visual?.logo,
         route: t.route,
       };
     });
@@ -66,6 +66,22 @@ export default function MensTournamentsPage() {
 
       {/* ================= LIST ================= */}
       <section className={styles.section}>
+        {/* ================= RANKINGS STRIP ================= */}
+        <div
+          className={styles.rankingsStrip}
+          onClick={() => navigate("/rankings/men")}
+        >
+          <div className={styles.rankingsText}>
+            <span className={styles.rankingsTitle}>
+              International Standings
+            </span>
+            <span className={styles.rankingsMain}>
+              World Rankings — Men
+            </span>
+          </div>
+          <span className={styles.rankingsArrow}>→</span>
+        </div>
+
         <div className={styles.list}>
           {mensTournaments.map((t) => (
             <div

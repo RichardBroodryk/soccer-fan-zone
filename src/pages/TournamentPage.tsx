@@ -104,6 +104,30 @@ export default function TournamentPage() {
         </button>
       </div>
 
+      {/* ================= RANKINGS STRIP ================= */}
+      <div
+        className={styles.rankingsStrip}
+        onClick={() =>
+          navigate(
+            tournament.gender === "women"
+              ? "/rankings/women"
+              : "/rankings/men"
+          )
+        }
+      >
+        <div className={styles.rankingsText}>
+          <span className={styles.rankingsTitle}>
+            International Standings
+          </span>
+          <span className={styles.rankingsMain}>
+            {tournament.gender === "women"
+              ? "World Rankings — Women"
+              : "World Rankings — Men"}
+          </span>
+        </div>
+        <span className={styles.rankingsArrow}>→</span>
+      </div>
+
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Anthems</h2>

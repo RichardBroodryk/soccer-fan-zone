@@ -1,7 +1,8 @@
 /* UPDATED:
    - Restored row click navigation to tournament routes
    - Gender-aware hub images (men/women)
-   - No code removed
+   - Rankings strip (clean + safe JSX)
+   - No broken structure
 */
 
 import { useNavigate } from "react-router-dom";
@@ -34,10 +35,8 @@ export default function TournamentsHubPage() {
         name: t.name,
         year: t.year,
         description:
-          t.heroSubtitle ??
-          "International rugby competition",
-        logo:
-          visual?.heroImageMen || visual?.logo,
+          t.heroSubtitle ?? "International rugby competition",
+        logo: visual?.heroImageMen || visual?.logo,
         route: t.route,
       };
     });
@@ -50,10 +49,8 @@ export default function TournamentsHubPage() {
         name: t.name,
         year: t.year,
         description:
-          t.heroSubtitle ??
-          "International rugby competition",
-        logo:
-          visual?.heroImageWomen || visual?.logo,
+          t.heroSubtitle ?? "International rugby competition",
+        logo: visual?.heroImageWomen || visual?.logo,
         route: t.route,
       };
     });
@@ -76,6 +73,22 @@ export default function TournamentsHubPage() {
 
       {/* ================= MEN ================= */}
       <section className={styles.section}>
+        {/* 🔥 Rankings Strip (MEN) */}
+        <div
+          className={styles.rankingsStrip}
+          onClick={() => navigate("/rankings/men")}
+        >
+          <div className={styles.rankingsText}>
+            <span className={styles.rankingsTitle}>
+              International Standings
+            </span>
+            <span className={styles.rankingsMain}>
+              World Rankings — Men
+            </span>
+          </div>
+          <span className={styles.rankingsArrow}>→</span>
+        </div>
+
         <div className={styles.sectionHeader}>
           <div className={styles.headerRow}>
             <h2>Men’s Tournaments</h2>
@@ -119,6 +132,22 @@ export default function TournamentsHubPage() {
 
       {/* ================= WOMEN ================= */}
       <section className={styles.section}>
+        {/* 🔥 Rankings Strip (WOMEN) */}
+        <div
+          className={styles.rankingsStrip}
+          onClick={() => navigate("/rankings/women")}
+        >
+          <div className={styles.rankingsText}>
+            <span className={styles.rankingsTitle}>
+              International Standings
+            </span>
+            <span className={styles.rankingsMain}>
+              World Rankings — Women
+            </span>
+          </div>
+          <span className={styles.rankingsArrow}>→</span>
+        </div>
+
         <div className={styles.sectionHeader}>
           <div className={styles.headerRow}>
             <h2>Women’s Tournaments</h2>
@@ -129,7 +158,9 @@ export default function TournamentsHubPage() {
               View all →
             </button>
           </div>
-          <p>Elite competitions defining women’s international rugby.</p>
+          <p>
+            Elite competitions defining women’s international rugby.
+          </p>
         </div>
 
         <div className={styles.list}>

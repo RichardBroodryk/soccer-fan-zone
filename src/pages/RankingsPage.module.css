@@ -1,0 +1,32 @@
+.page {
+  padding: 20px;
+}
+
+.hero {
+  margin-bottom: 20px;
+}
+
+.backWrap {
+  margin-bottom: 20px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

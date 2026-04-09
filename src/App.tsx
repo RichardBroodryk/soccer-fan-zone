@@ -43,6 +43,10 @@ import MensTournamentsPage from "./pages/MensTournamentsPage";
 import WomensTournamentsPage from "./pages/WomensTournamentsPage";
 import TournamentPage from "./pages/TournamentPage";
 
+/* ================= RANKINGS ================= */
+import RankingsMenPage from "./pages/RankingsMenPage";
+import RankingsWomenPage from "./pages/RankingsWomenPage";
+
 /* ================= MATCH CENTER ================= */
 import MatchCenterPage from "./pages/MatchCenterPage";
 import LiveScoresPage from "./pages/LiveScoresPage";
@@ -277,6 +281,9 @@ export default function App() {
           <Route path="/tournaments/women" element={<WomensTournamentsPage />} />
           <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
           <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
+
+          <Route path="/rankings/men" element={<RankingsMenPage />} />
+          <Route path="/rankings/women" element={<RankingsWomenPage />} />
 
           <Route path="/match/:id" element={<MatchPage />} />
           <Route path="/match-center" element={<MatchCenterPage />} />
