@@ -3,7 +3,7 @@ import styles from "./StadiumPage.module.css";
 
 /* ✅ DATA */
 import { matches2026 } from "../data/matches";
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import { stadiums } from "../data/stadiums";
 

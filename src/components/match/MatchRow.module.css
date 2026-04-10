@@ -167,3 +167,11 @@
 .clickable {
   cursor: pointer;
 }
+.flag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 2px;
+  margin: 0 6px;
+  flex-shrink: 0; /* 🔑 prevents squashing */
+}

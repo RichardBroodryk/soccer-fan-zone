@@ -6,7 +6,6 @@ import MatchRow from "../components/match/MatchRow";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
-
 import { matches2026 } from "../data/matches";
 
 import type { MatchData } from "../data/matches/types";
@@ -14,20 +13,18 @@ import type { MatchData } from "../data/matches/types";
 import StandingsTable from "../components/tournament/StandingsTable";
 import { buildStandings } from "../utils/standings/standingsEngine";
 
+import { getPoolQualifiers } from "../utils/svns/getPoolQualifiers";
+import { buildQuarterFinals } from "../utils/svns/buildKnockout";
+import { buildSemiFinals, buildFinal } from "../utils/svns/progression";
+
 import styles from "./TournamentPage.module.css";
+import svnsHero from "../assets/images/tournaments/svns-2026.jpg";
 
-/* ==================================================
-   STATE (FALLBACK ONLY — ADAPTER FIRST)
-   ================================================== */
-
+/* ================= STATE ================= */
 function resolveState(match: MatchData): "final" | "upcoming" {
   if ((match as any).state) return (match as any).state;
-
   if (match.score) return "final";
-
-  return new Date(match.date) > new Date()
-    ? "upcoming"
-    : "final";
+  return new Date(match.date) > new Date() ? "upcoming" : "final";
 }
 
 export default function TournamentPage() {
@@ -43,12 +40,12 @@ export default function TournamentPage() {
 
     return matches2026
       .filter(
-        (m: MatchData) =>
-          (m as { tournamentInstanceId?: string })
-            .tournamentInstanceId === tournament.instanceId
+        (m) =>
+          m.tournamentInstanceId &&
+          m.tournamentInstanceId === tournament.instanceId
       )
       .sort(
-        (a: MatchData, b: MatchData) =>
+        (a, b) =>
           new Date(a.date).getTime() -
           new Date(b.date).getTime()
       );
@@ -59,32 +56,51 @@ export default function TournamentPage() {
   }
 
   const visual = getTournamentVisual(tournament.conceptId);
+  const isSVNS = tournament.conceptId === "svns";
 
-  const heroImage =
-    tournament.gender === "women"
-      ? visual.heroImageWomen
-      : visual.heroImageMen;
+  const heroImage = isSVNS
+    ? svnsHero
+    : tournament.gender === "women"
+    ? visual.heroImageWomen
+    : visual.heroImageMen;
 
+  /* ================= TEAMS ================= */
   const teams = Array.from(
     new Map(
-      matches.flatMap((m: MatchData) => [
-        [m.home.name, m.home],
-        [m.away.name, m.away],
+      matches.flatMap((m) => [
+        [m.home.country, m.home],
+        [m.away.country, m.away],
       ])
     ).values()
   );
 
-  const isMultiStage = tournament.conceptId === "svns";
-
+  /* ================= SVNS STRUCTURE ================= */
   const stages = ["hong-kong", "valladolid", "bordeaux"];
+  const pools = ["A", "B", "C"];
 
-  const menMatches = matches.filter((m) => m.gender === "men");
-  const womenMatches = matches.filter((m) => m.gender === "women");
+  const menPools = matches.filter(
+    (m) => m.gender === "men" && m.round === "pool"
+  );
+
+  const womenPools = matches.filter(
+    (m) => m.gender === "women" && m.round === "pool"
+  );
+
+  /* ================= PROGRESSION ================= */
+  const menQualifiers = getPoolQualifiers(menPools);
+  const womenQualifiers = getPoolQualifiers(womenPools);
+
+  const menQF = buildQuarterFinals(menQualifiers);
+  const womenQF = buildQuarterFinals(womenQualifiers);
+
+  const menSF = buildSemiFinals(menQF);
+const womenSF = buildSemiFinals(womenQF);
+
+const menFinal = buildFinal(menSF);
+const womenFinal = buildFinal(womenSF);
 
   const groupByStage = (list: MatchData[], stage: string) =>
     list.filter((m) => m.stage === stage);
-
-  const pools = ["A", "B", "C"];
 
   return (
     <main className={styles.page}>
@@ -97,65 +113,56 @@ export default function TournamentPage() {
         }`}
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className={styles.heroContent}>
+        {!isSVNS && (
+          <div className={styles.heroContent}>
+            <h1>
+              {tournament.name} {tournament.year}
+            </h1>
+            {tournament.heroSubtitle && (
+              <p>{tournament.heroSubtitle}</p>
+            )}
+            <div className={styles.statusBadge}>
+              {tournament.status?.toUpperCase()}
+            </div>
+          </div>
+        )}
+
+        {isSVNS && (
+          <div className={styles.heroBadgeBottom}>
+            {tournament.status?.toUpperCase()}
+          </div>
+        )}
+      </header>
+
+      {/* TITLE */}
+      {isSVNS && (
+        <div className={styles.titleBlock}>
           <h1>
             {tournament.name} {tournament.year}
           </h1>
-
-          {tournament.heroSubtitle && (
-            <p>{tournament.heroSubtitle}</p>
-          )}
-
-          <div className={styles.statusBadge}>
-            {tournament.status?.toUpperCase()}
-          </div>
         </div>
-      </header>
+      )}
 
-      {/* ================= BACK ================= */}
+      {/* BACK */}
       <div className={styles.backNav}>
-        <button onClick={() => navigate("/tournaments")}>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/tournaments")}
+        >
           ← Back to Tournaments
         </button>
       </div>
-
-      {/* ================= RANKINGS ================= */}
-      <section className={styles.section}>
-        <div
-          className={styles.rankingsStrip}
-          onClick={() =>
-            navigate(
-              tournament.gender === "women"
-                ? "/rankings/women"
-                : "/rankings/men"
-            )
-          }
-        >
-          <div className={styles.rankingsText}>
-            <span className={styles.rankingsTitle}>
-              International Standings
-            </span>
-            <span className={styles.rankingsMain}>
-              {tournament.gender === "women"
-                ? "World Rankings — Women"
-                : "World Rankings — Men"}
-            </span>
-          </div>
-          <span className={styles.rankingsArrow}>→</span>
-        </div>
-      </section>
 
       {/* ================= ANTHEMS ================= */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Anthems</h2>
-          <p>Flags link to national anthems</p>
         </div>
 
         <div className={styles.flagsGrid}>
           {teams.map((team) => (
             <div
-              key={team.name}
+              key={team.country}
               onClick={() =>
                 team.country !== "unknown" &&
                 navigate(`/anthems/${team.country}`)
@@ -171,69 +178,19 @@ export default function TournamentPage() {
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Match Centre</h2>
-          <p>
-            Hong Kong Sevens — 50th Anniversary Edition · Kai Tak Sports Park
-          </p>
         </div>
 
-        {/* INTRO */}
-        <div className={styles.tournamentIntro}>
-          <p>
-            The HSBC SVNS World Championship 2026 opens in Hong Kong,
-            celebrating 50 years of one of rugby’s most iconic sevens events.
-            Featuring 12 teams per competition, the tournament begins with
-            pool play before progressing into knockout rounds.
-          </p>
-        </div>
-
-        {/* ================= NORMAL TOURNAMENTS ================= */}
-        {!isMultiStage &&
-          (matches.length === 0 ? (
-            <div className={styles.emptyState}>
-              No matches available
-            </div>
-          ) : (
-            matches.map((match) => (
-              <MatchRow
-                key={match.id}
-                home={match.home}
-                away={match.away}
-                state={resolveState(match)}
-                score={match.score}
-                metaLeft={match.date}
-                metaRight={match.venue}
-                onClick={() =>
-                  navigate(`/match/${match.id}`)
-                }
-              />
-            ))
-          ))}
-
-        {/* ================= SVNS ================= */}
-        {isMultiStage && (
+        {isSVNS && (
           <>
-            {/* ================= MEN ================= */}
+            {/* ================= MEN POOLS ================= */}
             <div className={styles.stageBlock}>
               <h3 className={styles.stageTitle}>Men</h3>
 
               {stages.map((stage) => {
                 const stageMatches = groupByStage(
-                  menMatches,
+                  menPools,
                   stage
                 );
-
-                if (stageMatches.length === 0) {
-                  return (
-                    <div key={stage}>
-                      <h4 className={styles.stageSubtitle}>
-                        {stage.replace("-", " ").toUpperCase()}
-                      </h4>
-                      <div className={styles.emptyState}>
-                        Fixtures to be announced
-                      </div>
-                    </div>
-                  );
-                }
 
                 return (
                   <div key={stage}>
@@ -246,13 +203,11 @@ export default function TournamentPage() {
                         (m) => m.pool === pool
                       );
 
-                      if (poolMatches.length === 0) return null;
+                      if (!poolMatches.length) return null;
 
                       return (
                         <div key={pool}>
-                          <h5 className={styles.roundTitle}>
-                            Pool {pool}
-                          </h5>
+                          <h5>Pool {pool}</h5>
 
                           <StandingsTable
                             data={buildStandings(poolMatches)}
@@ -280,28 +235,61 @@ export default function TournamentPage() {
               })}
             </div>
 
-            {/* ================= WOMEN ================= */}
+            {/* ================= MEN KNOCKOUT ================= */}
+            {menQF.length > 0 && (
+              <div className={styles.stageBlock}>
+                <h3 className={styles.stageTitle}>
+                  Men — Knockout
+                </h3>
+
+                <h4 className={styles.stageSubtitle}>
+                  QUARTER-FINAL
+                </h4>
+                {menQF.map((match) => (
+                  <MatchRow
+                    key={match.id}
+                    home={match.home || { name: "TBD", country: "unknown" }}
+                    away={match.away || { name: "TBD", country: "unknown" }}
+                    state="upcoming"
+                    metaLeft="TBD"
+                    metaRight="Quarter Final"
+                  />
+                ))}
+
+                <h4 className={styles.stageSubtitle}>SEMI-FINAL</h4>
+
+{menSF.map((match) => (
+  <MatchRow
+    key={match.id}
+    home={match.home}
+    away={match.away}
+    state="upcoming"
+    metaLeft="TBD"
+    metaRight="Semi Final"
+  />
+))}
+
+<h4 className={styles.stageSubtitle}>FINAL</h4>
+
+<MatchRow
+  home={menFinal.home}
+  away={menFinal.away}
+  state="upcoming"
+  metaLeft="TBD"
+  metaRight="Final"
+/>
+              </div>
+            )}
+
+            {/* ================= WOMEN POOLS ================= */}
             <div className={styles.stageBlock}>
               <h3 className={styles.stageTitle}>Women</h3>
 
               {stages.map((stage) => {
                 const stageMatches = groupByStage(
-                  womenMatches,
+                  womenPools,
                   stage
                 );
-
-                if (stageMatches.length === 0) {
-                  return (
-                    <div key={stage}>
-                      <h4 className={styles.stageSubtitle}>
-                        {stage.replace("-", " ").toUpperCase()}
-                      </h4>
-                      <div className={styles.emptyState}>
-                        Fixtures to be announced
-                      </div>
-                    </div>
-                  );
-                }
 
                 return (
                   <div key={stage}>
@@ -314,13 +302,11 @@ export default function TournamentPage() {
                         (m) => m.pool === pool
                       );
 
-                      if (poolMatches.length === 0) return null;
+                      if (!poolMatches.length) return null;
 
                       return (
                         <div key={pool}>
-                          <h5 className={styles.roundTitle}>
-                            Pool {pool}
-                          </h5>
+                          <h5>Pool {pool}</h5>
 
                           <StandingsTable
                             data={buildStandings(poolMatches)}
@@ -347,6 +333,52 @@ export default function TournamentPage() {
                 );
               })}
             </div>
+
+            {/* ================= WOMEN KNOCKOUT ================= */}
+            {womenQF.length > 0 && (
+              <div className={styles.stageBlock}>
+                <h3 className={styles.stageTitle}>
+                  Women — Knockout
+                </h3>
+
+                <h4 className={styles.stageSubtitle}>
+                  QUARTER-FINAL
+                </h4>
+                {womenQF.map((match) => (
+                  <MatchRow
+                    key={match.id}
+                    home={match.home || { name: "TBD", country: "unknown" }}
+                    away={match.away || { name: "TBD", country: "unknown" }}
+                    state="upcoming"
+                    metaLeft="TBD"
+                    metaRight="Quarter Final"
+                  />
+                ))}
+
+                <h4 className={styles.stageSubtitle}>SEMI-FINAL</h4>
+
+{womenSF.map((match) => (
+  <MatchRow
+    key={match.id}
+    home={match.home}
+    away={match.away}
+    state="upcoming"
+    metaLeft="TBD"
+    metaRight="Semi Final"
+  />
+))}
+
+<h4 className={styles.stageSubtitle}>FINAL</h4>
+
+<MatchRow
+  home={womenFinal.home}
+  away={womenFinal.away}
+  state="upcoming"
+  metaLeft="TBD"
+  metaRight="Final"
+/>
+              </div>
+            )}
           </>
         )}
       </section>

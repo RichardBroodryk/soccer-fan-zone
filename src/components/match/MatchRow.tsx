@@ -1,6 +1,5 @@
 import styles from "./MatchRow.module.css";
-
-/* ================= TYPES ================= */
+import { flagMap } from "../../data/flagMap";
 
 type TeamRef = {
   name: string;
@@ -27,17 +26,11 @@ type Props = {
   onClick?: () => void;
 };
 
-/* ================= HELPERS ================= */
-
 function getRowClass(state: MatchState) {
   if (state === "live") return styles.live;
   if (state === "final") return styles.final;
-
-  // treat starting + today as upcoming visually
   return styles.upcoming;
 }
-
-/* ================= COMPONENT ================= */
 
 export default function MatchRow({
   home,
@@ -51,6 +44,9 @@ export default function MatchRow({
   const isLive = state === "live";
   const isFinal = state === "final";
 
+  const homeFlag = flagMap[home.country];
+  const awayFlag = flagMap[away.country];
+
   return (
     <div
       className={`${styles.row} ${getRowClass(state)} ${
@@ -58,18 +54,17 @@ export default function MatchRow({
       }`}
       onClick={onClick}
     >
-      {/* ===== TEAMS ===== */}
       <div className={styles.teamsGrid}>
         <div className={styles.teamLeft}>
+          {homeFlag && (
+            <img src={homeFlag} alt={home.name} className={styles.flag} />
+          )}
           <span className={styles.teamName}>{home.name}</span>
         </div>
 
         <div className={styles.center}>
           {isLive ? (
-            <div className={styles.livePulse}>
-              <span className={styles.pulseDot} />
-              LIVE
-            </div>
+            <div className={styles.livePulse}>LIVE</div>
           ) : isFinal && score ? (
             <div className={styles.score}>
               {score.home} - {score.away}
@@ -81,10 +76,12 @@ export default function MatchRow({
 
         <div className={styles.teamRight}>
           <span className={styles.teamName}>{away.name}</span>
+          {awayFlag && (
+            <img src={awayFlag} alt={away.name} className={styles.flag} />
+          )}
         </div>
       </div>
 
-      {/* ===== META ===== */}
       {(metaLeft || metaRight) && (
         <div className={styles.meta}>
           <span>{metaLeft}</span>

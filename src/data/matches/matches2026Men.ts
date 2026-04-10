@@ -2,29 +2,7 @@
 // RAZ SYSTEM — MATCHES 2026 MEN (FULL DATASET — NORMALIZED SAFE)
 // --------------------------------------------------
 
-export interface MatchTeam {
-  name: string;
-  country: string;
-}
-
-export interface MatchScore {
-  home: number;
-  away: number;
-}
-
-export interface MatchData {
-  id: number;
-  competitionId: string;
-  tournament: string;
-  date: string;
-  venue: string;
-  home: MatchTeam;
-  away: MatchTeam;
-  score?: MatchScore;
-  state?: "upcoming" | "starting" | "live" | "final";
-  importance?: number;
-  tournamentInstanceId?: string;
-}
+import type { MatchData } from "./types";
 
 /* ================================================== */
 

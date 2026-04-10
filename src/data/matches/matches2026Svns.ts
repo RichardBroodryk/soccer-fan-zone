@@ -8,7 +8,7 @@ export const svnsMatches2026: MatchData[] = [
 
   /* ================= WOMEN — POOL A ================= */
   {
-    id: 1001,
+    id: 11001,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -22,7 +22,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Japan", country: "japan" },
   },
   {
-    id: 1002,
+    id: 11002,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -36,7 +36,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Brazil", country: "brazil" },
   },
   {
-    id: 1003,
+    id: 11003,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -50,7 +50,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Brazil", country: "brazil" },
   },
   {
-    id: 1004,
+    id: 11004,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -66,7 +66,7 @@ export const svnsMatches2026: MatchData[] = [
 
   /* ================= WOMEN — POOL B ================= */
   {
-    id: 1101,
+    id: 11101,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -80,7 +80,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Great Britain", country: "great-britain" },
   },
   {
-    id: 1102,
+    id: 11102,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -96,7 +96,7 @@ export const svnsMatches2026: MatchData[] = [
 
   /* ================= WOMEN — POOL C ================= */
   {
-    id: 1201,
+    id: 11201,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -110,7 +110,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Argentina", country: "argentina" },
   },
   {
-    id: 1202,
+    id: 11202,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -126,7 +126,7 @@ export const svnsMatches2026: MatchData[] = [
 
   /* ================= MEN — POOL A ================= */
   {
-    id: 2001,
+    id: 12001,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -140,7 +140,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Spain", country: "spain" },
   },
   {
-    id: 2002,
+    id: 12002,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -154,7 +154,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Uruguay", country: "uruguay" },
   },
   {
-    id: 2003,
+    id: 12003,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -168,7 +168,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Uruguay", country: "uruguay" },
   },
   {
-    id: 2004,
+    id: 12004,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -184,7 +184,7 @@ export const svnsMatches2026: MatchData[] = [
 
   /* ================= MEN — POOL B ================= */
   {
-    id: 2101,
+    id: 12101,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -198,7 +198,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "Great Britain", country: "great-britain" },
   },
   {
-    id: 2102,
+    id: 12102,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -214,7 +214,7 @@ export const svnsMatches2026: MatchData[] = [
 
   /* ================= MEN — POOL C ================= */
   {
-    id: 2201,
+    id: 12201,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -228,7 +228,7 @@ export const svnsMatches2026: MatchData[] = [
     away: { name: "USA", country: "united-states-of-america" },
   },
   {
-    id: 2202,
+    id: 12202,
     competitionId: "svns",
     tournament: "HSBC SVNS World Championship 2026",
     tournamentInstanceId: "svns-2026",
@@ -241,4 +241,102 @@ export const svnsMatches2026: MatchData[] = [
     home: { name: "Australia", country: "australia" },
     away: { name: "Kenya", country: "kenya" },
   },
+
+/* ================= WOMEN — KNOCKOUT ================= */
+{
+  id: 21001,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "women",
+  round: "quarter-final",
+  date: "2026-04-18T10:00:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "TBD A1", country: "unknown" },
+  away: { name: "TBD B2", country: "unknown" },
+},
+{
+  id: 21002,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "women",
+  round: "quarter-final",
+  date: "2026-04-18T10:25:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "TBD B1", country: "unknown" },
+  away: { name: "TBD C2", country: "unknown" },
+},
+
+{
+  id: 21101,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "women",
+  round: "semi-final",
+  date: "2026-04-18T14:00:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "Winner QF1", country: "unknown" },
+  away: { name: "Winner QF2", country: "unknown" },
+},
+
+{
+  id: 21201,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "women",
+  round: "final",
+  date: "2026-04-18T18:00:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "Winner SF1", country: "unknown" },
+  away: { name: "Winner SF2", country: "unknown" },
+},
+
+/* ================= MEN — KNOCKOUT ================= */
+{
+  id: 22001,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "men",
+  round: "quarter-final",
+  date: "2026-04-18T11:00:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "TBD A1", country: "unknown" },
+  away: { name: "TBD B2", country: "unknown" },
+},
+{
+  id: 22101,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "men",
+  round: "semi-final",
+  date: "2026-04-18T15:00:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "Winner QF1", country: "unknown" },
+  away: { name: "Winner QF2", country: "unknown" },
+},
+{
+  id: 22201,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "hong-kong",
+  gender: "men",
+  round: "final",
+  date: "2026-04-18T19:00:00",
+  venue: "Kai Tak Sports Park",
+  home: { name: "Winner SF1", country: "unknown" },
+  away: { name: "Winner SF2", country: "unknown" },
+},
+
 ];

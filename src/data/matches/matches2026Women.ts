@@ -205,7 +205,7 @@ export const matches2026Women: MatchData[] = [
   date: "2026-05-02",
   venue: "Vancouver",
   home: { name: "Canada", country: "canada" },
-  away: { name: "USA", country: "usa" },
+  away: { name: "USA", country: "united-states-of-america" },
 },
 {
   id: 8003,
@@ -225,7 +225,7 @@ export const matches2026Women: MatchData[] = [
   date: "2026-05-10",
   venue: "Hamilton",
   home: { name: "New Zealand", country: "new-zealand" },
-  away: { name: "USA", country: "usa" },
+  away: { name: "USA", country: "united-states-of-america" },
 },
 {
   id: 8005,
@@ -235,7 +235,7 @@ export const matches2026Women: MatchData[] = [
   date: "2026-05-18",
   venue: "Melbourne",
   home: { name: "Australia", country: "australia" },
-  away: { name: "USA", country: "usa" },
+  away: { name: "USA", country: "united-states-of-america" },
 },
 {
   id: 8006,

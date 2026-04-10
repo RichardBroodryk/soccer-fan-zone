@@ -1,30 +1,37 @@
 import React from "react";
 import "./Flag.css";
 
+import { flagMap } from "../data/flagMap";
+
 type FlagProps = {
   country: string;
   size?: "small" | "medium" | "large" | "xlarge";
 };
 
 const Flag: React.FC<FlagProps> = ({ country, size = "medium" }) => {
-  const fileName = country.toLowerCase().trim().replace(/\s+/g, "-");
-
-  let imageSrc;
-
-  try {
-    imageSrc = require(`../../assets/images/flags/${fileName}.png`);
-  } catch {
-    try {
-      imageSrc = require(`../../assets/images/flags/${fileName}.jpg`);
-    } catch {
-      return (
-        <div className={`flag-fallback flag-${size}`}>
-          {country.substring(0, 3).toUpperCase()}
-        </div>
-      );
-    }
+  if (!country) {
+    return (
+      <div className={`flag-fallback flag-${size}`}>
+        ---
+      </div>
+    );
   }
 
+  /* 🔒 NORMALIZE INPUT */
+  const key = country.toLowerCase().trim();
+
+  const imageSrc = flagMap[key];
+
+  /* ❌ NO FLAG FOUND */
+  if (!imageSrc) {
+    return (
+      <div className={`flag-fallback flag-${size}`}>
+        {country.substring(0, 3).toUpperCase()}
+      </div>
+    );
+  }
+
+  /* ✅ SUCCESS */
   return (
     <img
       src={imageSrc}
