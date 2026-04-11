@@ -11,7 +11,7 @@ const CheckoutPage = () => {
   useEffect(() => {
 
     // =====================================================
-    // 🔴 STEP 1 — VERIFY PAYMENT IMMEDIATELY (CRITICAL FIX)
+    // 🔴 VERIFY PAYMENT ON RETURN (_ptxn)
     // =====================================================
 
     const params = new URLSearchParams(window.location.search);
@@ -56,7 +56,7 @@ const CheckoutPage = () => {
     }
 
     // =====================================================
-    // 🟡 STEP 2 — LOAD PADDLE (OPTIONAL AFTER RETURN)
+    // 🟡 LOAD PADDLE (SAFE — NO REOPEN)
     // =====================================================
 
     const script = document.createElement("script");
@@ -68,7 +68,7 @@ const CheckoutPage = () => {
     script.onload = () => {
       if (window.Paddle) {
         window.Paddle.Initialize({
-          token: "live_1315bcf84802de1b59fc1bd1da5"
+          token: "live_1315bcf84802de1b59fc1bd1da5",
         });
       }
     };
