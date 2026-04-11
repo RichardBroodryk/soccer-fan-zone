@@ -187,17 +187,17 @@ function RequireAuth({ children }: { children: ReactNode }) {
 }
 
 function DevHomeEntry() {
-  const [params] = useSearchParams(); // ✅ ALWAYS FIRST
-
   const isDev = process.env.NODE_ENV === "development";
   const isLocalhost = window.location.hostname === "localhost";
-
-  const devTier = params.get("devTier");
 
   // 🔒 BLOCK IN PRODUCTION
   if (!isDev || !isLocalhost) {
     return <Navigate to="/" replace />;
   }
+
+  // ✅ NO HOOK — SAFE
+  const params = new URLSearchParams(window.location.search);
+  const devTier = params.get("devTier");
 
   if (devTier === "freemium") return <Navigate to="/home-free" replace />;
   if (devTier === "premium") return <Navigate to="/home" replace />;
@@ -205,7 +205,6 @@ function DevHomeEntry() {
 
   return <Navigate to="/" replace />;
 }
-
 export default function App() {
   const isDev = process.env.NODE_ENV === "development";
 
