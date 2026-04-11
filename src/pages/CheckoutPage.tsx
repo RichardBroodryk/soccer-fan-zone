@@ -22,12 +22,20 @@ const CheckoutPage = () => {
         try {
           console.log("🔍 Verifying txn:", transactionId);
 
+          const token = localStorage.getItem("raz_token");
+
+          if (!token) {
+            console.error("❌ No auth token found");
+            return;
+          }
+
           const res = await fetch(
             "https://rugby-anthem-backend.fly.dev/api/verify-payment",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                "Authorization": "Bearer " + token,
               },
               body: JSON.stringify({ txn: transactionId }),
             }
@@ -38,6 +46,8 @@ const CheckoutPage = () => {
           console.log("✅ Verify result:", data);
 
           if (data.success) {
+            console.log("🚀 Redirecting user based on tier:", data.tier);
+
             if (data.tier === "super") {
               window.location.href = "/home-super";
             } else if (data.tier === "premium") {
