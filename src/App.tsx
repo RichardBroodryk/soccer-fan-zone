@@ -187,16 +187,17 @@ function RequireAuth({ children }: { children: ReactNode }) {
 }
 
 function DevHomeEntry() {
+  const [params] = useSearchParams(); // ✅ ALWAYS FIRST
+
   const isDev = process.env.NODE_ENV === "development";
   const isLocalhost = window.location.hostname === "localhost";
 
-  const [params] = useSearchParams();
+  const devTier = params.get("devTier");
 
   // 🔒 BLOCK IN PRODUCTION
   if (!isDev || !isLocalhost) {
     return <Navigate to="/" replace />;
   }
-  const devTier = params.get("devTier");
 
   if (devTier === "freemium") return <Navigate to="/home-free" replace />;
   if (devTier === "premium") return <Navigate to="/home" replace />;
