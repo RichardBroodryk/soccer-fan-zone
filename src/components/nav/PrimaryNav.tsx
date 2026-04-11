@@ -90,6 +90,12 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
   const storedTier = sessionStorage.getItem(ACTIVE_TIER_KEY);
   const homeRoute = storedTier === "super" ? "/home-super" : "/home";
 
+  const path = window.location.pathname;
+
+  // 🔒 HARD LOCK: never show nav on freemium routes
+  if (path.startsWith("/free")) return null;
+
+  // Existing rule
   if (variant === "freemium") return null;
 
   function handleNavigate(route: string) {
@@ -108,7 +114,11 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
       {/* LEFT */}
       <div className={styles.left}>
         <NavLink to={homeRoute} className={styles.logoLink}>
-          <img src={logo} className={styles.logo} />
+          <img
+            src={logo}
+            className={styles.logo}
+            alt="Rugby Anthem Zone logo"
+          />
         </NavLink>
 
         {/* HOME ICON */}
@@ -214,7 +224,11 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
             onClick={() => setMenuOpen((p) => !p)}
           >
             {avatar ? (
-              <img src={avatar} className={styles.navAvatar} />
+              <img
+                src={avatar}
+                className={styles.navAvatar}
+                alt="User profile"
+              />
             ) : (
               <svg
                 width="22"

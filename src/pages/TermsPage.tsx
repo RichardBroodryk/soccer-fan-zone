@@ -20,16 +20,9 @@ declare global {
   }
 }
 
-type Pricing = {
-  label: string;
-  amount: string;
-  currencyNote?: string;
-};
-
 type TermsState = {
   tier?: "freemium" | "premium" | "super";
   country?: string;
-  pricing?: Pricing;
 };
 
 export default function TermsPage() {
@@ -42,7 +35,7 @@ export default function TermsPage() {
 
   const tier = state?.tier;
   const country = state?.country;
-  const pricing = state?.pricing;
+ 
 
   const [loading, setLoading] = useState(false);
 
@@ -231,23 +224,19 @@ export default function TermsPage() {
 
       <section className={styles.content}>
 
-        {(isPremium || isSuper) && pricing && (
-          <div className={styles.summaryBox}>
+        {(isPremium || isSuper) && (
+  <div className={styles.summaryBox}>
+    <h2>Subscription Summary</h2>
 
-            <h2>Subscription Summary</h2>
+    <p className={styles.price}>
+      {isPremium ? "$2.49 / month" : "$3.49 / month"}
+    </p>
 
-            <p className={styles.price}>
-              {pricing.label}
-            </p>
-
-            {pricing.currencyNote && (
-              <p className={styles.note}>
-                {pricing.currencyNote}
-              </p>
-            )}
-
-          </div>
-        )}
+    <p className={styles.note}>
+      Billed monthly
+    </p>
+  </div>
+)}
 
 
 

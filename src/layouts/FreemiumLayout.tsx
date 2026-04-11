@@ -1,9 +1,11 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AdBanner from "../components/homepage/AdBanner";
 import styles from "./FreemiumLayout.module.css";
 
 export default function FreemiumLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const isSplashPage = location.pathname === "/";
 
   return (
@@ -15,13 +17,18 @@ export default function FreemiumLayout() {
         </div>
       )}
 
+      {/* PAGE CONTENT */}
       <main className={styles.content}>
         <Outlet />
       </main>
 
-      {/* BOTTOM UPGRADE BAR */}
+      {/* 🔥 BOTTOM UPGRADE BAR (CLICKABLE CTA) */}
       {!isSplashPage && (
-        <div className={styles.adBottom}>
+        <div
+          className={styles.adBottom}
+          onClick={() => navigate("/what-you-get/premium")}
+          style={{ cursor: "pointer" }}
+        >
           <AdBanner text="⭐ Go Premium — Unlock the Full Rugby Experience" />
         </div>
       )}

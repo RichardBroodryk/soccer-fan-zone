@@ -3,50 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./PremiumSignupPage.module.css";
 import { registerUser, loginUser } from "../services/auth";
 
-/**
- * PREMIUM COMMITMENT PAGE
- * Paid subscription — nation-aware pricing
- * Auto-login after signup
- */
-
-type Pricing = {
-  label: string;
-  amount: string;
-  currencyNote?: string;
-};
-
-function resolvePremiumPrice(country: string): Pricing {
-  switch (country) {
-    case "South Africa":
-      return { label: "R 19.99 / month", amount: "19.99" };
-    case "Argentina":
-      return { label: "ARS 499 / month", amount: "499" };
-    case "New Zealand":
-      return { label: "NZ$ 2.99 / month", amount: "2.99" };
-    case "Australia":
-      return { label: "A$ 2.99 / month", amount: "2.99" };
-    case "United Kingdom":
-      return { label: "£1.49 / month", amount: "1.49" };
-    case "Ireland":
-    case "France":
-      return { label: "€1.79 / month", amount: "1.79" };
-    case "Japan":
-      return { label: "¥199 / month", amount: "199" };
-    case "United States":
-      return { label: "$1.99 / month", amount: "1.99" };
-    case "Fiji":
-    case "Samoa":
-    case "Georgia":
-      return { label: "$0.99 / month", amount: "0.99" };
-    default:
-      return {
-        label: "$1.99 / month",
-        amount: "1.99",
-        currencyNote: "Global pricing (USD)",
-      };
-  }
-}
-
 const COUNTRIES = [
   "South Africa",
   "Argentina",
@@ -60,6 +16,12 @@ const COUNTRIES = [
   "Fiji",
   "Samoa",
   "Georgia",
+  "Scotland",
+  "Wales",
+  "Spain",
+  "Portugal",
+  "Namibia",
+  "Zimbabwe",
   "Other",
 ];
 
@@ -72,8 +34,6 @@ export default function PremiumSignupPage() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const pricing = country ? resolvePremiumPrice(country) : null;
 
   const handleSignup = async () => {
     if (!country) {
@@ -90,18 +50,17 @@ export default function PremiumSignupPage() {
     setError("");
 
     try {
-      // 1. Register user
       await registerUser(email, password);
-
-      // 2. Auto-login to store token + userId
       await loginUser(email, password);
 
-      // 3. Proceed to Terms
       navigate("/terms", {
         state: {
           tier: "premium",
           country,
-          pricing,
+          pricing: {
+            label: "$2.49 / month",
+            amount: "2.49",
+          },
           email,
         },
       });
@@ -125,6 +84,7 @@ export default function PremiumSignupPage() {
       </header>
 
       <section className={styles.content}>
+        {/* WHAT’S INCLUDED */}
         <div className={styles.block}>
           <h2>What’s Included</h2>
           <ul>
@@ -137,6 +97,7 @@ export default function PremiumSignupPage() {
           </ul>
         </div>
 
+        {/* SUBSCRIPTION TERMS */}
         <div className={styles.block}>
           <h2>Subscription Terms</h2>
           <ul>
@@ -146,6 +107,7 @@ export default function PremiumSignupPage() {
           </ul>
         </div>
 
+        {/* EMAIL + PASSWORD */}
         <div className={styles.block}>
           <label className={styles.label}>Email</label>
           <input
@@ -166,12 +128,10 @@ export default function PremiumSignupPage() {
           />
         </div>
 
+        {/* COUNTRY */}
         <div className={styles.block}>
-          <label htmlFor="country" className={styles.label}>
-            Select your country
-          </label>
+          <label className={styles.label}>Select your country</label>
           <select
-            id="country"
             value={country}
             onChange={(e) => {
               setCountry(e.target.value);
@@ -190,19 +150,17 @@ export default function PremiumSignupPage() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
 
-        {pricing && (
-          <div className={styles.pricingBox}>
-            <p className={styles.price}>{pricing.label}</p>
-            {pricing.currencyNote && (
-              <p className={styles.note}>{pricing.currencyNote}</p>
-            )}
-            <p className={styles.psychology}>
-              Low monthly cost. Built for everyday rugby fans.
-            </p>
-          </div>
-        )}
+        {/* 🔥 FIXED PRICING (BOTTOM — MATCHES SUPER) */}
+        <div className={styles.pricingBox}>
+          <p className={styles.price}>$2.49 / month</p>
+          <p className={styles.billing}>Billed monthly</p>
+          <p className={styles.psychology}>
+            Low monthly cost. Built for everyday rugby fans.
+          </p>
+        </div>
       </section>
 
+      {/* CTA */}
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
@@ -213,11 +171,6 @@ export default function PremiumSignupPage() {
             ? "Creating account..."
             : "Proceed to Subscription Terms"}
         </button>
-
-        <p className={styles.superHint}>
-          Looking for an ad-free experience and access to Heritage and
-          Defining Moments? Super Premium is available for dedicated supporters.
-        </p>
       </footer>
     </section>
   );

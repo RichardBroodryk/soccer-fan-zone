@@ -74,15 +74,23 @@ const displayedEnglish = expanded
         </div>
       </header>
 
-      {/* BACK BUTTON */}
-      <div className={styles.backWrapper}>
-        <button
-          className={styles.backButton}
-          onClick={() => navigate("/anthems")}
-        >
-          ← Back to All Anthems
-        </button>
-      </div>
+     {/* BACK BUTTON */}
+<div className={styles.backWrapper}>
+  <button
+    className={styles.backButton}
+    onClick={() => {
+      const isFreemium = window.location.pathname.startsWith("/free");
+
+      if (isFreemium) {
+        navigate("/free/anthems");
+      } else {
+        navigate("/anthems");
+      }
+    }}
+  >
+    ← Back to All Anthems
+  </button>
+</div>
 
       {/* GRID */}
       <section className={styles.mainGrid}>
