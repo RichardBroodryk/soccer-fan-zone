@@ -1,7 +1,7 @@
 // src/config/api.ts
 
 // Production backend
-const PROD_API = "https://rugby-anthem-backend.fly.dev";
+const PROD_API = "https://rugby-anthem-backend.fly.dev/api";
 
 // Local development backend
 const DEV_API = "http://localhost:4000";
@@ -29,7 +29,9 @@ export const apiRequest = async (
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+ const response = await fetch(
+  `${API_BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`,
+  {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
