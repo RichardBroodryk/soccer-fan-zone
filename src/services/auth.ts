@@ -10,16 +10,24 @@ const USER_ID_KEY = "raz_user_id";
  */
 export const registerUser = async (email: string, password: string) => {
   try {
-    return await apiRequest("/api/register", "POST", {
+    const data = await apiRequest("/api/register", "POST", {
       email,
       password,
     });
+
+    // 🔥 CRITICAL FIX — AUTO LOGIN AFTER REGISTER
+    if (data.token) {
+      localStorage.setItem(TOKEN_KEY, data.token);
+    }
+
+    return data;
+
   } catch (err) {
-    // apiRequest throws Error(data.error)
     if (err instanceof Error) {
       if (err.message === "User already exists") {
-        // allow flow to continue
-        return { email };
+        // 🔥 ALSO LOGIN EXISTING USER
+        const loginData = await loginUser(email, password);
+        return loginData;
       }
     }
 

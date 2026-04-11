@@ -3,7 +3,6 @@ import {
   Routes,
   Route,
   Navigate,
-  useSearchParams,
 } from "react-router-dom";
 import { useEffect } from "react";
 import type { ReactNode } from "react";
