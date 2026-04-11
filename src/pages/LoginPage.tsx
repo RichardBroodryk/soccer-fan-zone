@@ -27,9 +27,19 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ Email validation helper
+  const isValidEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
   const handleLogin = async () => {
     if (!email || !password) {
       setError("Please enter email and password.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
 
@@ -37,10 +47,16 @@ export default function LoginPage() {
     setError("");
 
     try {
+      // 🔐 CONFIRM EMAIL BEFORE LOGIN (UX SAFETY)
+      if (!window.confirm(`Continue with this email?\n\n${email}`)) {
+        setLoading(false);
+        return;
+      }
+
       // 🔐 LOGIN
       await loginUser(email, password);
 
-      const token = getToken(); // ✅ FIXED TOKEN SOURCE
+      const token = getToken();
 
       // =====================================================
       // 💳 CHECKOUT INTENT PATH
@@ -106,15 +122,24 @@ export default function LoginPage() {
 
       <section className={styles.content}>
         <div className={styles.block}>
+          {/* EMAIL */}
           <label className={styles.label}>Email</label>
           <input
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
             placeholder="you@example.com"
           />
 
+          {/* 🔥 EMAIL PREVIEW */}
+          {email && (
+            <p style={{ fontSize: "12px", color: "#888", marginTop: "5px" }}>
+              You entered: <strong>{email}</strong>
+            </p>
+          )}
+
+          {/* PASSWORD */}
           <label className={styles.label}>Password</label>
           <input
             type="password"
@@ -124,6 +149,7 @@ export default function LoginPage() {
             placeholder="Enter password"
           />
 
+          {/* ERROR */}
           {error && <p className={styles.error}>{error}</p>}
         </div>
       </section>
