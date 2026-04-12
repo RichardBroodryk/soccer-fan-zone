@@ -1,29 +1,83 @@
 // src/pages/PremiumSignupPage.tsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumSignupPage.module.css";
 import { registerUser, loginUser } from "../services/auth";
 
+const COUNTRIES = [
+  "South Africa",
+  "Argentina",
+  "Australia",
+  "New Zealand",
+  "United Kingdom",
+  "Ireland",
+  "France",
+  "Japan",
+  "United States",
+  "Other",
+];
+
 export default function PremiumSignupPage() {
   const navigate = useNavigate();
 
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  const [showPassword,setShowPassword]=useState(false);
-  const [error,setError]=useState("");
-  const [loading,setLoading]=useState(false);
+  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleSignup = async () => {
-    if(!email || !password) return setError("Enter email and password");
+    if (!country) {
+      setError("Please select your country to continue.");
+      return;
+    }
+
+    if (!email || !password) {
+      setError("Please enter email and password.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
 
     setLoading(true);
-    try {
-      await registerUser(email,password);
-      await loginUser(email,password);
+    setError("");
 
-      navigate("/terms",{ state:{ tier:"premium", email }});
-    } catch {
-      setError("Signup failed");
+    try {
+      // ✅ Register + login (same flow as freemium)
+      await registerUser(email, password);
+      await loginUser(email, password);
+
+      // ✅ Route to Terms with PREMIUM context
+      navigate("/terms", {
+        state: {
+          tier: "premium",
+          country,
+          pricing: {
+            label: "$1.99 / month",
+            amount: "1.99",
+          },
+          email,
+        },
+      });
+
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Signup failed";
+
+      if (message.toLowerCase().includes("exists")) {
+        setError("Email already registered.");
+      } else {
+        setError("Signup failed. Please try again.");
+      }
+
     } finally {
       setLoading(false);
     }
@@ -31,28 +85,119 @@ export default function PremiumSignupPage() {
 
   return (
     <section className={styles.page}>
-      <h1>Premium Access</h1>
+      <header className={styles.header}>
+        <h1>Premium Access</h1>
+        <p className={styles.subtitle}>
+          Unlock enhanced Rugby Anthem Zone features with a premium subscription.
+        </p>
+      </header>
 
-      <label>Email</label>
-      <input value={email} onChange={e=>setEmail(e.target.value.toLowerCase())}/>
+      <section className={styles.content}>
+        {/* FEATURES */}
+        <div className={styles.block}>
+          <h2>What’s Included</h2>
+          <ul>
+            <li>Ad-free experience</li>
+            <li>Enhanced match insights</li>
+            <li>Priority updates and notifications</li>
+            <li>Access to premium features</li>
+          </ul>
+        </div>
 
-      <label>Password</label>
-      <div style={{position:"relative"}}>
-        <input
-          type={showPassword ? "text":"password"}
-          value={password}
-          onChange={e=>setPassword(e.target.value)}
-        />
-        <button onClick={()=>setShowPassword(!showPassword)}>
-          {showPassword ? "Hide":"Show"}
+        {/* INFO */}
+        <div className={styles.block}>
+          <h2>Billing</h2>
+          <p>
+            Premium is billed monthly and can be cancelled anytime.
+          </p>
+        </div>
+
+        {/* EMAIL + PASSWORD */}
+        <div className={styles.block}>
+          <label className={styles.label}>Email</label>
+          <input
+            type="email"
+            className={styles.select}
+            value={email}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            placeholder="you@example.com"
+          />
+
+          <label className={styles.label}>Password</label>
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={styles.select}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              style={{ paddingRight: "50px" }}
+            />
+
+            {/* 👁 TEMP BUTTON (SAFE VERSION) */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "8px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "#222",
+                color: "#fff",
+                border: "none",
+                padding: "4px 8px",
+                fontSize: "11px",
+                cursor: "pointer",
+              }}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+        </div>
+
+        {/* COUNTRY */}
+        <div className={styles.block}>
+          <label className={styles.label}>Select your country</label>
+          <select
+            value={country}
+            onChange={(e) => {
+              setCountry(e.target.value);
+              setError("");
+            }}
+            className={styles.select}
+          >
+            <option value="">— Select country —</option>
+            {COUNTRIES.map((c) => (
+              <option key={c} value={c}>
+                {c === "Other" ? "Other (Global)" : c}
+              </option>
+            ))}
+          </select>
+
+          {error && <p className={styles.error}>{error}</p>}
+        </div>
+
+        {/* PRICING */}
+        <div className={styles.pricingBox}>
+          <p className={styles.price}>$1.99 / month</p>
+          <p className={styles.psychology}>
+            Cancel anytime. No hidden fees.
+          </p>
+        </div>
+      </section>
+
+      <footer className={styles.footer}>
+        <button
+          className={styles.primaryButton}
+          onClick={handleSignup}
+          disabled={loading}
+        >
+          {loading
+            ? "Creating account..."
+            : "Continue to Subscription Terms"}
         </button>
-      </div>
-
-      {error && <p>{error}</p>}
-
-      <button onClick={handleSignup} disabled={loading}>
-        {loading ? "Loading..." : "Continue"}
-      </button>
+      </footer>
     </section>
   );
 }

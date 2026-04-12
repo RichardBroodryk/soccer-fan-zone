@@ -1,3 +1,5 @@
+// src/pages/LoginPage.tsx
+
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser, getUserTier, getToken } from "../services/auth";
@@ -12,6 +14,8 @@ export default function LoginPage() {
     | {
         redirectAfterLogin?: string;
         tier?: "premium" | "super";
+        country?: string;
+        pricing?: any;
       }
     | null;
 
@@ -22,13 +26,12 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const isValidEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -45,30 +48,43 @@ export default function LoginPage() {
     setError("");
 
     try {
+      // 🔐 LOGIN
       await loginUser(email, password);
 
       const token = getToken();
 
-      // 💳 CHECKOUT FLOW
+      // =============================
+      // 💳 CHECKOUT INTENT FLOW
+      // =============================
       if (checkoutIntent && checkoutTier && token) {
-        const data = await apiRequest(
-          "/api/payments",
-          "POST",
-          { tier: checkoutTier },
-          token
-        );
+        try {
+          const data = await apiRequest(
+            "/api/payments",
+            "POST",
+            { tier: checkoutTier },
+            token
+          );
 
-        if (!data.checkoutUrl) {
-          setError("Unable to start payment.");
+          if (!data.checkoutUrl) {
+            setError("Unable to start payment. Please try again.");
+            setLoading(false);
+            return;
+          }
+
+          window.location.href = data.checkoutUrl;
+          return;
+
+        } catch (err) {
+          console.error("Checkout error:", err);
+          setError("Payment service unavailable.");
           setLoading(false);
           return;
         }
-
-        window.location.href = data.checkoutUrl;
-        return;
       }
 
-      // 🧭 NORMAL ROUTING
+      // =============================
+      // 🧭 NORMAL LOGIN ROUTING
+      // =============================
       const tier = await getUserTier();
 
       if (tier === "super") {
@@ -83,7 +99,7 @@ export default function LoginPage() {
       const message =
         err instanceof Error ? err.message : "Login failed";
 
-      // 🔥 FRIENDLY ERROR MAPPING
+      // 🔥 FRIENDLY ERRORS
       if (message.toLowerCase().includes("password")) {
         setError("Incorrect password");
       } else if (message.toLowerCase().includes("user")) {
@@ -99,12 +115,6 @@ export default function LoginPage() {
 
   return (
     <section className={styles.page}>
-
-      {/* 🔥 FORCED VISIBILITY MARKER */}
-      <h1 style={{ background: "yellow", color: "black", padding: "10px" }}>
-        LOGIN PAGE (NEW BUILD)
-      </h1>
-
       <header className={styles.header}>
         <h1>Login</h1>
         <p className={styles.subtitle}>
@@ -114,7 +124,6 @@ export default function LoginPage() {
 
       <section className={styles.content}>
         <div className={styles.block}>
-
           {/* EMAIL */}
           <label className={styles.label}>Email</label>
           <input
@@ -134,7 +143,6 @@ export default function LoginPage() {
 
           {/* PASSWORD */}
           <label className={styles.label}>Password</label>
-
           <div style={{ position: "relative" }}>
             <input
               type={showPassword ? "text" : "password"}
@@ -142,28 +150,32 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
+              style={{ paddingRight: "50px" }}
             />
 
-            {/* 👁 EYE TOGGLE */}
-            <span
+            {/* 👁 TOGGLE */}
+            <button
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={{
                 position: "absolute",
-                right: "10px",
+                right: "8px",
                 top: "50%",
                 transform: "translateY(-50%)",
+                background: "#222",
+                color: "#fff",
+                border: "none",
+                padding: "4px 8px",
+                fontSize: "11px",
                 cursor: "pointer",
-                fontSize: "14px",
-                color: "#666",
               }}
             >
-              {showPassword ? "🙈" : "👁"}
-            </span>
+              {showPassword ? "Hide" : "Show"}
+            </button>
           </div>
 
           {/* ERROR */}
           {error && <p className={styles.error}>{error}</p>}
-
         </div>
       </section>
 
@@ -176,7 +188,6 @@ export default function LoginPage() {
           {loading ? "Logging in..." : "Login"}
         </button>
       </footer>
-
     </section>
   );
 }

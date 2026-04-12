@@ -1,6 +1,8 @@
+// src/pages/SuperPremiumSignupPage.tsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./SuperPremiumSignupPage.module.css";
+import styles from "./FreemiumSignupPage.module.css";
 import { registerUser, loginUser } from "../services/auth";
 
 const COUNTRIES = [
@@ -31,11 +33,12 @@ export default function SuperPremiumSignupPage() {
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [showPassword, setShowPassword] = useState(false); // ✅ FIX
+  const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleSignup = async () => {
     if (!country) {
@@ -48,13 +51,20 @@ export default function SuperPremiumSignupPage() {
       return;
     }
 
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
     try {
+      // ✅ Register + login
       await registerUser(email, password);
       await loginUser(email, password);
 
+      // ✅ Navigate to Terms with SUPER pricing
       navigate("/terms", {
         state: {
           tier: "super",
@@ -66,17 +76,17 @@ export default function SuperPremiumSignupPage() {
           email,
         },
       });
+
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Signup failed";
 
-      if (message.toLowerCase().includes("password")) {
-        setError("Incorrect password");
-      } else if (message.toLowerCase().includes("user")) {
-        setError("Email already exists or invalid");
+      if (message.toLowerCase().includes("exists")) {
+        setError("Email already registered.");
       } else {
         setError("Signup failed. Please try again.");
       }
+
     } finally {
       setLoading(false);
     }
@@ -87,12 +97,31 @@ export default function SuperPremiumSignupPage() {
       <header className={styles.header}>
         <h1>Super Premium Access</h1>
         <p className={styles.subtitle}>
-          For supporters who want the most complete Rugby Anthem Zone experience.
+          The ultimate Rugby Anthem Zone experience with full feature access.
         </p>
       </header>
 
       <section className={styles.content}>
-        {/* EMAIL */}
+        {/* FEATURES */}
+        <div className={styles.block}>
+          <h2>What’s Included</h2>
+          <ul>
+            <li>Everything in Premium</li>
+            <li>Full access to all advanced features</li>
+            <li>Early access to new releases</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+
+        {/* INFO */}
+        <div className={styles.block}>
+          <h2>Billing</h2>
+          <p>
+            Super Premium is billed monthly and can be cancelled anytime.
+          </p>
+        </div>
+
+        {/* EMAIL + PASSWORD */}
         <div className={styles.block}>
           <label className={styles.label}>Email</label>
           <input
@@ -103,9 +132,7 @@ export default function SuperPremiumSignupPage() {
             placeholder="you@example.com"
           />
 
-          {/* PASSWORD WITH TOGGLE */}
           <label className={styles.label}>Password</label>
-
           <div style={{ position: "relative" }}>
             <input
               type={showPassword ? "text" : "password"}
@@ -116,6 +143,7 @@ export default function SuperPremiumSignupPage() {
               style={{ paddingRight: "50px" }}
             />
 
+            {/* 👁 TEMP BUTTON */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -132,7 +160,7 @@ export default function SuperPremiumSignupPage() {
                 cursor: "pointer",
               }}
             >
-              {showPassword ? "HIDE" : "SHOW"}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
         </div>
@@ -162,7 +190,9 @@ export default function SuperPremiumSignupPage() {
         {/* PRICING */}
         <div className={styles.pricingBox}>
           <p className={styles.price}>$3.49 / month</p>
-          <p className={styles.billing}>Billed monthly</p>
+          <p className={styles.psychology}>
+            Cancel anytime. Full access to all features.
+          </p>
         </div>
       </section>
 
