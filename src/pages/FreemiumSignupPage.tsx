@@ -24,6 +24,7 @@ export default function FreemiumSignupPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = async () => {
     if (!country) {
@@ -40,13 +41,9 @@ export default function FreemiumSignupPage() {
     setError("");
 
     try {
-      // ✅ Register user
       await registerUser(email, password);
-
-      // 🔥 CRITICAL: auto-login so Terms sees token
       await loginUser(email, password);
 
-      // ✅ Continue to Terms
       navigate("/terms", {
         state: {
           tier: "freemium",
@@ -54,10 +51,20 @@ export default function FreemiumSignupPage() {
           email,
         },
       });
+
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Signup failed";
-      setError(message);
+
+      // 🔥 FRIENDLY ERROR MAPPING
+      if (message.toLowerCase().includes("password")) {
+        setError("Incorrect password");
+      } else if (message.toLowerCase().includes("user")) {
+        setError("Email already exists or not valid");
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+
     } finally {
       setLoading(false);
     }
@@ -94,23 +101,43 @@ export default function FreemiumSignupPage() {
         </div>
 
         <div className={styles.block}>
+          {/* EMAIL */}
           <label className={styles.label}>Email</label>
           <input
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
             placeholder="you@example.com"
           />
 
+          {/* PASSWORD */}
           <label className={styles.label}>Password</label>
-          <input
-            type="password"
-            className={styles.select}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
+
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={styles.select}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+            />
+
+            {/* 👁 TOGGLE */}
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              {showPassword ? "🙈" : "👁"}
+            </span>
+          </div>
         </div>
 
         <div className={styles.block}>
