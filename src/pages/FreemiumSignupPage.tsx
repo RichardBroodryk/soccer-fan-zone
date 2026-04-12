@@ -19,12 +19,14 @@ const COUNTRIES = [
 export default function FreemiumSignupPage() {
   const navigate = useNavigate();
 
-  const [country, setCountry] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [country, setCountry] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const [showPassword, setShowPassword] = useState<boolean>(false); // ✅ FIXED
+
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSignup = async () => {
     if (!country) {
@@ -56,13 +58,12 @@ export default function FreemiumSignupPage() {
       const message =
         err instanceof Error ? err.message : "Signup failed";
 
-      // 🔥 FRIENDLY ERROR MAPPING
       if (message.toLowerCase().includes("password")) {
         setError("Incorrect password");
       } else if (message.toLowerCase().includes("user")) {
-        setError("Email already exists or not valid");
+        setError("Email already exists or invalid");
       } else {
-        setError("Something went wrong. Please try again.");
+        setError("Signup failed. Please try again.");
       }
 
     } finally {
@@ -95,13 +96,12 @@ export default function FreemiumSignupPage() {
           <h2>Important to Know</h2>
           <p>
             Freemium is not a trial. It is a permanently free tier designed
-            for casual and regular followers who want reliable access to
-            match information without a subscription.
+            for casual and regular followers.
           </p>
         </div>
 
+        {/* EMAIL + PASSWORD */}
         <div className={styles.block}>
-          {/* EMAIL */}
           <label className={styles.label}>Email</label>
           <input
             type="email"
@@ -111,7 +111,6 @@ export default function FreemiumSignupPage() {
             placeholder="you@example.com"
           />
 
-          {/* PASSWORD */}
           <label className={styles.label}>Password</label>
 
           <div style={{ position: "relative" }}>
@@ -121,31 +120,35 @@ export default function FreemiumSignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
+              style={{ paddingRight: "60px" }}
             />
 
             {/* 👁 TOGGLE */}
-            <span
+            <button
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={{
                 position: "absolute",
                 right: "10px",
                 top: "50%",
                 transform: "translateY(-50%)",
+                background: "#222",
+                color: "#fff",
+                border: "none",
+                padding: "4px 8px",
+                fontSize: "11px",
                 cursor: "pointer",
-                fontSize: "14px",
               }}
             >
-              {showPassword ? "🙈" : "👁"}
-            </span>
+              {showPassword ? "HIDE" : "SHOW"}
+            </button>
           </div>
         </div>
 
+        {/* COUNTRY */}
         <div className={styles.block}>
-          <label htmlFor="country" className={styles.label}>
-            Select your country
-          </label>
+          <label className={styles.label}>Select your country</label>
           <select
-            id="country"
             value={country}
             onChange={(e) => {
               setCountry(e.target.value);
@@ -164,6 +167,7 @@ export default function FreemiumSignupPage() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
 
+        {/* PRICING */}
         <div className={styles.pricingBox}>
           <p className={styles.price}>Free</p>
           <p className={styles.psychology}>
