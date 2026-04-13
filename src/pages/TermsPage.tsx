@@ -59,7 +59,7 @@ export default function TermsPage() {
       setLoading(true);
 
       const res = await fetch(
-        `${API_BASE_URL}/api/payments`,
+        "https://rugby-anthem-backend.fly.dev/api/payments",
         {
           method: "POST",
           headers: {
