@@ -32,12 +32,11 @@ export const registerUser = async (email: string, password: string) => {
 
   } catch (err) {
     if (err instanceof Error) {
-      if (err.message === "User already exists") {
-        // 🔥 LOGIN EXISTING USER
-        const loginData = await loginUser(email, password);
-        return loginData;
-      }
-    }
+  if (err.message.toLowerCase().includes("exists")) {
+    const loginData = await loginUser(email, password);
+    return loginData;
+  }
+}
 
     throw err;
   }
