@@ -11,66 +11,45 @@ const CheckoutPage = () => {
   useEffect(() => {
 
     // =====================================================
-    // 🔴 VERIFY PAYMENT ON RETURN (_ptxn)
+    // 🔥 AFTER RETURN → CHECK SUBSCRIPTION (WEBHOOK-BASED FLOW)
     // =====================================================
 
-    const params = new URLSearchParams(window.location.search);
-    const transactionId =
-  params.get("transaction_id") ||
-  params.get("_ptxn") ||
-  params.get("txn");
+    (async () => {
+      try {
+        console.log("🔍 Checking subscription after checkout");
 
-  // 🔥 ADD DEBUG HERE (EXACT LOCATION)
-console.log("🔍 URL PARAMS:", Object.fromEntries(params.entries()));
-console.log("🔍 Transaction ID:", transactionId);
+        const token = localStorage.getItem("raz_token");
 
-    if (transactionId) {
-      (async () => {
-        try {
-          console.log("🔍 Verifying txn:", transactionId);
-
-          const token = localStorage.getItem("raz_token");
-
-          if (!token) {
-            console.error("❌ No auth token found");
-            return;
-          }
-
-          const res = await fetch(
-            "https://rugby-anthem-backend.fly.dev/api/verify-payment",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token,
-              },
-              body: JSON.stringify({ txn: transactionId }),
-            }
-          );
-
-          const data = await res.json();
-
-          console.log("✅ Verify result:", data);
-
-          if (data.success) {
-            console.log("🚀 Redirecting user based on tier:", data.tier);
-
-            if (data.tier === "super") {
-              window.location.href = "/home-super";
-            } else if (data.tier === "premium") {
-              window.location.href = "/home";
-            } else {
-              window.location.href = "/home-free";
-            }
-          } else {
-            console.error("❌ Verification failed:", data);
-          }
-
-        } catch (err) {
-          console.error("❌ Verify error:", err);
+        if (!token) {
+          console.error("❌ No auth token found");
+          return;
         }
-      })();
-    }
+
+        const res = await fetch(
+          "https://rugby-anthem-backend.fly.dev/api/subscription",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        const data = await res.json();
+
+        console.log("✅ Subscription status:", data);
+
+        if (data.tier === "super") {
+          window.location.href = "/home-super";
+        } else if (data.tier === "premium") {
+          window.location.href = "/home";
+        } else {
+          window.location.href = "/home-free";
+        }
+
+      } catch (err) {
+        console.error("❌ Subscription check failed:", err);
+      }
+    })();
 
     // =====================================================
     // 🟡 LOAD PADDLE (SAFE — NO REOPEN)
@@ -106,8 +85,8 @@ console.log("🔍 Transaction ID:", transactionId);
         flexDirection: "column",
       }}
     >
-      <h2>Preparing secure checkout...</h2>
-      <p>Loading Rugby Anthem Zone subscription.</p>
+      <h2>Finalizing your subscription...</h2>
+      <p>Please wait while we confirm your access.</p>
     </div>
   );
 };
