@@ -31,16 +31,23 @@ export const registerUser = async (email: string, password: string) => {
     };
 
   } catch (err) {
-    if (err instanceof Error) {
-  if (err.message.toLowerCase().includes("exists")) {
+  console.log("🔥 REGISTER ERROR RAW:", err);
+
+  // 🔥 ALWAYS attempt fallback login
+  try {
+    console.log("🔁 ATTEMPTING FALLBACK LOGIN");
+
     const loginData = await loginUser(email, password);
     return loginData;
-  }
-}
 
+  } catch (loginErr) {
+    console.log("❌ LOGIN ALSO FAILED:", loginErr);
+
+    // Only now we throw original error
     throw err;
   }
-};
+}
+}
 
 /**
  * LOGIN USER
