@@ -1,9 +1,7 @@
-// src/pages/SuperPremiumSignupPage.tsx
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumSignupPage.module.css";
-import { registerUser, loginUser } from "../services/auth";
+import { registerUser } from "../services/auth";
 
 const COUNTRIES = [
   "South Africa",
@@ -60,11 +58,10 @@ export default function SuperPremiumSignupPage() {
     setError("");
 
     try {
-      // ✅ Register + login
+      // ✅ ONE CALL ONLY (handles register OR login)
       await registerUser(email, password);
-      await loginUser(email, password);
 
-      // ✅ Navigate to Terms with SUPER pricing
+      // ✅ ALWAYS CONTINUE (NO ERROR FOR EXISTING USERS)
       navigate("/terms", {
         state: {
           tier: "super",
@@ -81,12 +78,7 @@ export default function SuperPremiumSignupPage() {
       const message =
         err instanceof Error ? err.message : "Signup failed";
 
-      if (message.toLowerCase().includes("exists")) {
-        setError("Email already registered.");
-      } else {
-        setError("Signup failed. Please try again.");
-      }
-
+      setError(message || "Signup failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -102,7 +94,6 @@ export default function SuperPremiumSignupPage() {
       </header>
 
       <section className={styles.content}>
-        {/* FEATURES */}
         <div className={styles.block}>
           <h2>What’s Included</h2>
           <ul>
@@ -113,7 +104,6 @@ export default function SuperPremiumSignupPage() {
           </ul>
         </div>
 
-        {/* INFO */}
         <div className={styles.block}>
           <h2>Billing</h2>
           <p>
@@ -121,7 +111,6 @@ export default function SuperPremiumSignupPage() {
           </p>
         </div>
 
-        {/* EMAIL + PASSWORD */}
         <div className={styles.block}>
           <label className={styles.label}>Email</label>
           <input
@@ -143,7 +132,6 @@ export default function SuperPremiumSignupPage() {
               style={{ paddingRight: "50px" }}
             />
 
-            {/* 👁 TEMP BUTTON */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -165,7 +153,6 @@ export default function SuperPremiumSignupPage() {
           </div>
         </div>
 
-        {/* COUNTRY */}
         <div className={styles.block}>
           <label className={styles.label}>Select your country</label>
           <select
@@ -187,7 +174,6 @@ export default function SuperPremiumSignupPage() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
 
-        {/* PRICING */}
         <div className={styles.pricingBox}>
           <p className={styles.price}>$3.49 / month</p>
           <p className={styles.psychology}>

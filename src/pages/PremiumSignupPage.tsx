@@ -1,9 +1,7 @@
-// src/pages/PremiumSignupPage.tsx
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumSignupPage.module.css";
-import { registerUser, loginUser } from "../services/auth";
+import { registerUser } from "../services/auth";
 
 const COUNTRIES = [
   "South Africa",
@@ -51,11 +49,10 @@ export default function PremiumSignupPage() {
     setError("");
 
     try {
-      // ✅ Register + login (same flow as freemium)
+      // ✅ ONE CALL ONLY (handles register OR login)
       await registerUser(email, password);
-      await loginUser(email, password);
 
-      // ✅ Route to Terms with PREMIUM context
+      // ✅ ALWAYS CONTINUE FLOW (NO ERROR FOR EXISTING USERS)
       navigate("/terms", {
         state: {
           tier: "premium",
@@ -72,12 +69,7 @@ export default function PremiumSignupPage() {
       const message =
         err instanceof Error ? err.message : "Signup failed";
 
-      if (message.toLowerCase().includes("exists")) {
-        setError("Email already registered.");
-      } else {
-        setError("Signup failed. Please try again.");
-      }
-
+      setError(message || "Signup failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -93,7 +85,6 @@ export default function PremiumSignupPage() {
       </header>
 
       <section className={styles.content}>
-        {/* FEATURES */}
         <div className={styles.block}>
           <h2>What’s Included</h2>
           <ul>
@@ -104,15 +95,11 @@ export default function PremiumSignupPage() {
           </ul>
         </div>
 
-        {/* INFO */}
         <div className={styles.block}>
           <h2>Billing</h2>
-          <p>
-            Premium is billed monthly and can be cancelled anytime.
-          </p>
+          <p>Premium is billed monthly and can be cancelled anytime.</p>
         </div>
 
-        {/* EMAIL + PASSWORD */}
         <div className={styles.block}>
           <label className={styles.label}>Email</label>
           <input
@@ -134,7 +121,6 @@ export default function PremiumSignupPage() {
               style={{ paddingRight: "50px" }}
             />
 
-            {/* 👁 TEMP BUTTON (SAFE VERSION) */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -156,7 +142,6 @@ export default function PremiumSignupPage() {
           </div>
         </div>
 
-        {/* COUNTRY */}
         <div className={styles.block}>
           <label className={styles.label}>Select your country</label>
           <select
@@ -178,9 +163,8 @@ export default function PremiumSignupPage() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
 
-        {/* PRICING */}
         <div className={styles.pricingBox}>
-          <p className={styles.price}>$1.99 / month</p>
+          <p className={styles.price}>$2.49 / month</p>
           <p className={styles.psychology}>
             Cancel anytime. No hidden fees.
           </p>
