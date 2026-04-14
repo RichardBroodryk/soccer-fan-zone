@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./TermsPage.module.css";
-
 import { getToken } from "../services/auth";
-import { apiRequest } from "../services/api";
 
 type TermsState = {
   tier?: "freemium" | "premium" | "super";
@@ -23,33 +21,30 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
-  // ---------------------------------------------------
-  // SAFETY GUARD
-  // ---------------------------------------------------
+  // ================= SAFETY GUARD =================
   useEffect(() => {
     if (!tier) {
       navigate("/welcome", { replace: true });
     }
   }, [tier, navigate]);
 
-  // ---------------------------------------------------
-  // ACCEPT TERMS → START CHECKOUT
-  // ---------------------------------------------------
+  // ================= ACCEPT TERMS =================
   const acceptTerms = async () => {
-    const acceptedAt = new Date().toISOString();
+    console.log("🔥 ACCEPT TERMS CLICKED");
 
-    // ✅ Freemium bypass
+    // ✅ Freemium flow
     if (tier === "freemium") {
-      navigate("/home-free", {
-        replace: true,
-        state: { acceptedAt },
-      });
+      console.log("➡️ FREEMIUM FLOW");
+      navigate("/home-free", { replace: true });
       return;
     }
 
     const token = getToken();
 
+    console.log("🔐 TOKEN:", token);
+
     if (!token) {
+      console.log("❌ NO TOKEN");
       navigate("/login");
       return;
     }
@@ -57,25 +52,44 @@ export default function TermsPage() {
     try {
       setLoading(true);
 
-      const data = await apiRequest(
-        "/api/payments",
-        "POST",
-        { tier },
-        token
+      console.log("🚀 CALLING /api/payments");
+
+      const response = await fetch(
+        "https://rugby-anthem-backend.fly.dev/api/payments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ tier }),
+        }
       );
 
-      console.log("🔥 CHECKOUT RESPONSE:", data);
+      console.log("📡 RAW RESPONSE:", response);
+
+      const data = await response.json();
+
+      console.log("📦 RESPONSE DATA:", data);
+
+      if (!response.ok) {
+        console.error("❌ RESPONSE NOT OK", data);
+        throw new Error("Request failed");
+      }
 
       if (!data.checkoutUrl) {
+        console.error("❌ NO checkoutUrl IN RESPONSE", data);
         throw new Error("Missing checkout URL");
       }
 
-      // ✅ REDIRECT TO PADDLE
+      console.log("✅ REDIRECTING TO:", data.checkoutUrl);
+
+      // ✅ THIS MUST HAPPEN
       window.location.href = data.checkoutUrl;
 
     } catch (err) {
-      console.error("❌ Checkout error:", err);
-      alert("Payment service unavailable. Please try again.");
+      console.error("💥 CHECKOUT FAILED:", err);
+      alert("Checkout failed — check console");
       setLoading(false);
     }
   };
