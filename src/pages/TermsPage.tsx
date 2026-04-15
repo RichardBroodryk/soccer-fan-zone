@@ -15,36 +15,27 @@ export default function TermsPage() {
   const location = useLocation();
 
   const state = location.state as TermsState | null;
-
   const tier = state?.tier;
   const country = state?.country;
 
   const [loading, setLoading] = useState(false);
 
-  // ================= SAFETY GUARD =================
   useEffect(() => {
     if (!tier) {
       navigate("/welcome", { replace: true });
     }
   }, [tier, navigate]);
 
-  // ================= ACCEPT TERMS =================
   const acceptTerms = async () => {
     console.log("🔥 ACCEPT TERMS CLICKED");
 
-    // ✅ Freemium flow
     if (tier === "freemium") {
-      console.log("➡️ FREEMIUM FLOW");
       navigate("/home-free", { replace: true });
       return;
     }
 
     const token = getToken();
-
-    console.log("🔐 TOKEN:", token);
-
     if (!token) {
-      console.log("❌ NO TOKEN");
       navigate("/login");
       return;
     }
@@ -52,7 +43,7 @@ export default function TermsPage() {
     try {
       setLoading(true);
 
-      console.log("🚀 CALLING /api/payments");
+      console.log("🚀 CALLING /api/payments with tier:", tier);
 
       const response = await fetch(
         "https://rugby-anthem-backend.fly.dev/api/payments",
@@ -66,30 +57,27 @@ export default function TermsPage() {
         }
       );
 
-      console.log("📡 RAW RESPONSE:", response);
-
       const data = await response.json();
-
       console.log("📦 RESPONSE DATA:", data);
 
       if (!response.ok) {
         console.error("❌ RESPONSE NOT OK", data);
-        throw new Error("Request failed");
+        throw new Error(data.error || "Request failed");
       }
 
       if (!data.checkoutUrl) {
-        console.error("❌ NO checkoutUrl IN RESPONSE", data);
-        throw new Error("Missing checkout URL");
+        console.error("❌ NO checkoutUrl RECEIVED", data);
+        throw new Error("Missing checkout URL from backend");
       }
 
-      console.log("✅ REDIRECTING TO:", data.checkoutUrl);
+      console.log("✅ REDIRECTING TO PADDLE CHECKOUT:", data.checkoutUrl);
 
-      // ✅ THIS MUST HAPPEN
+      // Critical: Use window.location.href to leave React Router context
       window.location.href = data.checkoutUrl;
 
-    } catch (err) {
+    } catch (err: any) {
       console.error("💥 CHECKOUT FAILED:", err);
-      alert("Checkout failed — check console");
+      alert("Checkout failed: " + (err.message || "Unknown error"));
       setLoading(false);
     }
   };
@@ -106,19 +94,9 @@ export default function TermsPage() {
         <p className={styles.context}>
           You are about to access Rugby Anthem Zone as a{" "}
           <strong>
-            {isFreemium
-              ? "Freemium"
-              : isPremium
-              ? "Premium"
-              : "Super Premium"}
+            {isFreemium ? "Freemium" : isPremium ? "Premium" : "Super Premium"}
           </strong>
-
-          {country && (
-            <>
-              {" "}
-              from <strong>{country}</strong>
-            </>
-          )}
+          {country && <> from <strong>{country}</strong></>}
           .
         </p>
       </header>
@@ -127,35 +105,26 @@ export default function TermsPage() {
         {(isPremium || isSuper) && (
           <div className={styles.summaryBox}>
             <h2>Subscription Summary</h2>
-
             <p className={styles.price}>
               {isPremium ? "$2.49 / month" : "$3.49 / month"}
             </p>
-
-            <p className={styles.note}>Billed monthly</p>
+            <p className={styles.note}>Billed monthly • Cancel anytime</p>
           </div>
         )}
 
         <div className={styles.block}>
           <h2>Access & Billing</h2>
-
           <ul>
             {isFreemium && (
               <>
                 <li>Freemium access is free and permanently limited.</li>
                 <li>The experience is ad-supported.</li>
-                <li>This is not a trial.</li>
               </>
             )}
-
             {(isPremium || isSuper) && (
               <>
                 <li>Subscription is billed monthly.</li>
-                <li>No free trial is offered.</li>
-                <li>
-                  Cancellation is effective only after a full billing month
-                  has elapsed.
-                </li>
+                <li>Cancellation is effective at the end of the billing period.</li>
               </>
             )}
           </ul>
@@ -168,14 +137,11 @@ export default function TermsPage() {
           onClick={acceptTerms}
           disabled={loading}
         >
-          {loading
-            ? "Starting secure checkout…"
-            : "Accept Terms & Continue"}
+          {loading ? "Starting secure checkout…" : "Accept Terms & Continue"}
         </button>
 
         <p className={styles.notice}>
-          By continuing, you confirm that you understand and accept the
-          terms above.
+          By continuing, you confirm that you understand and accept the terms above.
         </p>
       </footer>
     </section>
