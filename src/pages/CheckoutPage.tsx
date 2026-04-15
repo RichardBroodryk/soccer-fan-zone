@@ -24,18 +24,49 @@ const CheckoutPage = () => {
         console.log("✅ Paddle script loaded successfully");
 
         window.Paddle.Initialize({
-          token: "live_1315bcf84802de1b59fc1bd1da5",   // Your live client token
+          token: "live_1315bcf84802de1b59fc1bd1da5", // Your live client token
           eventCallback: (event: any) => {
-            console.log("📦 Paddle event received:", event.name);
+            console.log("📦 Paddle event:", event.name);
 
             if (event.name === "checkout.completed") {
               console.log("🎉 Checkout completed successfully");
-              setStatus("Payment successful! Redirecting...");
 
-              // Give a moment before redirecting to the correct homepage
-              setTimeout(() => {
-                window.location.href = "/home-super";   // Change based on tier if needed
-              }, 1500);
+              setStatus("Payment successful! Redirecting to your homepage...");
+
+              // Small delay to let Paddle finish processing
+              setTimeout(async () => {
+                try {
+                  // Try to get the real tier from the server
+                  const token = localStorage.getItem("raz_token");
+                  const res = await fetch(
+                    "https://rugby-anthem-backend.fly.dev/api/subscription",
+                    {
+                      headers: token ? { Authorization: `Bearer ${token}` } : {},
+                    }
+                  );
+
+                  if (res.ok) {
+                    const data = await res.json();
+                    const tier = data.tier;
+
+                    console.log("✅ Real tier from server:", tier);
+
+                    if (tier === "super") {
+                      window.location.href = "/home-super";
+                    } else if (tier === "premium") {
+                      window.location.href = "/home";
+                    } else {
+                      window.location.href = "/home-free";
+                    }
+                  } else {
+                    // Fallback
+                    window.location.href = "/home";
+                  }
+                } catch (err) {
+                  console.error("Redirect failed, using fallback");
+                  window.location.href = "/home";
+                }
+              }, 2000);
             }
           },
         });
@@ -43,7 +74,7 @@ const CheckoutPage = () => {
         setStatus("Opening secure checkout...");
       } else {
         console.error("❌ Paddle failed to load");
-        setStatus("Failed to load checkout. Please try again.");
+        setStatus("Failed to load checkout. Please refresh the page.");
       }
     };
 
