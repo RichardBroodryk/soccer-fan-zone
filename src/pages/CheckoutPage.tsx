@@ -1,119 +1,58 @@
-import { useEffect } from "react";
-
-declare global {
-  interface Window {
-    Paddle: any;
-  }
-}
+import { useEffect, useState } from "react";
+import { getUserTier } from "../services/auth";   // We'll use the one from auth.ts
 
 const CheckoutPage = () => {
+  const [status, setStatus] = useState("Processing your payment...");
 
   useEffect(() => {
-
-    console.log("🔥 CHECKOUT PAGE LOADED");
-
     const params = new URLSearchParams(window.location.search);
     const txn = params.get("_ptxn");
 
-    console.log("🔍 TXN:", txn);
+    console.log("🔍 CheckoutPage loaded with txn:", txn);
 
-    // =====================================================
-    // 🟢 PADDLE MODE
-    // =====================================================
-    if (txn) {
+    // Give Paddle webhook time + retry a few times
+    const checkAndRedirect = async (attempt = 0) => {
+      try {
+        const tier = await getUserTier();   // This calls the real backend
 
-      console.log("🟢 Paddle mode — loading checkout");
+        console.log("✅ Fetched real tier from server:", tier);
 
-      const script = document.createElement("script");
-      script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-      script.async = true;
-
-      document.body.appendChild(script);
-
-      script.onload = () => {
-        if (window.Paddle) {
-          window.Paddle.Initialize({
-            token: "live_1315bcf84802de1b59fc1bd1da5",
-            eventCallback: async (event: any) => {
-
-              console.log("🔥 PADDLE EVENT:", event);
-
-              // ✅ PAYMENT COMPLETE
-              if (event.name === "checkout.completed") {
-
-                console.log("✅ PAYMENT COMPLETED — checking subscription");
-
-                setTimeout(async () => {
-                  await checkSubscriptionAndRedirect();
-                }, 2000); // give webhook time
-              }
-            }
-          });
+        if (tier === "super") {
+          window.location.href = "/home-super";
+        } else if (tier === "premium") {
+          window.location.href = "/home";
+        } else {
+          window.location.href = "/home-free";
         }
-      };
+      } catch (err) {
+        console.error("Tier check failed on attempt", attempt, err);
+        if (attempt < 5) {
+          setStatus(`Verifying payment... (${attempt + 1}/5)`);
+          setTimeout(() => checkAndRedirect(attempt + 1), 1500);
+        } else {
+          setStatus("Payment completed. Please refresh the page.");
+          window.location.href = "/home-free";   // fallback
+        }
+      }
+    };
 
-      return;
-    }
-
-    // =====================================================
-    // 🔁 FALLBACK (NO TXN)
-    // =====================================================
-    checkSubscriptionAndRedirect();
+    // Start checking after a short delay
+    setTimeout(() => checkAndRedirect(), 2500);
 
   }, []);
 
-  // =====================================================
-  // 🔁 SUBSCRIPTION CHECK
-  // =====================================================
-  const checkSubscriptionAndRedirect = async () => {
-
-    try {
-      const token = localStorage.getItem("raz_token");
-
-      if (!token) {
-        console.error("❌ No token found");
-        return;
-      }
-
-      const res = await fetch(
-        "https://rugby-anthem-backend.fly.dev/api/subscription",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Cache-Control": "no-cache"
-          },
-        }
-      );
-
-      const data = await res.json();
-
-      console.log("✅ Subscription:", data);
-
-      if (data.tier === "super") {
-        window.location.href = "/home-super";
-      } else if (data.tier === "premium") {
-        window.location.href = "/home";
-      } else {
-        window.location.href = "/home-free";
-      }
-
-    } catch (err) {
-      console.error("❌ Subscription check failed:", err);
-    }
-  };
-
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <h2>Processing your subscription...</h2>
-      <p>Please wait while we complete checkout.</p>
+    <div style={{
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      background: "#0a0a0a",
+      color: "white"
+    }}>
+      <h2>{status}</h2>
+      <p>Please wait while we verify your subscription...</p>
     </div>
   );
 };

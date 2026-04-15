@@ -1,16 +1,17 @@
 import { apiRequest } from "./api";
 
 export const createPaymentSession = async (tier: "premium" | "super") => {
+  const token = localStorage.getItem("raz_token");   // ← Fixed key
 
-  const token = localStorage.getItem("token"); // 🔥 ADD THIS
+  if (!token) {
+    throw new Error("No auth token found. Please log in again.");
+  }
 
   const data = await apiRequest(
     "/api/payments",
     "POST",
-    {
-      tier
-    },
-    token || undefined // 🔥 PASS TOKEN
+    { tier },
+    token
   );
 
   return data;
