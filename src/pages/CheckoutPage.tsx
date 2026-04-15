@@ -1,43 +1,48 @@
 import { useEffect, useState } from "react";
-import { getUserTier } from "../services/auth";   // We'll use the one from auth.ts
+import { getUserTier } from "../services/auth";
 
 const CheckoutPage = () => {
   const [status, setStatus] = useState("Processing your payment...");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const txn = params.get("_ptxn");
+    console.log("🔥 CheckoutPage loaded");
 
-    console.log("🔍 CheckoutPage loaded with txn:", txn);
+    // Clear any old cached tier data
+    localStorage.removeItem("subscriptionTier");
+    localStorage.removeItem("raz_tier");
 
-    // Give Paddle webhook time + retry a few times
     const checkAndRedirect = async (attempt = 0) => {
       try {
-        const tier = await getUserTier();   // This calls the real backend
+        const tier = await getUserTier();
 
-        console.log("✅ Fetched real tier from server:", tier);
+        console.log("✅ Real tier from server:", tier);
 
+        setStatus(`Subscription upgraded to ${tier || "freemium"}...`);
+
+        // Exact redirect rules you specified
         if (tier === "super") {
-          window.location.href = "/home-super";
+          window.location.href = "/home-super";        // Super Premium homepage
         } else if (tier === "premium") {
-          window.location.href = "/home";
+          window.location.href = "/home";              // Main Premium homepage
         } else {
-          window.location.href = "/home-free";
+          window.location.href = "/home-free";         // Freemium homepage
         }
+
       } catch (err) {
         console.error("Tier check failed on attempt", attempt, err);
-        if (attempt < 5) {
-          setStatus(`Verifying payment... (${attempt + 1}/5)`);
-          setTimeout(() => checkAndRedirect(attempt + 1), 1500);
+
+        if (attempt < 6) {
+          setStatus(`Verifying payment... (${attempt + 1}/6)`);
+          setTimeout(() => checkAndRedirect(attempt + 1), 1800);
         } else {
-          setStatus("Payment completed. Please refresh the page.");
-          window.location.href = "/home-free";   // fallback
+          setStatus("Payment completed. Please refresh the page or log in again.");
+          window.location.href = "/home-free";
         }
       }
     };
 
-    // Start checking after a short delay
-    setTimeout(() => checkAndRedirect(), 2500);
+    // Start checking after short delay to allow webhook to process
+    setTimeout(() => checkAndRedirect(), 3000);
 
   }, []);
 
@@ -49,10 +54,12 @@ const CheckoutPage = () => {
       justifyContent: "center",
       alignItems: "center",
       background: "#0a0a0a",
-      color: "white"
+      color: "white",
+      textAlign: "center",
+      padding: "20px"
     }}>
       <h2>{status}</h2>
-      <p>Please wait while we verify your subscription...</p>
+      <p>Please wait while we verify your subscription and redirect you...</p>
     </div>
   );
 };
