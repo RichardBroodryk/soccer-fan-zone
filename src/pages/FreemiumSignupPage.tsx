@@ -117,34 +117,34 @@ export default function FreemiumSignupPage() {
 
           <label className={styles.label}>Password</label>
           <div style={{ position: "relative" }}>
-            <input
-              type={showPassword ? "text" : "password"}
-              className={styles.select}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              style={{ paddingRight: "50px" }}
-            />
+  <input
+    type={showPassword ? "text" : "password"}
+    className={styles.select}
+    value={password}
+    onChange={(e) => {
+      setPassword(e.target.value);
+      setError(""); // ✅ CLEAR ERROR ON TYPE
+    }}
+    placeholder="Enter password"
+    style={{ paddingRight: "40px" }}
+  />
 
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                right: "8px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "#222",
-                color: "#fff",
-                border: "none",
-                padding: "4px 8px",
-                fontSize: "11px",
-                cursor: "pointer",
-              }}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    style={{
+      position: "absolute",
+      right: "10px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      cursor: "pointer",
+      fontSize: "14px",
+      opacity: 0.7,
+      userSelect: "none",
+    }}
+  >
+    {showPassword ? "🙈" : "👁️"}
+  </span>
+</div>
         </div>
 
         {/* COUNTRY */}
