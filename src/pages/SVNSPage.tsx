@@ -1,39 +1,39 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Flag from "../components/images/Flag";
+
 import { matches2026 } from "../data/matches";
+import { tournaments2026 } from "../data/tournamentMeta";
+import { getTournamentVisual } from "../data/tournamentVisuals";
+
 import type { MatchData } from "../data/matches/types";
 
 import styles from "./SVNSPage.module.css";
 
 /* ================= HELPERS ================= */
 
-function getDayLabel(date: string) {
+function formatMatchDate(date: string) {
   const d = new Date(date);
-  const day = d.getDate();
 
-  if (day === 17) return "Day 1";
-  if (day === 18) return "Day 2";
-  if (day === 19) return "Day 3";
-
-  return d.toDateString();
+  return d.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
 }
 
-/* ================= TYPES ================= */
+/* ================= POOL ENGINE ================= */
 
 type PoolRow = {
   team: string;
   country: string;
   played: number;
-  won: number;
-  lost: number;
   pf: number;
   pa: number;
   pd: number;
   points: number;
 };
-
-/* ================= POOL ENGINE ================= */
 
 function buildPoolTable(matches: MatchData[]) {
   const table: Record<string, PoolRow> = {};
@@ -47,8 +47,6 @@ function buildPoolTable(matches: MatchData[]) {
           team: team.name,
           country: team.country,
           played: 0,
-          won: 0,
-          lost: 0,
           pf: 0,
           pa: 0,
           pd: 0,
@@ -72,13 +70,9 @@ function buildPoolTable(matches: MatchData[]) {
     away.pa += match.score.home;
 
     if (match.score.home > match.score.away) {
-      home.won++;
       home.points += 3;
-      away.lost++;
     } else if (match.score.away > match.score.home) {
-      away.won++;
       away.points += 3;
-      home.lost++;
     }
   });
 
@@ -94,7 +88,6 @@ function getPools(matches: MatchData[], gender: "men" | "women") {
     .filter((m) => m.gender === gender && m.round === "pool")
     .forEach((m) => {
       if (!m.pool) return;
-
       if (!pools[m.pool]) pools[m.pool] = [];
       pools[m.pool].push(m);
     });
@@ -102,39 +95,20 @@ function getPools(matches: MatchData[], gender: "men" | "women") {
   return pools;
 }
 
-/* ================= BRACKET ENGINE ================= */
+/* ================= BRACKET ================= */
 
-function getTopTeams(pools: Record<string, MatchData[]>) {
-  const tables = Object.entries(pools).map(([pool, matches]) => ({
-    pool,
-    table: buildPoolTable(matches),
-  }));
+function buildQuarterFinals(pools: Record<string, MatchData[]>) {
+  const tables = Object.values(pools).map((matches) =>
+    buildPoolTable(matches)
+  );
 
-  const first: PoolRow[] = [];
-  const second: PoolRow[] = [];
-  const third: PoolRow[] = [];
-
-  tables.forEach(({ table }) => {
-    if (table[0]) first.push(table[0]);
-    if (table[1]) second.push(table[1]);
-    if (table[2]) third.push(table[2]);
-  });
+  const first = tables.map((t) => t[0]).filter(Boolean);
+  const second = tables.map((t) => t[1]).filter(Boolean);
+  const third = tables.map((t) => t[2]).filter(Boolean);
 
   const bestThird = third
     .sort((a, b) => b.points - a.points || b.pd - a.pd)
     .slice(0, 2);
-
-  return {
-    first,
-    second,
-    bestThird,
-  };
-}
-
-function buildQuarterFinals(
-  pools: Record<string, MatchData[]>
-) {
-  const { first, second, bestThird } = getTopTeams(pools);
 
   return [
     { home: first[0], away: bestThird[0] },
@@ -149,20 +123,38 @@ function buildQuarterFinals(
 export default function SVNSPage() {
   const navigate = useNavigate();
 
+  const tournament = tournaments2026.find(
+    (t) => t.conceptId === "svns-series"
+  );
+
+  const visual = getTournamentVisual("svns-series");
+
   const svnsMatches = useMemo(() => {
     return matches2026.filter(
-      (m: MatchData) =>
-        m.competitionId === "svns" &&
-        m.stage === "hong-kong"
+      (m) => m.competitionId === "svns"
     );
   }, []);
+
+  /* 🔥 STEP 9 — REAL QF MATCHS */
+  const qfMatches = useMemo(() => {
+    return svnsMatches.filter(
+      (m) => m.round === "quarter-final"
+    );
+  }, [svnsMatches]);
+
+  const womensQFMatches = qfMatches.filter(
+    (m) => m.gender === "women"
+  );
+
+  const mensQFMatches = qfMatches.filter(
+    (m) => m.gender === "men"
+  );
 
   const matchesByDay = useMemo(() => {
     const grouped: Record<string, MatchData[]> = {};
 
     svnsMatches.forEach((match) => {
-      const day = getDayLabel(match.date);
-
+      const day = formatMatchDate(match.date);
       if (!grouped[day]) grouped[day] = [];
       grouped[day].push(match);
     });
@@ -171,151 +163,197 @@ export default function SVNSPage() {
   }, [svnsMatches]);
 
   return (
-  <main className={styles.page}>
-    {/* HERO */}
-    <header className={styles.hero}>
-      <h1>SVNS World Championship — Hong Kong</h1>
-      <p>Pool Stage → Knockout → Finals</p>
-    </header>
+    <main className={styles.page}>
+      {/* HERO */}
+      <header
+        className={`${styles.hero} ${styles.heroContained}`}
+        style={{
+          backgroundImage: `url(${
+            visual.heroImageMen || visual.heroImageWomen
+          })`,
+        }}
+      />
 
-    {/* BACK */}
-    <div className={styles.backNav}>
-      <button onClick={() => navigate("/tournaments")}>
-        ← Back to Tournaments
-      </button>
-    </div>
+      {/* TITLE */}
+      <div className={styles.titleBlock}>
+        <h1>
+          {tournament?.name} {tournament?.year}
+        </h1>
+        <p>{tournament?.heroSubtitle}</p>
+      </div>
 
-    {Object.entries(matchesByDay).map(([day, matches]) => {
-      const womenPools = getPools(matches, "women");
-      const menPools = getPools(matches, "men");
+      {/* BACK */}
+      <div className={styles.backNav}>
+        <button onClick={() => navigate("/tournaments")}>
+          ← Back to Tournaments
+        </button>
+      </div>
 
-      const womenQF = buildQuarterFinals(womenPools);
-      const menQF = buildQuarterFinals(menPools);
+      {/* CONTENT */}
+      {Object.entries(matchesByDay).map(([day, matches]) => {
+        const womenPools = getPools(matches, "women");
+        const menPools = getPools(matches, "men");
 
-      return (
-        <section key={day} className={styles.section}>
-          <h2 className={styles.dayTitle}>{day}</h2>
+        const womenQF = buildQuarterFinals(womenPools).map(
+          (m, i) => ({
+            ...m,
+            match: womensQFMatches[i],
+          })
+        );
 
-          {/* ================= WOMEN ================= */}
-          <div className={styles.block}>
-            <h3 className={styles.genderTitle}>Women</h3>
+        const menQF = buildQuarterFinals(menPools).map(
+          (m, i) => ({
+            ...m,
+            match: mensQFMatches[i],
+          })
+        );
 
-            {/* POOLS */}
-            <div className={styles.poolsGrid}>
-              {Object.entries(womenPools).map(([pool, poolMatches]) => {
-                const table = buildPoolTable(poolMatches);
+        return (
+          <section key={day} className={styles.section}>
+            <h2>{day}</h2>
 
-                return (
-                  <div key={pool} className={styles.poolCard}>
-                    <h4>Pool {pool}</h4>
+            {/* WOMEN */}
+            <div className={styles.block}>
+              <h3>Women</h3>
 
-                    <table className={styles.poolTable}>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Team</th>
-                          <th>P</th>
-                          <th>PD</th>
-                          <th>PTS</th>
-                        </tr>
-                      </thead>
+              {Object.entries(womenPools).map(
+                ([pool, poolMatches]) => {
+                  const table = buildPoolTable(poolMatches);
 
-                      <tbody>
-                        {table.map((row, i) => (
-                          <tr key={row.team}>
-                            <td>{i + 1}</td>
-                            <td className={styles.teamCell}>
-                              {row.team}
-                            </td>
-                            <td>{row.played}</td>
-                            <td>{row.pd}</td>
-                            <td className={styles.points}>
-                              {row.points}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                );
-              })}
-            </div>
+                  return (
+                    <div key={pool} className={styles.poolCard}>
+                      <h4>Pool {pool}</h4>
 
-            {/* BRACKET */}
-            <div className={styles.bracketCard}>
-              <h4>Quarter-finals</h4>
+                      <table className={styles.poolTable}>
+                        <tbody>
+                          {table.map((row, i) => (
+                            <tr key={row.team}>
+                              <td>{i + 1}</td>
 
-              <div className={styles.bracketGrid}>
+                              <td className={styles.teamCell}>
+                                <Flag country={row.country} size="small" />
+                                <span>{row.team}</span>
+                              </td>
+
+                              <td>{row.points}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                }
+              )}
+
+              {/* WOMEN QF */}
+              <div className={styles.bracketTree}>
+                <h4>Quarter-finals</h4>
+
                 {womenQF.map((m, i) => (
-                  <div key={i} className={styles.matchBox}>
-                    <div>{m.home?.team || "TBD"}</div>
+                  <div
+                    key={i}
+                    className={styles.matchBox}
+                    onClick={() =>
+                      m.match &&
+                      navigate(`/match/${m.match.id}`)
+                    }
+                  >
+                    <div className={styles.teamLine}>
+                      <Flag country={m.home?.country || "unknown"} size="small" />
+                      <span>{m.home?.team || "TBD"}</span>
+                    </div>
+
                     <div className={styles.vs}>vs</div>
-                    <div>{m.away?.team || "TBD"}</div>
+
+                    <div className={styles.teamLine}>
+                      <Flag country={m.away?.country || "unknown"} size="small" />
+                      <span>{m.away?.team || "TBD"}</span>
+                    </div>
+
+                    <div className={styles.time}>
+                      {m.match
+                        ? new Date(m.match.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : ""}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* ================= MEN ================= */}
-          <div className={styles.block}>
-            <h3 className={styles.genderTitle}>Men</h3>
+            {/* MEN */}
+            <div className={styles.block}>
+              <h3>Men</h3>
 
-            <div className={styles.poolsGrid}>
-              {Object.entries(menPools).map(([pool, poolMatches]) => {
-                const table = buildPoolTable(poolMatches);
+              {Object.entries(menPools).map(
+                ([pool, poolMatches]) => {
+                  const table = buildPoolTable(poolMatches);
 
-                return (
-                  <div key={pool} className={styles.poolCard}>
-                    <h4>Pool {pool}</h4>
+                  return (
+                    <div key={pool} className={styles.poolCard}>
+                      <h4>Pool {pool}</h4>
 
-                    <table className={styles.poolTable}>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Team</th>
-                          <th>P</th>
-                          <th>PD</th>
-                          <th>PTS</th>
-                        </tr>
-                      </thead>
+                      <table className={styles.poolTable}>
+                        <tbody>
+                          {table.map((row, i) => (
+                            <tr key={row.team}>
+                              <td>{i + 1}</td>
 
-                      <tbody>
-                        {table.map((row, i) => (
-                          <tr key={row.team}>
-                            <td>{i + 1}</td>
-                            <td className={styles.teamCell}>
-                              {row.team}
-                            </td>
-                            <td>{row.played}</td>
-                            <td>{row.pd}</td>
-                            <td className={styles.points}>
-                              {row.points}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                );
-              })}
-            </div>
+                              <td className={styles.teamCell}>
+                                <Flag country={row.country} size="small" />
+                                <span>{row.team}</span>
+                              </td>
 
-            <div className={styles.bracketCard}>
-              <h4>Quarter-finals</h4>
+                              <td>{row.points}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                }
+              )}
 
-              <div className={styles.bracketGrid}>
+              {/* MEN QF */}
+              <div className={styles.bracketTree}>
+                <h4>Quarter-finals</h4>
+
                 {menQF.map((m, i) => (
-                  <div key={i} className={styles.matchBox}>
-                    <div>{m.home?.team || "TBD"}</div>
+                  <div
+                    key={i}
+                    className={styles.matchBox}
+                    onClick={() =>
+                      m.match &&
+                      navigate(`/match/${m.match.id}`)
+                    }
+                  >
+                    <div className={styles.teamLine}>
+                      <Flag country={m.home?.country || "unknown"} size="small" />
+                      <span>{m.home?.team || "TBD"}</span>
+                    </div>
+
                     <div className={styles.vs}>vs</div>
-                    <div>{m.away?.team || "TBD"}</div>
+
+                    <div className={styles.teamLine}>
+                      <Flag country={m.away?.country || "unknown"} size="small" />
+                      <span>{m.away?.team || "TBD"}</span>
+                    </div>
+
+                    <div className={styles.time}>
+                      {m.match
+                        ? new Date(m.match.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })
+                        : ""}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-                  </section>
+          </section>
         );
       })}
     </main>

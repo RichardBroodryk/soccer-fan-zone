@@ -114,7 +114,7 @@ export const tournaments2026: TournamentMeta[] = [
     matchKey: "HSBC SVNS World Championship 2026",
     heroBadge: "WORLD CHAMPIONSHIP",
     heroSubtitle: "Hong Kong · Valladolid · Bordeaux",
-    route: "/tournaments/svns-2026",
+    route: "/svns",
     window: "Apr – Jun 2026",
   },
 

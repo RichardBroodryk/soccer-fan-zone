@@ -1,37 +1,108 @@
-.page { padding: 16px; }
+.page {
+  padding: 20px;
+}
 
-.hero { margin-bottom: 16px; }
+/* HERO (matches TournamentPage feel) */
+.hero {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+}
 
-.section { margin-bottom: 32px; }
+.heroContained {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #000;
+}
 
-.block { margin-top: 20px; }
+/* TITLE BLOCK (CRITICAL — THIS WAS MISSING VISUALLY) */
+.titleBlock {
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
 
-.poolBlock { margin-bottom: 16px; }
+.titleBlock h1 {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
 
+.titleBlock p {
+  color: #666;
+}
+
+/* BACK */
+.backNav {
+  margin-bottom: 20px;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 32px;
+}
+
+.block {
+  margin-top: 20px;
+}
+
+/* POOLS */
+.poolsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.poolCard {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
 .poolTable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 6px;
 }
 
-.poolTable th {
-  background: #111;
-  color: #fff;
-  padding: 6px;
-}
-
 .poolTable td {
   padding: 6px;
-  text-align: center;
   border-bottom: 1px solid #eee;
 }
 
+/* TEAM CELL */
+.teamCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* BRACKET */
 .bracket {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .matchBox {
-  padding: 8px;
   border: 1px solid #ddd;
-  margin-bottom: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+.titleBlock {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.backNav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.time {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
 }
