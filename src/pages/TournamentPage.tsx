@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Flag from "../components/images/Flag";
 import MatchRow from "../components/match/MatchRow";
 
 import { tournaments2026 } from "../data/tournamentMeta";
@@ -216,13 +215,6 @@ export default function TournamentPage() {
       away.points += 2;
     }
   });
-
-  const table = Object.values(standings)
-    .map((t) => ({
-      ...t,
-      pd: t.pf - t.pa,
-    }))
-    .sort((a, b) => b.points - a.points || b.pd - a.pd);
 
   /* ================= RENDER ================= */
 
