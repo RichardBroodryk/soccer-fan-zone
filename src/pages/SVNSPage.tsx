@@ -159,18 +159,7 @@ export default function SVNSPage() {
     );
   }
 
-  const qfMatches = svnsMatches.filter((m) => m.round === "quarter-final");
-  const sfMatches = svnsMatches.filter((m) => m.round === "semi-final");
-  const finalMatches = svnsMatches.filter((m) => m.round === "final");
-
-  const womensQF = qfMatches.filter((m) => m.gender === "women");
-  const mensQF = qfMatches.filter((m) => m.gender === "men");
-
-  const womensSF = sfMatches.filter((m) => m.gender === "women");
-  const mensSF = sfMatches.filter((m) => m.gender === "men");
-
-  const womensFinal = finalMatches.filter((m) => m.gender === "women");
-  const mensFinal = finalMatches.filter((m) => m.gender === "men");
+  /* ================= RENDER ================= */
 
   return (
     <main>
