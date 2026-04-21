@@ -409,7 +409,7 @@ export const matches2026Men: MatchData[] = [
 
   {
     id: 5001,
-    competitionId: "pacific-nations-cup",
+    competitionId: "pacific-nations",
     tournamentInstanceId: PACIFIC_NATIONS_2026,
     tournament: "Pacific Nations Cup 2026",
     date: "2026-08-15",
@@ -419,7 +419,7 @@ export const matches2026Men: MatchData[] = [
   },
   {
     id: 5002,
-    competitionId: "pacific-nations-cup",
+    competitionId: "pacific-nations",
     tournamentInstanceId: PACIFIC_NATIONS_2026,
     tournament: "Pacific Nations Cup 2026",
     date: "2026-08-22",
@@ -429,7 +429,7 @@ export const matches2026Men: MatchData[] = [
   },
   {
     id: 5003,
-    competitionId: "pacific-nations-cup",
+    competitionId: "pacific-nations",
     tournamentInstanceId: PACIFIC_NATIONS_2026,
     tournament: "Pacific Nations Cup 2026",
     date: "2026-08-29",
@@ -475,7 +475,7 @@ export const matches2026Men: MatchData[] = [
 
   {
     id: 7001,
-    competitionId: "rivalry",
+    competitionId: "sa-nz-rival-tour",
     tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
     tournament: "The Rivalry Tour 2026",
     date: "2026-09-12",
@@ -485,7 +485,7 @@ export const matches2026Men: MatchData[] = [
   },
   {
     id: 7002,
-    competitionId: "rivalry",
+    competitionId: "sa-nz-rival-tour",
     tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
     tournament: "The Rivalry Tour 2026",
     date: "2026-09-19",
@@ -495,7 +495,7 @@ export const matches2026Men: MatchData[] = [
   },
   {
     id: 7003,
-    competitionId: "rivalry",
+    competitionId: "sa-nz-rival-tour",
     tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
     tournament: "The Rivalry Tour 2026",
     date: "2026-09-26",
@@ -505,7 +505,7 @@ export const matches2026Men: MatchData[] = [
   },
   {
     id: 7004,
-    competitionId: "rivalry",
+    competitionId: "sa-nz-rival-tour",
     tournamentInstanceId: SA_NZ_RIVAL_TOUR_2026,
     tournament: "The Rivalry Tour 2026",
     date: "2026-10-03",

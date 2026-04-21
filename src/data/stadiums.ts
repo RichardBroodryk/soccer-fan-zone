@@ -15,6 +15,10 @@ export const stadiums: Stadium[] = [
   { name: "Stade de France", slug: "stade-de-france", country: "France", city: "Paris" },
   { name: "Stadio Olimpico", slug: "stadio-olimpico", country: "Italy", city: "Rome" },
 
+  { name: "Allianz Stadium", slug: "allianz-stadium", country: "England", city: "London" },
+  { name: "Stade des Alpes", slug: "stade-des-alpes", country: "France", city: "Grenoble" },
+  { name: "Dexcom Stadium", slug: "dexcom", country: "Ireland", city: "Galway" },
+
   /* ===== RUGBY CHAMPIONSHIP ===== */
 
   { name: "Eden Park", slug: "eden-park", country: "New Zealand", city: "Auckland" },

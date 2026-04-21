@@ -1,255 +1,202 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-
-import Flag from "../components/images/Flag";
-import TeamComparisonTable from "../components/stats/TeamComparisonTable";
-
-import type { MatchData } from "../data/matches/types";
-import { matches2026 } from "../data/matches";
-import { tournaments2026 } from "../data/tournamentMeta";
-import { stadiums } from "../data/stadiums";
-import { matchDetails2026 } from "../data/matchDetails2026";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styles from "./MatchPage.module.css";
 
-import { API_BASE_URL } from "../config/api";
-
-import {
-  fetchMatchLineups,
-  MatchLineups,
-} from "../services/playerService";
-
-/* ================= HELPERS ================= */
-
-function resolveState(match: MatchData): "final" | "upcoming" {
-  if (match.score) return "final";
-  return new Date(match.date) > new Date() ? "upcoming" : "final";
-}
-
-function buildMirrorRows(home: any[], away: any[]) {
-  const max = Math.max(home.length, away.length);
-  const rows = [];
-
-  for (let i = 0; i < max; i++) {
-    rows.push({
-      home: home[i],
-      away: away[i],
-    });
-  }
-
-  return rows;
-}
-
-/* ================= PAGE ================= */
+import { flagMap } from "../data/flagMap";
+import { getStadiumByName } from "../utils/stadiumResolver";
+import { getMatchDetails } from "../utils/matchDetailsResolver";
 
 export default function MatchPage() {
-  const { id } = useParams<{ id: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const matchId = id ? Number(id) : NaN;
+  const match = location.state as any;
+  const tournamentSlug = match?.tournamentSlug || "";
 
-  const [stats, setStats] = useState<any>(null);
-  const [lineups, setLineups] = useState<MatchLineups | null>(null);
-  const [comments, setComments] = useState<any[]>([]);
-  const [text, setText] = useState("");
-
-  const match = matches2026.find((m) => m.id === matchId);
-
-  /* ================= LOAD DATA ================= */
-
-  useEffect(() => {
-    async function loadStats() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/stats/match/${matchId}`);
-        if (res.ok) {
-          setStats(await res.json());
-          return;
-        }
-      } catch {}
-
-      const local = matchDetails2026.find((m) => m.matchId === matchId);
-      if (local) setStats(local);
-    }
-
-    if (!isNaN(matchId)) loadStats();
-  }, [matchId]);
-
-  useEffect(() => {
-    if (!isNaN(matchId)) {
-      fetchMatchLineups(matchId).then(setLineups);
-    }
-  }, [matchId]);
-
-  useEffect(() => {
-    async function loadComments() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/comments?match_id=${matchId}`);
-        if (!res.ok) return;
-        setComments(await res.json());
-      } catch {}
-    }
-
-    if (!isNaN(matchId)) loadComments();
-  }, [matchId]);
-
-  async function postComment() {
-    const token = localStorage.getItem("token");
-    if (!token) return alert("Please log in.");
-
-    await fetch(`${API_BASE_URL}/api/comments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ match_id: matchId, content: text }),
-    });
-
-    setText("");
-  }
+  const [userComments, setUserComments] = useState<any[]>([]);
+  const [newComment, setNewComment] = useState("");
 
   if (!match) {
-    return <main className={styles.error}>Match not found</main>;
+    return <div className={styles.page}>Match not found</div>;
   }
 
-  const instanceId = (match as any).tournamentInstanceId;
+  const details = getMatchDetails(match);
 
-  const tournament = tournaments2026.find(
-    (t) => t.instanceId === instanceId
-  );
+  const homeFlag = flagMap[match.home.country];
+  const awayFlag = flagMap[match.away.country];
+  const stadium = getStadiumByName(match.venue);
 
-  const backToTournament = tournament ? tournament.route : "/tournaments";
+  const formattedDate = match.date
+    ? new Date(match.date).toLocaleString("en-GB", {
+        dateStyle: "full",
+        timeStyle: "short",
+      })
+    : "Date TBC";
 
-  const { home, away, score, venue, date } = match;
+  const hasScore = !!match.score;
 
-  const stadium = stadiums.find((s) => s.name === venue);
+  const handlePostComment = () => {
+    if (newComment.trim() === "") return;
 
-  const status = (match as any).state || resolveState(match);
+    const comment = {
+      id: Date.now().toString(),
+      tournamentId: match.competitionId,
+      text: newComment,
+      createdAt: new Date().toISOString(),
+      author: { displayName: "You" },
+    };
 
-  /* ================= LINEUPS ================= */
-
-  const homePlayers =
-    lineups?.home.starting ||
-    stats?.lineups?.homeStarting ||
-    [];
-
-  const awayPlayers =
-    lineups?.away.starting ||
-    stats?.lineups?.awayStarting ||
-    [];
-
-  const mirrorRows = buildMirrorRows(homePlayers, awayPlayers);
-
-  /* ================= STATS ================= */
-
-  const matchStats = stats
-    ? [
-        { label: "Possession", home: stats.possession?.home ?? "—", away: stats.possession?.away ?? "—" },
-        { label: "Territory", home: stats.territory?.home ?? "—", away: stats.territory?.away ?? "—" },
-        { label: "Tries", home: stats.tries?.home ?? score?.home ?? "—", away: stats.tries?.away ?? score?.away ?? "—" },
-      ]
-    : [];
-
-  /* ================= RENDER ================= */
+    setUserComments([...userComments, comment]);
+    setNewComment("");
+  };
 
   return (
     <main className={styles.page}>
-      {/* BACK */}
-      <nav className={styles.backNav}>
-        <button onClick={() => navigate(backToTournament)}>
-          ← Back to {tournament ? `${tournament.name} ${tournament.year}` : "Tournaments"}
+      {/* ================= TOP MATCH BAR ================= */}
+      <header className={styles.hero}>
+        <button 
+          className={styles.backButton}
+          onClick={() => navigate(`/tournaments/${tournamentSlug}`)}
+        >
+          ← Back to Tournament
         </button>
-      </nav>
 
-      {/* HEADER */}
-      <header className={styles.header}>
-        <h1>{match.tournament}</h1>
-        <span className={`${styles.status} ${styles[status]}`}>
-          {status}
-        </span>
+        <div className={styles.teamsRow}>
+          <div className={styles.team}>
+            {homeFlag && <img src={homeFlag} alt="" className={styles.flag} />}
+            <span>{match.home.name}</span>
+          </div>
+
+          <div className={styles.center}>
+            {hasScore ? (
+              <div className={styles.score}>
+                {match.score.home} - {match.score.away}
+              </div>
+            ) : (
+              <div className={styles.vs}>VS</div>
+            )}
+          </div>
+
+          <div className={styles.team}>
+            <span>{match.away.name}</span>
+            {awayFlag && <img src={awayFlag} alt="" className={styles.flag} />}
+          </div>
+        </div>
+
+        <div className={styles.meta}>
+          <span>{formattedDate}</span>
+          {stadium && (
+            <a href={`/stadium/${stadium.slug}`} className={styles.stadiumLink}>
+              🏟 {stadium.name}
+            </a>
+          )}
+        </div>
       </header>
 
-      {/* TEAMS */}
-      <section className={styles.teams}>
-        <div>
-          <Flag country={home.country} size="large" />
-          <h2>{home.name}</h2>
-        </div>
-
-        <div className={styles.score}>
-          {score ? `${score.home} – ${score.away}` : "vs"}
-        </div>
-
-        <div>
-          <Flag country={away.country} size="large" />
-          <h2>{away.name}</h2>
-        </div>
-      </section>
-
-      {/* META */}
-      <section className={styles.meta}>
-        <span>{date}</span>
-        <span>{stadium?.name || "Venue TBC"}</span>
-      </section>
-
-      {/* LINEUPS — MIRROR */}
-      <section className={styles.lineups}>
-        <h2>Lineups</h2>
-
-        <div className={styles.mirrorHeader}>
-          <span>{home.name}</span>
-          <span>vs</span>
-          <span>{away.name}</span>
-        </div>
-
-        <div className={styles.mirrorGrid}>
-          {mirrorRows.map((row, i) => (
-            <div key={i} className={styles.mirrorRow}>
-              <div className={styles.mirrorPlayerLeft}>
-                {row.home && (
-                  <>
-                    <span className={styles.number}>{row.home.number}</span>
-                    <span>{row.home.name}</span>
-                  </>
-                )}
-              </div>
-
-              <div className={styles.mirrorCenter}>vs</div>
-
-              <div className={styles.mirrorPlayerRight}>
-                {row.away && (
-                  <>
-                    <span>{row.away.name}</span>
-                    <span className={styles.number}>{row.away.number}</span>
-                  </>
-                )}
-              </div>
+      {/* ================= EVENTS ================= */}
+      <section className={styles.section}>
+        <h2>Match Events</h2>
+        {details?.timeline && details.timeline.length > 0 ? (
+          details.timeline.map((e: any, i: number) => (
+            <div key={i} className={styles.event}>
+              <strong>{e.minute}</strong> — {e.label}
             </div>
-          ))}
+          ))
+        ) : (
+          <p>No events recorded yet for this match.</p>
+        )}
+      </section>
+
+      {/* ================= LINEUPS ================= */}
+      <section className={styles.section}>
+        <h2>Lineups</h2>
+        
+        <div className={styles.lineups}>
+          <div>
+            <h3>{match.home.name} — Starting XV</h3>
+            {details?.lineups?.homeStarting && details.lineups.homeStarting.length > 0 ? (
+              details.lineups.homeStarting.map((p: any) => (
+                <div key={p.number} className={styles.player}>
+                  {p.number}. {p.name}
+                </div>
+              ))
+            ) : (
+              <p>No starting lineup data yet for home team.</p>
+            )}
+          </div>
+
+          <div>
+            <h3>{match.away.name} — Starting XV</h3>
+            {details?.lineups?.awayStarting && details.lineups.awayStarting.length > 0 ? (
+              details.lineups.awayStarting.map((p: any) => (
+                <div key={p.number} className={styles.player}>
+                  {p.number}. {p.name}
+                </div>
+              ))
+            ) : (
+              <p>No starting lineup data yet for away team.</p>
+            )}
+          </div>
+        </div>
+
+        {/* The Bench */}
+        <div className={styles.benchSection}>
+          <h3>The Bench</h3>
+          {details?.lineups?.homeBench && details.lineups.homeBench.length > 0 ? (
+            details.lineups.homeBench.map((p: any) => (
+              <div key={p.number} className={styles.player}>
+                {p.number}. {p.name}
+              </div>
+            ))
+          ) : (
+            <p>No bench data yet for this match.</p>
+          )}
         </div>
       </section>
 
-      {/* STATS */}
+      {/* ================= PLAYER PERFORMANCES ================= */}
       <section className={styles.section}>
-        <h2>Stats</h2>
-
-        <TeamComparisonTable
-          home={{ name: home.name, country: home.country }}
-          away={{ name: away.name, country: away.country }}
-          stats={matchStats}
-        />
+        <h2>Player Performances</h2>
+        {details?.performances && details.performances.length > 0 ? (
+          details.performances.map((perf: any, i: number) => (
+            <div key={i} className={styles.performance}>
+              <strong>{perf.category}:</strong> {perf.player} — {perf.value}
+            </div>
+          ))
+        ) : (
+          <p>No performance stats yet for this match.</p>
+        )}
       </section>
 
-      {/* COMMENTS */}
+      {/* ================= FAN COMMENTS (PROFESSIONAL) ================= */}
       <section className={styles.section}>
-        <h2>Fan Reactions</h2>
+        <h2>Fan Comments</h2>
 
-        {comments.map((c) => (
-          <p key={c.id}>{c.content}</p>
-        ))}
+        {/* Comment Input */}
+        <div className={styles.commentInput}>
+          <input
+            type="text"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Add your comment..."
+            onKeyPress={(e) => e.key === "Enter" && handlePostComment()}
+          />
+          <button onClick={handlePostComment}>Post Comment</button>
+        </div>
 
-        <textarea value={text} onChange={(e) => setText(e.target.value)} />
-        <button onClick={postComment}>Post</button>
+        <div className={styles.commentsPanel}>
+          {userComments.length > 0 ? (
+            userComments.map((c) => (
+              <div key={c.id} className={styles.comment}>
+                <strong>{c.author.displayName}</strong>
+                <p>{c.text}</p>
+                <small>{new Date(c.createdAt).toLocaleDateString()}</small>
+              </div>
+            ))
+          ) : (
+            <p>Be the first to comment after the match!</p>
+          )}
+        </div>
       </section>
     </main>
   );

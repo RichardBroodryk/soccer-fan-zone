@@ -81,3 +81,9 @@
     gap: 16px;
   }
 }
+.poolsNotice {
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}

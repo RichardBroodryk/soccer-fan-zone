@@ -144,6 +144,10 @@ export default function SVNSPoolsPage() {
         </button>
       </div>
 
+      <div className={styles.poolsNotice}>
+  Pools - Played / Won / Lost / Points For / Points Against / Points will render with the next Amazing leg
+</div>
+
       {/* ================= WOMEN ================= */}
       <section className={styles.section}>
         <h2>Women</h2>

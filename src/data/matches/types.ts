@@ -1,6 +1,4 @@
-// ==================================================
-// RAZ SYSTEM — MATCH TYPES (FINAL STABLE)
-// ==================================================
+// src/data/matches/types.ts
 
 export interface MatchTeam {
   name: string;
@@ -14,17 +12,16 @@ export interface MatchScore {
 
 export interface MatchData {
   id: number;
+  matchKey?: string;
 
   competitionId: string;
   tournament: string;
   tournamentInstanceId?: string;
 
-  // ✅ SVNS SUPPORT
   stage?: string;
   gender?: "men" | "women";
   round?: string;
-  pool?: string; 
-  placement?: number;
+  pool?: string;
 
   date: string;
   venue: string;
@@ -32,8 +29,12 @@ export interface MatchData {
   home: MatchTeam;
   away: MatchTeam;
 
+  // ✅ USE THIS (NOT homeScore / awayScore)
   score?: MatchScore;
 
   state?: "upcoming" | "starting" | "live" | "final";
   importance?: number;
+
+  // SVNS placement (5th, 7th etc.)
+  placement?: number;
 }

@@ -22,8 +22,22 @@ const isToday = (dateStr: string) => {
   );
 };
 
-/* Placeholder until live engine exists */
+const isWomenTournament = (tournament: string) =>
+  tournament.toLowerCase().includes("women");
+
+/* 🔥 ONLY WOMEN SIX NATIONS FOR UPCOMING */
+const isWomensSixNations = (m: MatchData) =>
+  m.competitionId === "six-nations-women";
+
+/* Placeholder */
 const isLive = (_matchId: number) => false;
+
+/* ================= SPLIT ================= */
+
+const splitByGender = (matches: MatchData[]) => ({
+  men: matches.filter((m) => !isWomenTournament(m.tournament)),
+  women: matches.filter((m) => isWomenTournament(m.tournament)),
+});
 
 /* ================= PAGE ================= */
 
@@ -31,10 +45,8 @@ export default function LiveScoresPage() {
   const navigate = useNavigate();
 
   const [matches, setMatches] = useState<MatchData[]>([]);
-  const [loading, setLoading] = useState(true);        // ✅ ADDED
-  const [error, setError] = useState<string | null>(null); // ✅ ADDED
-
-  /* ================= FETCH MATCHES ================= */
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -43,18 +55,11 @@ export default function LiveScoresPage() {
       try {
         setLoading(true);
         const data = await getMatches();
-
-        if (mounted) {
-          setMatches(data);
-        }
-      } catch (err) {
-        if (mounted) {
-          setError("Failed to load matches");
-        }
+        if (mounted) setMatches(data);
+      } catch {
+        if (mounted) setError("Failed to load matches");
       } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        if (mounted) setLoading(false);
       }
     }
 
@@ -64,8 +69,6 @@ export default function LiveScoresPage() {
       mounted = false;
     };
   }, []);
-
-  /* ================= GROUP MATCHES ================= */
 
   const { live, recentFinals, today, upcoming } = useMemo(() => {
     const liveMatches = matches.filter((m) => isLive(m.id));
@@ -90,8 +93,6 @@ export default function LiveScoresPage() {
     };
   }, [matches]);
 
-  /* ================= STATES ================= */
-
   if (loading) {
     return (
       <main className={styles.page}>
@@ -108,13 +109,41 @@ export default function LiveScoresPage() {
     );
   }
 
+  /* ================= RENDER ================= */
+
+  const renderGroup = (group: MatchData[]) => {
+    const { men, women } = splitByGender(group);
+
+    return (
+      <div className={styles.groupWrap}>
+        {men.length > 0 && (
+          <div className={styles.subBlock}>
+            <div className={styles.subHeader}>MEN</div>
+            {men.map((m) => (
+              <LiveScoreRow key={m.id} matchId={m.id} home={m.home} away={m.away} score={m.score} phase={m.score ? "Final" : "Upcoming"} tournament={m.tournament} venue={m.venue} />
+            ))}
+          </div>
+        )}
+
+        {women.length > 0 && (
+          <div className={styles.subBlock}>
+            <div className={styles.subHeader}>WOMEN</div>
+            {women.map((m) => (
+              <LiveScoreRow key={m.id} matchId={m.id} home={m.home} away={m.away} score={m.score} phase={m.score ? "Final" : "Upcoming"} tournament={m.tournament} venue={m.venue} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /* 🔥 FILTER UPCOMING */
+  const womensUpcoming = upcoming.filter(isWomensSixNations);
+
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
+      {/* HERO */}
+      <header className={styles.hero} style={{ backgroundImage: `url(${heroBg})` }}>
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <h1>Live Scores</h1>
@@ -126,98 +155,53 @@ export default function LiveScoresPage() {
         </div>
       </header>
 
-      {/* ================= BACK ================= */}
+      {/* BACK */}
       <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/match-center")}
-        >
+        <button className={styles.back} onClick={() => navigate("/match-center")}>
           ← Back to Match Center
         </button>
       </div>
 
-      {/* ================= LIVE ================= */}
+      {/* LIVE */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Live Now</h2>
-
+        <h2 className={styles.sectionTitleCenter}>Live Now</h2>
         {live.length === 0 ? (
-          <div className={styles.empty}>
-            No matches live right now.
-          </div>
+          <div className={styles.empty}>No matches live right now.</div>
         ) : (
-          live.map((m) => (
-            <LiveScoreRow
-              key={m.id}
-              matchId={m.id}
-              home={m.home}
-              away={m.away}
-              score={m.score}
-              phase="2nd Half"
-              tournament={m.tournament}
-              venue={m.venue}
-              anthemStatus="played"
-            />
-          ))
+          renderGroup(live)
         )}
       </section>
 
-      {/* ================= RECENT RESULTS ================= */}
+      {/* RESULTS */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Recent Results</h2>
-
+        <h2 className={styles.sectionTitleCenter}>Recent Results</h2>
         {recentFinals.length === 0 ? (
-          <div className={styles.empty}>
-            No completed matches available.
-          </div>
+          <div className={styles.empty}>No completed matches available.</div>
         ) : (
-          recentFinals.map((m) => (
-            <LiveScoreRow
-              key={m.id}
-              matchId={m.id}
-              home={m.home}
-              away={m.away}
-              score={m.score}
-              phase="Final"
-              tournament={m.tournament}
-              venue={m.venue}
-            />
-          ))
+          renderGroup(recentFinals)
         )}
       </section>
 
-      {/* ================= TODAY ================= */}
+      {/* TODAY */}
       <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMuted}>Today</h2>
-
+        <h2 className={styles.sectionTitleMutedCenter}>Today</h2>
         {today.length === 0 ? (
           <div className={styles.empty}>No matches today.</div>
         ) : (
-          today.map((m) => (
-            <LiveScoreRow
-              key={m.id}
-              matchId={m.id}
-              home={m.home}
-              away={m.away}
-              phase="Upcoming"
-              tournament={m.tournament}
-              venue={m.venue}
-              anthemStatus="pending"
-            />
-          ))
+          renderGroup(today)
         )}
       </section>
 
-      {/* ================= UPCOMING ================= */}
+      {/* UPCOMING (FILTERED) */}
       <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMuted}>Upcoming</h2>
+        <h2 className={styles.sectionTitleMutedCenter}>Upcoming</h2>
 
-        {upcoming.length === 0 ? (
-          <div className={styles.empty}>
-            No upcoming matches available.
-          </div>
+        {womensUpcoming.length === 0 ? (
+          <div className={styles.empty}>No upcoming key fixtures.</div>
         ) : (
-          <div className={styles.upcomingGrid}>
-            {upcoming.slice(0, 8).map((m) => (
+          <div className={styles.subBlock}>
+            <div className={styles.subHeader}>WOMEN'S SIX NATIONS</div>
+            {womensUpcoming.map((m) => (
               <LiveScoreRow
                 key={m.id}
                 matchId={m.id}

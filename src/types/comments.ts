@@ -1,9 +1,4 @@
-/* =========================================================
-   RUGBY ANTHEM ZONE
-   TOURNAMENT COMMENTS — CANONICAL TYPES (v1)
-   Scope: Tournament-scoped fan comments
-   ========================================================= */
-
+// src/types/comments.ts
 export type CommentAuthor = {
   displayName: string;
   role?: "fan" | "verified";
@@ -15,14 +10,10 @@ export type TournamentComment = {
   id: string;
   tournamentId: string;
   text: string;
-  createdAt: string; // ISO timestamp
+  createdAt: string;
   author: CommentAuthor;
-
-  // Optional light context
   matchLabel?: string;
   matchPhase?: MatchPhase;
-
-  // System flags (future-safe)
   flags?: {
     moderated?: boolean;
     pinned?: boolean;
@@ -32,7 +23,5 @@ export type TournamentComment = {
 export type TournamentCommentThread = {
   tournamentId: string;
   comments: TournamentComment[];
-
-  // Derived, not stored in backend later
   lastActivityAt: string;
 };

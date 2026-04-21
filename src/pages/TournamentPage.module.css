@@ -42,27 +42,117 @@
 
 .section {
   max-width: 1200px;
-  margin: 64px auto 0;
+  margin: 40px auto 0;
   padding: 0 24px;
 }
 
-/* ================= STANDINGS ================= */
-.tableContainer {
-  overflow-x: auto;
-  margin-bottom: 40px;
+/* ================= FINAL STANDINGS - PERFECT ALIGNMENT ================= */
+.standings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 20px;
 }
 
+.headerRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: #0f172a;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+  font-size: 0.95rem;
+}
+
+.headerRow > span {
+  text-align: center;
+}
+
+.headerRow .rankHeader   { width: 40px; }
+.headerRow .teamHeader   { flex: 1; text-align: left; padding-left: 12px; }
+.headerRow .numHeader    { width: 48px; }
+.headerRow .pdHeader     { width: 58px; }
+.headerRow .ptsHeader    { width: 58px; }
+.headerRow .formHeader   { width: 130px; }   /* Room for 5-6 form items */
+
+.standingRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.standingRow > span {
+  text-align: center;
+}
+
+.standingRow .rank   { width: 40px; font-weight: 600; color: #475569; }
+.standingRow .team   { flex: 1; display: flex; align-items: center; gap: 10px; text-align: left; padding-left: 12px; }
+.standingRow .num    { width: 48px; }
+.standingRow .pd     { width: 58px; }
+.standingRow .pts    { width: 58px; font-weight: 700; }
+.standingRow .form   { width: 130px; display: flex; gap: 6px; justify-content: center; }
+
+.flag {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.win  { color: #22c55e; font-weight: 700; }
+.loss { color: #ef4444; font-weight: 700; }
+.draw { color: #64748b; }
+
+/* ================= MATCHES ================= */
+.matches {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .hero { height: 260px; }
+  .flag { width: 24px; height: 16px; }
+  
+  .headerRow, .standingRow {
+    font-size: 0.9rem;
+    padding: 12px 12px;
+  }
+  
+  .headerRow .teamHeader,
+  .standingRow .team { flex: 1.2; }
+  
+  .headerRow .numHeader,
+  .standingRow .num,
+  .headerRow .pdHeader,
+  .standingRow .pd,
+  .headerRow .ptsHeader,
+  .standingRow .pts { width: 42px; }
+  
+  .headerRow .formHeader,
+  .standingRow .form { width: 100px; gap: 4px; }
+}
+/* ================= TABLE STANDINGS - PERFECT ALIGNMENT ================= */
 .standingsTable {
   width: 100%;
   border-collapse: collapse;
   background: white;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .standingsTable th,
 .standingsTable td {
-  padding: 12px 10px;
+  padding: 14px 12px;
   text-align: center;
   border-bottom: 1px solid #eee;
 }
@@ -71,57 +161,84 @@
   background: #0f172a;
   color: white;
   font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.standingsTable td {
+  font-size: 0.95rem;
+}
+
+.standingsTable th:nth-child(1),
+.standingsTable td:nth-child(1) { width: 50px; }
+
+.standingsTable th:nth-child(2),
+.standingsTable td:nth-child(2) { 
+  text-align: left; 
+  width: 260px; 
+}
+
+.standingsTable th:nth-child(3),
+.standingsTable td:nth-child(3),
+.standingsTable th:nth-child(4),
+.standingsTable td:nth-child(4),
+.standingsTable th:nth-child(5),
+.standingsTable td:nth-child(5),
+.standingsTable th:nth-child(6),
+.standingsTable td:nth-child(6) { width: 55px; }
+
+.standingsTable th:nth-child(7),
+.standingsTable td:nth-child(7) { width: 70px; }
+
+.standingsTable th:nth-child(8),
+.standingsTable td:nth-child(8) { width: 65px; font-weight: 700; }
+
+.standingsTable th:nth-child(9),
+.standingsTable td:nth-child(9) { width: 140px; }
+
+.teamCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .flag {
-  width: 24px;
-  height: 16px;
+  width: 28px;
+  height: 20px;
   object-fit: cover;
-  border-radius: 2px;
-  margin-right: 8px;
-  vertical-align: middle;
+  border-radius: 3px;
 }
 
-/* ================= MATCHES ================= */
-.matchRow {
-  display: grid;
-  grid-template-columns: 1fr 120px 1fr;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-}
-
-.matchRow:hover {
-  background: #f8fafc;
-}
-
-.team {
+.form {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
+  gap: 6px;
+  justify-content: center;
 }
 
-.team:last-child {
-  justify-content: flex-end;
-  text-align: right;
-}
+.win  { color: #22c55e; font-weight: 700; }
+.loss { color: #ef4444; font-weight: 700; }
+.draw { color: #64748b; }
 
-.timeBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-}
-
-.time {
-  font-weight: 600;
-}
-
-/* ================= MOBILE ================= */
+/* Mobile */
 @media (max-width: 768px) {
-  .hero { height: 260px; }
-  .flag { width: 22px; height: 15px; }
-  .matchRow { grid-template-columns: 1fr 100px 1fr; }
+  .standingsTable th,
+  .standingsTable td {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+  
+  .standingsTable th:nth-child(2),
+  .standingsTable td:nth-child(2) { width: 180px; }
+  
+  .form { gap: 4px; }
+}
+.flagsGrid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr); /* 🔥 max 4 per row */
+
+  gap: 16px;
+  justify-items: center;
+
+  max-width: 480px;
+  margin: 0 auto;
 }

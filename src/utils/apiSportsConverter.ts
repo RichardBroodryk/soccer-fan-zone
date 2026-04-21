@@ -2,24 +2,45 @@ import type { MatchData } from "../data/matches/types";
 import { API_TO_CONCEPT_MAP } from "../contracts/competitionIdMap";
 
 /* ==================================================
-   NORMALIZER (FIXED FOR FLAGS)
+   NORMALIZERS
    ================================================== */
+
+function normalizeKey(value?: string): string {
+  if (!value) return "unknown";
+
+  return value
+    .toLowerCase()
+    .replace(/\b(women|w|7s|sevens)\b/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .trim();
+}
+
+function normalizeDate(date?: string): string {
+  if (!date) return "";
+
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "";
+
+  return d.toISOString().split("T")[0];
+}
 
 function normalizeCountry(name?: string): string {
   if (!name) return "unknown";
 
   return name
     .toLowerCase()
-    .replace(/\b(7s|sevens|women|w)\b/g, "") // remove noise
-    .replace(/\s+/g, "-")                    // spaces → dash
-    .replace(/-+/g, "-")                     // collapse dashes
-    .replace(/^-|-$/g, "")                   // trim dashes
+    .replace(/\b(7s|sevens|women|w)\b/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
     .replace(/'/g, "")
     .trim();
 }
 
 /* ==================================================
-   CONVERTER (STRICT + SAFE)
+   CONVERTER
    ================================================== */
 
 export function convertApiSportsFixture(
@@ -28,21 +49,20 @@ export function convertApiSportsFixture(
   const home = fixture.teams?.home;
   const away = fixture.teams?.away;
 
-  const homeScore = fixture.scores?.home?.total;
-  const awayScore = fixture.scores?.away?.total;
+  const homeScore =
+    fixture.scores?.home?.total ??
+    fixture.scores?.home ??
+    null;
+
+  const awayScore =
+    fixture.scores?.away?.total ??
+    fixture.scores?.away ??
+    null;
 
   const leagueId = fixture.league?.id;
 
-  /* 🔒 HARD FILTER — ONLY ALLOWED COMPETITIONS */
   const competitionId = API_TO_CONCEPT_MAP[leagueId];
-
-  if (!competitionId) {
-    return null; // 🚫 DROP UNKNOWN LEAGUES
-  }
-
-  /* ==================================================
-     MATCH STATE
-     ================================================== */
+  if (!competitionId) return null;
 
   let state: MatchData["state"] = "upcoming";
 
@@ -52,50 +72,55 @@ export function convertApiSportsFixture(
   else if (status === "1H" || status === "2H") state = "live";
   else if (status === "NS") state = "upcoming";
 
-  /* ==================================================
-     RETURN CLEAN STRUCTURE
-     ================================================== */
+  const normalizedDate =
+    normalizeDate(fixture.fixture?.date) || "unknown";
 
-return {
-  id: Number(fixture.fixture?.id),
+  return {
+    id: Number(fixture.fixture?.id) || Date.now() + Math.random(),
 
-  competitionId,
+    matchKey: [
+      competitionId,
+      normalizedDate,
+      normalizeKey(home?.name),
+      normalizeKey(away?.name),
+    ].join("_"),
 
-  tournament: fixture.league?.name ?? "Unknown",
+    competitionId,
 
-  // 🔥 ADD THIS
-  stage:
-    fixture.fixture?.stage ||
-    fixture.fixture?.round ||
-    fixture.league?.round ||
-    "",
+    tournament: fixture.league?.name ?? "Unknown",
 
-  date: fixture.fixture?.date ?? "",
-  venue: fixture.fixture?.venue?.name ?? "TBC",
+    stage:
+      fixture.fixture?.stage ||
+      fixture.fixture?.round ||
+      fixture.league?.round ||
+      "",
 
-  home: {
-    name: home?.name ?? "Unknown",
-    country: normalizeCountry(home?.name),
-  },
+    date: fixture.fixture?.date ?? "",
+    venue: fixture.fixture?.venue?.name || "",
 
-  away: {
-    name: away?.name ?? "Unknown",
-    country: normalizeCountry(away?.name),
-  },
+    home: {
+      name: home?.name ?? "Unknown",
+      country: normalizeCountry(home?.name),
+    },
 
-  score:
-    homeScore != null && awayScore != null
-      ? { home: homeScore, away: awayScore }
-      : undefined,
+    away: {
+      name: away?.name ?? "Unknown",
+      country: normalizeCountry(away?.name),
+    },
 
-  state,
+    score:
+      homeScore != null && awayScore != null
+        ? { home: homeScore, away: awayScore }
+        : undefined,
 
-  importance: 50,
-};
+    state,
+
+    importance: 50,
+  };
 }
 
 /* ==================================================
-   BATCH CONVERTER (SAFE)
+   BATCH
    ================================================== */
 
 export function convertApiSportsFixtures(

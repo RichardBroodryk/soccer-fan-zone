@@ -1,15 +1,18 @@
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./StadiumPage.module.css";
 
-/* ✅ DATA */
+/* DATA */
 import { matches2026 } from "../data/matches";
 import type { MatchData } from "../data/matches/types";
-
 import { stadiums } from "../data/stadiums";
 
+/* COMPONENTS */
 import MatchRow from "../components/match/MatchRow";
 
-/* 🧠 ENGINE */
+/* RESOLVER */
+import { getStadiumByName } from "../utils/stadiumResolver";
+
+/* ENGINE */
 import {
   getStadiumHero,
   getStadiumGallery,
@@ -40,14 +43,12 @@ export default function StadiumPage() {
     );
   }
 
-  /* DATA */
   const heroImage = getStadiumHero(slug, fallbackHero);
   const gallery = getStadiumGallery(slug);
   const seating = getStadiumSeating(slug) || [];
   const meta = getStadiumMeta(slug);
   const experience = getStadiumExperience(slug);
 
-  /* ✅ SAFE GALLERY */
   const galleryImages = [
     gallery?.inside,
     gallery?.outside,
@@ -57,13 +58,16 @@ export default function StadiumPage() {
 
   const now = new Date();
 
-  /* ✅ MATCH FILTER */
   const upcomingMatches = matches2026
-    .filter(
-      (m: MatchData) =>
-        m.venue === stadium.name &&
+    .filter((m: MatchData) => {
+      const stadiumMatch = getStadiumByName(m.venue);
+
+      return (
+        stadiumMatch &&
+        stadiumMatch.slug === stadium.slug &&
         new Date(m.date) >= now
-    )
+      );
+    })
     .sort(
       (a: MatchData, b: MatchData) =>
         new Date(a.date).getTime() -
@@ -72,7 +76,6 @@ export default function StadiumPage() {
 
   return (
     <main className={styles.page}>
-      {/* HERO */}
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -87,7 +90,6 @@ export default function StadiumPage() {
         </div>
       </header>
 
-      {/* MATCHES */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Upcoming matches</h2>
 
@@ -100,7 +102,7 @@ export default function StadiumPage() {
                 away={m.away}
                 state="upcoming"
                 metaLeft={m.date}
-                metaRight={m.tournament}
+                metaRight={stadium.slug}
                 onClick={() => navigate(`/match/${m.id}`)}
               />
             ))}
@@ -108,20 +110,8 @@ export default function StadiumPage() {
         ) : (
           <p>No upcoming fixtures.</p>
         )}
-
-        <div className={styles.ctaWrap}>
-          <button
-            className={styles.primary}
-            onClick={() =>
-              navigate(`/stadium/${stadium.slug}/matchday`)
-            }
-          >
-            Plan your matchday
-          </button>
-        </div>
       </section>
 
-      {/* INTELLIGENCE */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Stadium intelligence</h2>
 
@@ -155,7 +145,6 @@ export default function StadiumPage() {
         )}
       </section>
 
-      {/* GALLERY */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Inside the stadium</h2>
 
@@ -168,7 +157,6 @@ export default function StadiumPage() {
         </div>
       </section>
 
-      {/* SEATING */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Seating</h2>
 

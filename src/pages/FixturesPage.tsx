@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 
 import styles from "./FixturesPage.module.css";
 
-import { getMatches } from "../data/matchesAdapter";
+/* ✅ CHANGE HERE */
+import { matches2026 } from "../data/matches";
 
-/* ✅ FIX: correct type import */
+/* ✅ TYPE */
 import type { MatchData } from "../data/matches/types";
 
 import FixtureRow from "../components/fixtures/FixtureRow";
@@ -31,6 +32,18 @@ function formatDate(dateStr: string) {
   });
 }
 
+/* ✅ CLEAN UPCOMING RULE */
+function isUpcoming(match: MatchData) {
+  const now = new Date();
+  const matchDate = new Date(match.date);
+
+  return (
+    matchDate >= now &&
+    !match.score &&
+    (match as any).state !== "final"
+  );
+}
+
 /* ================= PAGE ================= */
 
 export default function FixturesPage() {
@@ -38,44 +51,22 @@ export default function FixturesPage() {
 
   const [matches, setMatches] = useState<MatchData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  /* ================= FETCH MATCHES ================= */
+  /* ================= LOAD (STATIC) ================= */
 
   useEffect(() => {
-    let mounted = true;
-
-    async function fetchData() {
-      try {
-        setLoading(true);
-        const data = await getMatches();
-
-        if (mounted) setMatches(data);
-      } catch {
-        if (mounted) setError("Failed to load fixtures");
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-
-    fetchData();
-
-    return () => {
-      mounted = false;
-    };
+    // ✅ NO API — direct load
+    setMatches(matches2026);
+    setLoading(false);
   }, []);
 
   if (loading) {
     return <div className={styles.empty}>Loading fixtures...</div>;
   }
 
-  if (error) {
-    return <div className={styles.empty}>{error}</div>;
-  }
-
   /* ================= UPCOMING ================= */
 
-  const upcoming = matches.filter((m) => !m.score);
+  const upcoming = matches.filter(isUpcoming);
 
   const mensFixtures = upcoming.filter(
     (m) => !isWomenTournament(m.tournament)
@@ -124,25 +115,27 @@ export default function FixturesPage() {
           backgroundImage={mensHero}
         />
 
-        {mensFixtures.length === 0 && (
+        {mensFixtures.length === 0 ? (
           <div className={styles.empty}>
             No upcoming men’s fixtures.
           </div>
+        ) : (
+          <div className={styles.group}>
+            {mensFixtures.map((m) => (
+              <FixtureRow
+                key={m.id}
+                date={formatDate(m.date)}
+                home={m.home}
+                away={m.away}
+                venue={m.venue}
+                tournament={m.tournament}
+                tournamentRoute={`/tournament/${m.tournament
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
+              />
+            ))}
+          </div>
         )}
-
-        {mensFixtures.map((m) => (
-          <FixtureRow
-            key={m.id}
-            date={formatDate(m.date)}
-            home={m.home}
-            away={m.away}
-            venue={m.venue}
-            tournament={m.tournament}
-            tournamentRoute={`/tournament/${m.tournament
-              .toLowerCase()
-              .replace(/\s+/g, "-")}`}
-          />
-        ))}
       </section>
 
       {/* ================= WOMEN ================= */}
@@ -154,25 +147,27 @@ export default function FixturesPage() {
           position="top"
         />
 
-        {womensFixtures.length === 0 && (
+        {womensFixtures.length === 0 ? (
           <div className={styles.empty}>
             No upcoming women’s fixtures.
           </div>
+        ) : (
+          <div className={styles.group}>
+            {womensFixtures.map((m) => (
+              <FixtureRow
+                key={m.id}
+                date={formatDate(m.date)}
+                home={m.home}
+                away={m.away}
+                venue={m.venue}
+                tournament={m.tournament}
+                tournamentRoute={`/tournament/${m.tournament
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
+              />
+            ))}
+          </div>
         )}
-
-        {womensFixtures.map((m) => (
-          <FixtureRow
-            key={m.id}
-            date={formatDate(m.date)}
-            home={m.home}
-            away={m.away}
-            venue={m.venue}
-            tournament={m.tournament}
-            tournamentRoute={`/tournament/${m.tournament
-              .toLowerCase()
-              .replace(/\s+/g, "-")}`}
-          />
-        ))}
       </section>
     </main>
   );

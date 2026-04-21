@@ -1,6 +1,6 @@
 // --------------------------------------------------
 // RAZ SYSTEM — MATCHES ADAPTER (ROLLS ROYCE)
-// FINAL — STATE + SAFETY + FALLBACK LOCKED
+// FINAL — STATE + SAFETY + FALLBACK LOCKED (MERGE FIX)
 // --------------------------------------------------
 
 import type { MatchData } from "../data/matches/types";
@@ -169,10 +169,18 @@ export async function getMatches(options?: {
     options?.gender
   );
 
+  /* ✅ FIX: MERGE instead of replace */
   if (!backendData || backendData.length === 0) {
     data = matches2026;
   } else {
-    data = backendData;
+    const merged = [...matches2026];
+
+    backendData.forEach((bm) => {
+      const exists = merged.some((m) => m.id === bm.id);
+      if (!exists) merged.push(bm);
+    });
+
+    data = merged;
   }
 
   let filtered = data

@@ -1,121 +1,98 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-import MatchRow from "../components/match/MatchRow";
+import { useParams, useNavigate } from "react-router-dom";
+import styles from "./TournamentPage.module.css";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
-import { matches2026 } from "../data/matches";
-
-import { fetchSixNationsWomenMatches } from "../services/sixNationsWomenService";
-
+import { buildStandings, type TeamStanding } from "../utils/standings/standingsEngine";
+import { flagMap } from "../data/flagMap";
 import type { MatchData } from "../data/matches/types";
 
-import styles from "./TournamentPage.module.css";
-import { svnsFlags } from "../data/flags/svnsFlags";
+import MatchRow from "../components/match/MatchRow";
+import { getStadiumByName } from "../utils/stadiumResolver";
 
-function cleanTeamName(name: string): string {
-  return name.replace(/ W$/, "").replace(/ Women$/, "").trim();
-}
+import { fetchSixNationsWomenMatches } from "../services/sixNationsWomenService";
+import { matches2026 } from "../data/matches";
+
+/* 🔥 ADD FLAG COMPONENT */
+import Flag from "../components/images/Flag";
 
 export default function TournamentPage() {
-  const location = useLocation();
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [matches, setMatches] = useState<MatchData[]>([]);
 
-  const tournament = tournaments2026.find((t) => t.route === location.pathname);
+  const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const tournament = tournaments2026.find((t) =>
+    t.route?.includes(slug || "") || t.conceptId === slug || t.route === slug
+  );
+
+  const visual = tournament ? getTournamentVisual(tournament.conceptId) : null;
+  const heroImage = tournament?.gender === "women"
+    ? visual?.heroImageWomen
+    : visual?.heroImageMen || visual?.logo;
+
+  const hasStandings = !["svns"].includes(tournament?.conceptId || "");
 
   useEffect(() => {
-    if (!tournament) return;
+    async function load() {
+      if (!tournament) return;
+      setLoading(true);
 
-    if (tournament.conceptId === "six-nations-women") {
-      fetchSixNationsWomenMatches().then((data) => {
-        console.log("SNW DATA LOADED:", data.length);
-        setMatches(data);
-      });
-      return;
+      try {
+        if (tournament.conceptId === "six-nations-women") {
+          const data = await fetchSixNationsWomenMatches();
+          setMatches(data);
+        } else {
+          const local = matches2026
+            .filter((m) => m.competitionId === tournament.conceptId)
+            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          setMatches(local);
+        }
+      } catch (e) {
+        console.error(e);
+        setMatches([]);
+      }
+      setLoading(false);
     }
-
-    // fallback
-    const filtered = matches2026.filter((m) => m.competitionId === "six-nations-women");
-    setMatches(filtered);
+    load();
   }, [tournament]);
 
-  if (!tournament) return <div className={styles.error}>Tournament not found</div>;
-  if (!matches.length) {
-    return (
-      <main className={styles.page}>
-        <header className={styles.hero}>
-          <h1>{tournament.name}</h1>
-        </header>
-        <div className={styles.error}>No matches yet</div>
-      </main>
-    );
-  }
+  if (!tournament) return <div className={styles.page}>Tournament not found</div>;
 
-  const visual = getTournamentVisual(tournament.conceptId);
+  const standings: TeamStanding[] = hasStandings ? buildStandings(matches) : [];
 
-  /* ================= STANDINGS ================= */
-  type TableRow = {
-    team: string;
-    country: string;
-    played: number;
-    won: number;
-    draw: number;
-    lost: number;
-    pf: number;
-    pa: number;
-    pd: number;
-    points: number;
-  };
+  const grouped = matches.reduce<Record<string, MatchData[]>>((acc, match) => {
+    const key = match.round || match.stage || "All Matches";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(match);
+    return acc;
+  }, {});
 
-  const standings: Record<string, TableRow> = {};
+  const rounds = Object.keys(grouped).sort();
 
-  const teams = Array.from(new Map(matches.flatMap((m) => [[m.home.name, m.home], [m.away.name, m.away]])).values());
+  /* ==================================================
+     🔥 ANTHEM TEAMS (SAFE — NO PLACEHOLDERS)
+     ================================================== */
 
-  teams.forEach((team) => {
-    const clean = cleanTeamName(team.name);
-    standings[clean] = { team: clean, country: team.country, played: 0, won: 0, draw: 0, lost: 0, pf: 0, pa: 0, pd: 0, points: 0 };
-  });
-
-  matches.forEach((match) => {
-    if (!match.score) return;
-    const homeClean = cleanTeamName(match.home.name);
-    const awayClean = cleanTeamName(match.away.name);
-    const home = standings[homeClean];
-    const away = standings[awayClean];
-    if (!home || !away) return;
-
-    home.played++; away.played++;
-    home.pf += match.score.home || 0; home.pa += match.score.away || 0;
-    away.pf += match.score.away || 0; away.pa += match.score.home || 0;
-
-    if ((match.score.home || 0) > (match.score.away || 0)) { home.won++; home.points += 4; away.lost++; }
-    else if ((match.score.away || 0) > (match.score.home || 0)) { away.won++; away.points += 4; home.lost++; }
-    else { home.draw++; away.draw++; home.points += 2; away.points += 2; }
-  });
-
-  const sortedStandings = Object.values(standings).sort((a, b) => b.points - a.points || b.pd - a.pd);
-
-  /* ================= ROUND GROUPING (using your exact dates) ================= */
-  const groupedMatches: Record<string, MatchData[]> = {};
-  matches.forEach((match) => {
-    let roundLabel = "Other";
-    if (tournament.conceptId === "six-nations-women") {
-      const day = new Date(match.date).getDate();
-      if (day === 11) roundLabel = "Round 1";
-      else if (day === 18) roundLabel = "Round 2";
-      else if (day === 25) roundLabel = "Round 3";
-      else if (day === 9) roundLabel = "Round 4";
-      else if (day === 17) roundLabel = "Round 5";
-    }
-    if (!groupedMatches[roundLabel]) groupedMatches[roundLabel] = [];
-    groupedMatches[roundLabel].push(match);
-  });
+  const anthemTeams = Array.from(
+    new Map(
+      matches.flatMap((m) => [
+        [m.home.country, m.home],
+        [m.away.country, m.away],
+      ])
+    ).values()
+  ).filter(
+    (team) =>
+      team.country &&
+      team.country !== "unknown" &&
+      flagMap[team.country] // only show nations we actually support
+  );
 
   return (
     <main className={styles.page}>
-      <header className={styles.hero} style={{ backgroundImage: `url(${visual.heroImageWomen})` }}>
+      <header className={styles.hero} style={{ backgroundImage: `url(${heroImage})` }}>
         <div className={styles.heroContent}>
           <h1>{tournament.name} {tournament.year}</h1>
           <p>{tournament.heroSubtitle}</p>
@@ -123,68 +100,111 @@ export default function TournamentPage() {
       </header>
 
       <div className={styles.backNav}>
-        <button onClick={() => navigate("/tournaments")}>← Back to Tournaments</button>
+        <button className={styles.backButton} onClick={() => navigate("/tournaments")}>
+          ← Back to Tournaments
+        </button>
       </div>
 
-      {/* STANDINGS - clean flags */}
-      {sortedStandings.length > 0 && (
+      {/* ==================================================
+          🔥 ANTHEMS SECTION (INSERTED — SAFE)
+         ================================================== */}
+
+      {anthemTeams.length > 0 && (
         <section className={styles.section}>
-          <h2>Standings</h2>
-          <div className={styles.tableContainer}>
-            <table className={styles.standingsTable}>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Team</th>
-                  <th>P</th><th>W</th><th>D</th><th>L</th>
-                  <th>PF</th><th>PA</th><th>PD</th><th>Pts</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedStandings.map((row, i) => (
-                  <tr key={row.team}>
-                    <td>{i + 1}</td>
-                    <td>
-                      <img src={svnsFlags[row.country] || ""} alt={row.team} className={styles.flag} />
-                      {row.team}
-                    </td>
-                    <td>{row.played}</td>
-                    <td>{row.won}</td>
-                    <td>{row.draw}</td>
-                    <td>{row.lost}</td>
-                    <td>{row.pf}</td>
-                    <td>{row.pa}</td>
-                    <td>{row.pd}</td>
-                    <td><strong>{row.points}</strong></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <h2>Anthems</h2>
+          <p>Click a flag to view the national anthem</p>
+
+          <div className={styles.flagsGrid}>
+            {anthemTeams.map((team) => (
+              <div
+                key={team.country}
+                onClick={() => navigate(`/anthems/${team.country}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Flag country={team.country} size="medium" />
+              </div>
+            ))}
           </div>
         </section>
       )}
 
-      {/* MATCHES - proper rounds */}
-      <section className={styles.section}>
-        <h2>Matches</h2>
-        {Object.entries(groupedMatches).map(([round, games]) => (
-          <div key={round}>
-            <h3>{round}</h3>
-            {games.map((match) => (
-              <MatchRow
-                key={match.id}
-                home={match.home}
-                away={match.away}
-                state={match.score ? "final" : "upcoming"}
-                score={match.score}
-                metaLeft={match.date}
-                metaRight={match.venue}
-                onClick={() => navigate(`/match/${match.id}`)}
-              />
-            ))}
+      {hasStandings && (
+        <section className={styles.section}>
+          <h2>Standings</h2>
+          <table className={styles.standingsTable}>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Team</th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>PD</th>
+                <th>Pts</th>
+                <th>Form</th>
+              </tr>
+            </thead>
+            <tbody>
+              {standings.map((t, i) => {
+                const countryKey = t.country || t.team.toLowerCase().replace(/ w$/, "");
+                const flag = flagMap[countryKey];
+
+                return (
+                  <tr key={t.team}>
+                    <td>{i + 1}</td>
+                    <td className={styles.teamCell}>
+                      {flag && <img src={flag} alt="" className={styles.flag} />}
+                      <span>{t.team}</span>
+                    </td>
+                    <td>{t.played}</td>
+                    <td>{t.won}</td>
+                    <td>{t.drawn}</td>
+                    <td>{t.lost}</td>
+                    <td>{t.pointsDiff}</td>
+                    <td className={styles.points}>{t.points}</td>
+                    <td className={styles.form}>
+                      {t.form.map((f, idx) => (
+                        <span
+                          key={idx}
+                          className={f === "W" ? styles.win : f === "L" ? styles.loss : styles.draw}
+                        >
+                          {f}
+                        </span>
+                      ))}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+      )}
+
+      {loading && <div className={styles.section}>Loading matches...</div>}
+
+      {!loading && rounds.map((round) => (
+        <section key={round} className={styles.section}>
+          <h2>{round}</h2>
+          <div className={styles.matches}>
+            {grouped[round].map((match) => {
+              const stadium = getStadiumByName(match.venue);
+              return (
+                <MatchRow
+                  key={match.id}
+                  home={match.home}
+                  away={match.away}
+                  state={match.state || "upcoming"}
+                  score={match.score}
+                  metaLeft={new Date(match.date).toLocaleDateString("en-GB")}
+                  metaRight={stadium?.slug}
+                  onClick={() => navigate(`/match/${match.id}`, { state: { ...match, tournamentSlug: slug } })}
+                />
+              );
+            })}
           </div>
-        ))}
-      </section>
+        </section>
+      ))}
     </main>
   );
 }

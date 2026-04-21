@@ -146,3 +146,9 @@
   opacity: 0.6;
   margin-top: 4px;
 }
+.subHeader {
+  text-align: center;
+  margin: 1rem 0 2rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}

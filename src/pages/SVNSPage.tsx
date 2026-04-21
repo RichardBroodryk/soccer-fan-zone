@@ -1,194 +1,143 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
-import type { MatchData } from "../data/matches/types";
-
 import styles from "./SVNSPage.module.css";
 import { svnsFlags } from "../data/flags/svnsFlags";
-
-import { fetchSvnsMatches } from "../services/svnsService";
-import { matches2026 } from "../data/matches";
-
-/* ==================================================
-   🧠 POOL GROUPING
-   ================================================== */
-
-function getPools(matches: MatchData[]) {
-  const womenPools: Record<string, MatchData[]> = { A: [], B: [], C: [] };
-  const menPools: Record<string, MatchData[]> = { A: [], B: [], C: [] };
-
-  const svnsPoolMatches = matches.filter(m => 
-    m.competitionId === "svns" && m.round === "pool"
-  );
-
-  svnsPoolMatches.forEach(match => {
-    const genderKey = match.gender === "women" ? "women" : "men";
-    const poolKey = match.pool && ["A", "B", "C"].includes(match.pool) ? match.pool : "A";
-
-    const target = genderKey === "women" ? womenPools : menPools;
-    if (!target[poolKey]) target[poolKey] = [];
-    target[poolKey].push(match);
-  });
-
-  return { women: womenPools, men: menPools };
-}
-
-/* ==================================================
-   🧠 POOL TABLE (Simple points view)
-   ================================================== */
-
-type PoolRow = {
-  team: string;
-  country: string;
-  points: number;
-};
-
-function buildPoolTable(matches: MatchData[]): PoolRow[] {
-  const table: Record<string, PoolRow> = {};
-
-  matches.forEach((match) => {
-    [match.home, match.away].forEach((team) => {
-      if (!table[team.name]) {
-        table[team.name] = { team: team.name, country: team.country, points: 0 };
-      }
-    });
-
-    if (!match.score) return;
-
-    const home = table[match.home.name];
-    const away = table[match.away.name];
-
-    if (home && away) {
-      if ((match.score.home || 0) > (match.score.away || 0)) home.points += 3;
-      else if ((match.score.away || 0) > (match.score.home || 0)) away.points += 3;
-    }
-  });
-
-  return Object.values(table).sort((a, b) => b.points - a.points);
-}
-
-/* ==================================================
-   🚀 MAIN SVNS PAGE
-   ================================================== */
 
 export default function SVNSPage() {
   const navigate = useNavigate();
 
-  const tournament = tournaments2026.find((t) => t.conceptId === "svns");
+  const tournament = tournaments2026.find(
+    (t) => t.conceptId === "svns"
+  );
   const visual = getTournamentVisual("svns");
 
-  const [svnsMatches, setSvnsMatches] = useState<MatchData[]>([]);
+  if (!tournament) return <div>SVNS not found</div>;
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await fetchSvnsMatches();
-        console.log("SVNS LIVE DATA LOADED:", data.length);
-        setSvnsMatches(data);
-      } catch (err) {
-        console.error("SVNS LOAD FAILED:", err);
-      }
-    };
-    load();
-  }, []);
+  const menFinalStandings = [
+    { rank: 1, team: "South Africa", points: 20 },
+    { rank: 2, team: "Argentina", points: 18 },
+    { rank: 3, team: "Fiji", points: 16 },
+    { rank: 4, team: "New Zealand", points: 14 },
+  ];
 
-  if (!tournament) return <div>SVNS tournament not found</div>;
-
-  if (!svnsMatches.length) {
-    return (
-      <main className={styles.page}>
-        <header className={`${styles.hero} ${styles.heroSVNSLayout}`} style={{ backgroundImage: `url(${visual.heroImageMen || visual.heroImageWomen})` }}>
-          <div className={styles.heroContent}>
-            <h1>{tournament.name} {tournament.year}</h1>
-            <p>Loading championship data...</p>
-          </div>
-        </header>
-      </main>
-    );
-  }
-
-  const { women, men } = getPools(matches2026);
+  const womenFinalStandings = [
+    { rank: 1, team: "New Zealand", points: 20 },
+    { rank: 2, team: "Australia", points: 18 },
+    { rank: 3, team: "France", points: 16 },
+    { rank: 4, team: "Canada", points: 14 },
+  ];
 
   return (
     <main className={styles.page}>
-      {/* HERO - UNCHANGED */}
-      <header className={`${styles.hero} ${styles.heroSVNSLayout}`} style={{ backgroundImage: `url(${visual.heroImageMen || visual.heroImageWomen})` }}>
-        <div className={styles.heroContent}>
-          <h1>{tournament.name} {tournament.year}</h1>
-          <p>{tournament.heroSubtitle}</p>
-        </div>
+      {/* HERO (NOW CLEAN — IMAGE ONLY) */}
+      <header
+        className={styles.hero}
+        style={{
+          backgroundImage: `url(${
+            visual.heroImageMen || visual.heroImageWomen
+          })`,
+        }}
+      >
+        <div className={styles.heroOverlay} />
       </header>
 
-      {/* NAV - UNCHANGED */}
-      <div className={styles.navButtons}>
-        <button className={styles.primaryButton} onClick={() => navigate("/svns/matches")}>Matches</button>
-        <button className={styles.secondaryButton} onClick={() => navigate("/svns/pools")}>Pools</button>
+      {/* ✅ NEW TITLE BLOCK */}
+      <div className={styles.titleBlock}>
+        <h1 className={styles.mainTitle}>
+          {tournament.name} {tournament.year}
+        </h1>
+
+        <p className={styles.heroSubtitle}>
+          {tournament.heroSubtitle}
+        </p>
       </div>
 
-      {/* BACK - UNCHANGED */}
-      <div className={styles.backNav}>
-        <button className={styles.backButton} onClick={() => navigate("/tournaments")}>← All Tournaments</button>
-      </div>
-
-      {/* POOLS SECTION */}
-      <section className={styles.section}>
-        <h2>Pools</h2>
-
-        {/* WOMEN */}
-        <h3>Women</h3>
-        <div className={styles.poolsGrid}>
-          {["A", "B", "C"].map((poolKey) => {
-            const matches = women[poolKey] || [];
-            const table = buildPoolTable(matches);
-            return (
-              <div key={`w-${poolKey}`} className={styles.poolCard}>
-                <h4>Pool {poolKey}</h4>
-                {table.map((row, i) => {
-                  const cleanName = row.team.replace(/ 7s/i, "");
-                  return (
-                    <div key={row.team} className={styles.poolRow}>
-                      <span>{i + 1}</span>
-                      <div className={styles.team}>
-                        <img src={svnsFlags[cleanName]} alt={cleanName} className={styles.flag} />
-                        <span>{cleanName}</span>
-                      </div>
-                      <span>{row.points}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
+      {/* NAVIGATION */}
+      <div className={styles.navContainer}>
+        <div className={styles.navButtons}>
+          <button
+            className={styles.primaryButton}
+            onClick={() => navigate("/svns/matches")}
+          >
+            Matches
+          </button>
+          <button
+            className={styles.secondaryButton}
+            onClick={() => navigate("/svns/pools")}
+          >
+            Pools
+          </button>
         </div>
 
-        {/* MEN */}
-        <h3>Men</h3>
-        <div className={styles.poolsGrid}>
-          {["A", "B", "C"].map((poolKey) => {
-            const matches = men[poolKey] || [];
-            const table = buildPoolTable(matches);
-            return (
-              <div key={`m-${poolKey}`} className={styles.poolCard}>
-                <h4>Pool {poolKey}</h4>
-                {table.map((row, i) => {
-                  const cleanName = row.team.replace(/ 7s/i, "");
-                  return (
-                    <div key={row.team} className={styles.poolRow}>
-                      <span>{i + 1}</span>
-                      <div className={styles.team}>
-                        <img src={svnsFlags[cleanName]} alt={cleanName} className={styles.flag} />
-                        <span>{cleanName}</span>
-                      </div>
-                      <span>{row.points}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/tournaments")}
+        >
+          ← Back to Tournaments
+        </button>
+
+        <p className={styles.subtitle}>
+          Hong Kong Leg Completed – Two more legs to crown the World Champions
+        </p>
+      </div>
+
+      {/* STANDINGS */}
+      <section className={styles.section}>
+        <h2>Hong Kong Leg Final Standings</h2>
+
+        <div className={styles.standingsGrid}>
+          {/* MEN */}
+          <div>
+            <h3 className={styles.subHeader}>Men</h3>
+            <div className={styles.standingsPreview}>
+              {menFinalStandings.map((row) => (
+                <div key={row.rank} className={styles.previewRow}>
+                  <span className={styles.rank}>{row.rank}</span>
+
+                  <div className={styles.teamCell}>
+                    <img
+                      src={svnsFlags[row.team] || ""}
+                      alt={row.team}
+                      className={styles.flag}
+                    />
+                    <span>{row.team}</span>
+                  </div>
+
+                  <span className={styles.points}>
+                    {row.points} pts
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* WOMEN */}
+          <div>
+            <h3 className={styles.subHeader}>Women</h3>
+            <div className={styles.standingsPreview}>
+              {womenFinalStandings.map((row) => (
+                <div key={row.rank} className={styles.previewRow}>
+                  <span className={styles.rank}>{row.rank}</span>
+
+                  <div className={styles.teamCell}>
+                    <img
+                      src={svnsFlags[row.team] || ""}
+                      alt={row.team}
+                      className={styles.flag}
+                    />
+                    <span>{row.team}</span>
+                  </div>
+
+                  <span className={styles.points}>
+                    {row.points} pts
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </main>

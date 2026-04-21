@@ -1,276 +1,184 @@
+.page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* ================= HERO ================= */
 .hero {
-  height: 300px;
+  height: 320px;
   background-size: cover;
   background-position: center;
   position: relative;
+  z-index: 1;
 }
 
-.heroSVNSLayout::after {
-  content: "";
+/* OVERLAY NOW SAFE */
+.heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
-  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.2)
+  );
+  z-index: 1;
+  pointer-events: none; /* 🔥 THIS FIXES CLICK BLOCKING */
 }
 
 .heroContent {
   position: relative;
   z-index: 2;
   color: white;
-
+  height: 100%;
+  padding: 40px 24px 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  height: 100%;
-  padding: 24px;
+  justify-content: flex-end;
 }
 
-.heroBadgeBottom {
-  align-self: flex-end;
-  background: rgba(0,0,0,0.7);
-  padding: 6px 10px;
-  border-radius: 6px;
+.heroContent h1 {
+  font-size: 2.1rem;
+  margin: 0 0 8px 0;
 }
 
-.backNav {
+.heroContent p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* ================= NAV ================= */
+.navContainer {
+  position: relative;
+  z-index: 3; /* 🔥 ABOVE HERO */
   max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 24px;
+  margin: 0 auto;
+  padding: 28px 24px 16px;
+  text-align: center;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: 11px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primaryButton {
+  background: #0f172a;
+  color: white;
+  border: none;
+}
+
+.secondaryButton {
+  background: transparent;
+  border: 2px solid #cbd5e1;
 }
 
 .backButton {
+  margin-top: 10px;
   background: #0f172a;
   color: white;
-  padding: 10px 14px;
-  border-radius: 6px;
+  padding: 9px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
+.subtitle {
+  margin-top: 18px;
+  color: #334155;
+}
+
+/* ================= SECTION ================= */
 .section {
   max-width: 1200px;
   margin: 64px auto;
   padding: 0 24px;
 }
 
-.poolsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 260px);
+/* ================= GRID ================= */
+.standingsGrid {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
 }
 
-.poolCard {
+.subHeader {
+  margin-bottom: 12px;
+}
+
+/* ================= STANDINGS ================= */
+.standingsPreview {
   background: white;
-  padding: 12px;
+  padding: 16px;
   border-radius: 10px;
+  min-width: 260px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.poolRow {
-  display: grid;
-  grid-template-columns: 24px 1fr 40px;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-}
-
-.team {
+.previewRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.previewRow:last-child {
+  border-bottom: none;
 }
 
 .rank {
-  font-weight: 600;
-  text-align: center;
+  font-weight: 700;
+  width: 28px;
 }
 
 .points {
-  font-weight: 600;
-  text-align: right;
+  font-weight: 500;
 }
 
-.bracket {
+/* ================= TEAM ================= */
+.teamCell {
   display: flex;
-  gap: 40px;
-  overflow-x: auto;
-}
-
-.matchCard {
-  background: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-}
-
-.finalCard {
-  background: gold;
-  padding: 14px;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.time {
-  font-size: 12px;
-  color: #666;
-}
-.poolRow:first-child {
-  font-weight: 700;
-}
-
-.poolRow:nth-child(2) {
-  opacity: 0.95;
-}
-
-.poolRow:nth-child(n+3) {
-  opacity: 0.7;
-}
-.flagPlaceholder {
-  width: 18px;
-  height: 12px;
-  background: #ddd;
-  border-radius: 2px;
-}
-.heroCenterNav {
-  position: relative;
-  z-index: 5;
-}
-.navButtons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-
-  margin-top: 32px;   /* ⬅️ THIS IS THE KEY FIX */
-  margin-bottom: 8px;
-
-  .navButtons {
-  position: relative;
-  z-index: 10;
-}
-
-  flex-wrap: wrap;
-}
-.primaryButton {
-  background: #0f172a;
-  color: #ffffff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.primaryButton:hover {
-  background: #1e293b;
-  transform: translateY(-1px);
-}
-.secondaryButton {
-  background: transparent;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.secondaryButton:hover {
-  background: #f1f5f9;
-}
-.backNavStack {
-  display: flex;
-  justify-content: center;
-
-  margin-top: 12px;  /* slightly more breathing room */
-}
-.hero {
-  margin-bottom: 24px;
-}
-.topTeam {
-  background: rgba(34, 197, 94, 0.08);
-  border-radius: 6px;
-}
-.timeBlock {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
+  flex: 1;
 }
 
-.matchType {
-  font-size: 10px;
-  font-weight: 700;
-  color: #dc2626;
-}
-.finalCard {
-  background: linear-gradient(135deg, gold, #facc15);
-  color: #000;
-}
-.featuredCard {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.featuredTeams {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.vs {
-  margin: 0 6px;
-  opacity: 0.7;
-}
-
-.featuredMeta {
-  margin-top: 8px;
-  font-size: 14px;
-  opacity: 0.9;
-}
 .flag {
-  width: 18px;
-  height: 12px;
+  width: 22px;
+  height: 14px;
   object-fit: cover;
   border-radius: 2px;
 }
-/* Mobile responsiveness for pools */
+
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
-  .poolsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .poolCard {
-    max-width: 100%;
-  }
-
-  .poolRow {
-    grid-template-columns: 28px 1fr 50px;
-    gap: 10px;
-  }
-
-  .team {
-    gap: 6px;
-  }
-
-  .flag {
-    width: 24px;
-    height: 16px;
+  .heroContent h1 {
+    font-size: 1.9rem;
   }
 }
+.titleBlock {
+  text-align: center;
+  margin: 1.5rem 0 1rem;
+}
 
-/* Make sure flags are consistent */
-.flag {
-  width: 24px;
-  height: 16px;
-  object-fit: cover;
-  border-radius: 2px;
+.mainTitle {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  opacity: 0.85;
 }

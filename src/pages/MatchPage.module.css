@@ -1,159 +1,322 @@
 /* ================= PAGE CORE ================= */
-
 .page {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 32px 20px 80px;
+  padding: 20px;
 }
 
-/* ================= HEADER ================= */
-
-.header {
+/* ================= MATCH HERO / TOP BAR ================= */
+.hero {
+  background: #0f172a;
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 40px;
   text-align: center;
+}
+
+.backButton {
+  background: #1e293b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   margin-bottom: 20px;
+  font-size: 1rem;
 }
 
-.header h1 {
-  font-size: 1.8rem;
-  margin-bottom: 8px;
+.backButton:hover {
+  background: #334155;
 }
 
-.status {
-  font-size: 0.7rem;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-/* ================= MATCH ================= */
-
-.teams {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+.teamsRow {
+  display: flex;
   align-items: center;
-  text-align: center;
-  margin-bottom: 16px;
+  justify-content: center;
+  gap: 60px;
+  margin: 24px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.score {
+.team {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.center {
   font-size: 2.8rem;
   font-weight: 800;
 }
 
-/* ================= META ================= */
+.score {
+  color: #22c55e;
+}
+
+.vs {
+  color: #94a3b8;
+}
 
 .meta {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  font-size: 0.9rem;
-  margin-bottom: 48px;
+  gap: 32px;
+  font-size: 1.05rem;
+  opacity: 0.9;
 }
 
-/* ================= LINEUPS (MIRROR CLEAN) ================= */
-
-.lineups {
-  margin-bottom: 72px;
-}
-
-.lineups h2 {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.mirrorHeader {
-  display: grid;
-  grid-template-columns: 1fr 80px 1fr;
-  font-weight: 700;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.mirrorGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.mirrorRow {
-  display: grid;
-  grid-template-columns: 1fr 60px 1fr;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.mirrorPlayerLeft {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.mirrorPlayerRight {
-  display: flex;
-  justify-content: flex-start;
-  gap: 8px;
-}
-
-.mirrorCenter {
-  text-align: center;
-  font-size: 0.7rem;
-  opacity: 0.5;
-}
-
-.number {
-  font-weight: 700;
-  opacity: 0.7;
-  width: 22px;
-}
-
-.playerName {
-  font-size: 0.9rem;
-}
-
-/* ================= STATS ================= */
-
+/* ================= SECTIONS ================= */
 .section {
-  margin-bottom: 64px;
+  margin-bottom: 56px;
 }
 
-/* ================= COMMENTS ================= */
+.section h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
 
-.commentsPanel {
-  max-height: 280px;
-  overflow-y: auto;
-  border: 1px solid #e6e6e6;
-  padding: 16px;
+/* ================= EVENTS ================= */
+.event {
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 1.05rem;
+}
+
+/* ================= LINEUPS ================= */
+.lineups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.lineups h3 {
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.player {
+  padding: 6px 0;
+  font-size: 1.05rem;
+}
+
+/* ================= BEST PERFORMANCES ================= */
+.bestPerf {
+  background: #f8fafc;
+  padding: 20px;
   border-radius: 10px;
+  font-size: 1.1rem;
 }
 
-.commentInput {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
+.bestPerf div {
+  margin-bottom: 12px;
+}
+
+/* ================= FAN COMMENTS ================= */
+.commentsPanel {
+  max-height: 340px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.comment {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.comment strong {
+  color: #0f172a;
 }
 
 /* ================= RESPONSIVE ================= */
-
 @media (max-width: 768px) {
-  .teams {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .teamsRow {
+    gap: 30px;
+    font-size: 1.3rem;
   }
 
-  .mirrorHeader {
-    grid-template-columns: 1fr;
-    gap: 6px;
+  .center {
+    font-size: 2.2rem;
   }
 
-  .mirrorRow {
-    grid-template-columns: 1fr;
-    gap: 4px;
+  .meta {
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .mirrorPlayerLeft,
-  .mirrorPlayerRight {
-    justify-content: center;
+  .lineups {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
+}
+.flag {
+  width: 32px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.benchSection {
+  margin-top: 40px;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.benchNote {
+  color: #64748b;
+  font-style: italic;
+}
+.flag {
+  width: 32px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.stadiumLink {
+  color: white;
+  text-decoration: none;
+}
+
+.stadiumLink:hover {
+  text-decoration: underline;
+}
+
+.benchSection {
+  margin-top: 40px;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.benchNote {
+  color: #64748b;
+  font-style: italic;
+}
+.flag {
+  width: 32px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.stadiumLink {
+  color: white;
+  text-decoration: none;
+}
+
+.stadiumLink:hover {
+  text-decoration: underline;
+}
+
+.benchSection {
+  margin-top: 40px;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.benchNote {
+  color: #64748b;
+  font-style: italic;
+}
+.flag {
+  width: 32px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.stadiumLink {
+  color: white;
+  text-decoration: none;
+}
+
+.stadiumLink:hover {
+  text-decoration: underline;
+}
+
+.benchSection {
+  margin-top: 40px;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.benchNote {
+  color: #64748b;
+  font-style: italic;
+}
+.bestPerf {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+.performance {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.performance:last-child {
+  border-bottom: none;
+}
+.commentInput {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.commentInput input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.commentInput button {
+  background: #0f172a;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.commentInput button:hover {
+  background: #1e293b;
+}
+
+.commentsPanel {
+  max-height: 380px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.comment {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.comment p {
+  margin: 6px 0 4px 0;
+}
+
+.comment small {
+  color: #64748b;
+  font-size: 0.9rem;
 }
