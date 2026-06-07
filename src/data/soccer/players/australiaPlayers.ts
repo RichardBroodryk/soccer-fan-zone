@@ -1,0 +1,125 @@
+// src/data/soccer/players/australiaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const australiaPlayers: SoccerPlayer[] = [
+  {
+    id: "mat-ryan",
+    name: "Mat Ryan",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Levante",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 1,
+    captain: true,
+  },
+
+  {
+    id: "harry-souttar",
+    name: "Harry Souttar",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Leicester City",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 19,
+  },
+
+  {
+    id: "jordy-bos",
+    name: "Jordy Bos",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Feyenoord",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 3,
+  },
+
+  {
+    id: "aziz-behich",
+    name: "Aziz Behich",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Melbourne City",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 36,
+    number: 16,
+  },
+
+  {
+    id: "jackson-irvine",
+    name: "Jackson Irvine",
+    nation: "Australia",
+    teamId: "australia",
+    club: "St. Pauli",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 22,
+  },
+
+  {
+    id: "ajdin-hrustic",
+    name: "Ajdin Hrustić",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Heracles Almelo",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 10,
+  },
+
+  {
+    id: "connor-metcalfe",
+    name: "Connor Metcalfe",
+    nation: "Australia",
+    teamId: "australia",
+    club: "St. Pauli",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 8,
+  },
+
+  {
+    id: "mathew-leckie",
+    name: "Mathew Leckie",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Melbourne City",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 7,
+  },
+
+  {
+    id: "nestory-irankunda",
+    name: "Nestory Irankunda",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Watford",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 20,
+    number: 11,
+  },
+
+  {
+    id: "kusini-yengi",
+    name: "Kusini Yengi",
+    nation: "Australia",
+    teamId: "australia",
+    club: "Machida Zelvia",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 9,
+  },
+];

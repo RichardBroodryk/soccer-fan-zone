@@ -1,0 +1,125 @@
+// src/data/soccer/players/czechiaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const czechiaPlayers: SoccerPlayer[] = [
+  {
+    id: "matej-kovar",
+    name: "Matěj Kovář",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "PSV Eindhoven",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 1,
+  },
+
+  {
+    id: "vladimir-coufal",
+    name: "Vladimír Coufal",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Hoffenheim",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 5,
+  },
+
+  {
+    id: "tomas-holes",
+    name: "Tomáš Holeš",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Slavia Prague",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 3,
+    captain: true,
+  },
+
+  {
+    id: "ladislav-krejci",
+    name: "Ladislav Krejčí",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Wolverhampton Wanderers",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 4,
+  },
+
+  {
+    id: "tomas-soucek",
+    name: "Tomáš Souček",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "West Ham United",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 22,
+  },
+
+  {
+    id: "pavel-sulc",
+    name: "Pavel Šulc",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Lyon",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 10,
+  },
+
+  {
+    id: "lukas-provod",
+    name: "Lukáš Provod",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Slavia Prague",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 14,
+  },
+
+  {
+    id: "adam-hlozek",
+    name: "Adam Hložek",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Hoffenheim",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 9,
+  },
+
+  {
+    id: "patrik-schick",
+    name: "Patrik Schick",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Bayer Leverkusen",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 10,
+  },
+
+  {
+    id: "jan-kuchta",
+    name: "Jan Kuchta",
+    nation: "Czechia",
+    teamId: "czechia",
+    club: "Sparta Prague",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 11,
+  },
+];

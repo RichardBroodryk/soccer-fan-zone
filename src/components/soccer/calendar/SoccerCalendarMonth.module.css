@@ -1,0 +1,112 @@
+.month {
+  margin-top: 56px;
+}
+
+.month:first-child {
+  margin-top: 32px;
+}
+
+.monthHeader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.monthTitle {
+  font-size: 1.5rem;
+
+  font-weight: 900;
+
+  color: #111827;
+}
+
+.monthDivider {
+  flex: 1;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.18),
+      transparent
+    );
+}
+
+.dayBlock {
+  margin-bottom: 34px;
+}
+
+.dayHeader {
+  margin-bottom: 16px;
+
+  color: #334155;
+
+  font-size: 0.86rem;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+.matchWrapper {
+  margin-bottom: 18px;
+}
+
+.stadiumMeta {
+  margin-top: 8px;
+
+  margin-left: 12px;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #475569;
+
+  font-size: 0.8rem;
+}
+
+.stadiumLink {
+  border: none;
+
+  background: none;
+
+  padding: 0;
+
+  color: #2563eb;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.location {
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .month {
+    margin-top: 40px;
+  }
+
+  .monthTitle {
+    font-size: 1.2rem;
+  }
+
+  .stadiumMeta {
+    margin-left: 6px;
+
+    font-size: 0.72rem;
+  }
+}

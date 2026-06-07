@@ -1,0 +1,125 @@
+// src/data/soccer/players/swedenPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const swedenPlayers: SoccerPlayer[] = [
+  {
+    id: "viktor-johansson",
+    name: "Viktor Johansson",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Stoke City",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 1,
+  },
+
+  {
+    id: "victor-lindelof",
+    name: "Victor Lindelöf",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Aston Villa",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 3,
+    captain: true,
+  },
+
+  {
+    id: "isak-hien",
+    name: "Isak Hien",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Atalanta",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 4,
+  },
+
+  {
+    id: "lucas-bergvall",
+    name: "Lucas Bergvall",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Tottenham Hotspur",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 20,
+    number: 18,
+  },
+
+  {
+    id: "mattias-svanberg",
+    name: "Mattias Svanberg",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Wolfsburg",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 8,
+  },
+
+  {
+    id: "yasin-ayari",
+    name: "Yasin Ayari",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Brighton & Hove Albion",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 16,
+  },
+
+  {
+    id: "alexander-isak",
+    name: "Alexander Isak",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Liverpool",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 9,
+  },
+
+  {
+    id: "viktor-gyokeres",
+    name: "Viktor Gyökeres",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Arsenal",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 17,
+  },
+
+  {
+    id: "anthony-elanga",
+    name: "Anthony Elanga",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Newcastle United",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 11,
+  },
+
+  {
+    id: "benjamin-nygren",
+    name: "Benjamin Nygren",
+    nation: "Sweden",
+    teamId: "sweden",
+    club: "Celtic",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 22,
+  },
+];

@@ -1,0 +1,125 @@
+// src/data/soccer/players/ivoryCoastPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const ivoryCoastPlayers: SoccerPlayer[] = [
+  {
+    id: "yahia-fofana",
+    name: "Yahia Fofana",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Çaykur Rizespor",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 1,
+  },
+
+  {
+    id: "odilon-kossounou",
+    name: "Odilon Kossounou",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Atalanta",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 7,
+  },
+
+  {
+    id: "evan-ndicka",
+    name: "Evan Ndicka",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Roma",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 21,
+  },
+
+  {
+    id: "wilfried-singo",
+    name: "Wilfried Singo",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Galatasaray",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 5,
+  },
+
+  {
+    id: "franck-kessie",
+    name: "Franck Kessié",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Al-Ahli",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 8,
+    captain: true,
+  },
+
+  {
+    id: "ibrahim-sangare",
+    name: "Ibrahim Sangaré",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Nottingham Forest",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 18,
+  },
+
+  {
+    id: "seko-fofana",
+    name: "Seko Fofana",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Rennes",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 6,
+  },
+
+  {
+    id: "amad-diallo",
+    name: "Amad Diallo",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Manchester United",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 10,
+  },
+
+  {
+    id: "simon-adingra",
+    name: "Simon Adingra",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "Monaco",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 11,
+  },
+
+  {
+    id: "elye-wahi",
+    name: "Elye Wahi",
+    nation: "Ivory Coast",
+    teamId: "ivory-coast",
+    club: "OGC Nice",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 9,
+  },
+];

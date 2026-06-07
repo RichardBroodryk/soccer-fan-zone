@@ -1,0 +1,310 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  padding-bottom: 80px;
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+
+  min-height: 440px;
+
+  border-radius: 34px;
+
+  overflow: hidden;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 52px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,0.9),
+      rgba(0,0,0,0.2)
+    );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+
+  max-width: 760px;
+
+  color: #ffffff;
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+
+  font-size: 0.78rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.8;
+}
+
+.heroContent h1 {
+  margin: 0 0 18px;
+
+  font-size: 4.2rem;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+.heroContent p {
+  max-width: 620px;
+
+  line-height: 1.7;
+
+  font-size: 1.05rem;
+
+  opacity: 0.92;
+}
+
+/* BACK */
+
+.backRow {
+  display: flex;
+}
+
+.backButton {
+  border: none;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  font-weight: 700;
+}
+
+/* SECTION */
+
+.sectionHeader {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+}
+
+.sectionEyebrow {
+  margin-bottom: 10px;
+
+  font-size: 0.78rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.7;
+}
+
+.sectionHeader h2 {
+  margin: 0;
+
+  font-size: 2.2rem;
+}
+
+/* BUTTON */
+
+.manageButton {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color: #ffffff;
+
+  padding: 14px 22px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  font-weight: 800;
+}
+
+/* EMPTY */
+
+.emptyState {
+  background:
+    linear-gradient(
+      135deg,
+      #111827,
+      #1f2937
+    );
+
+  border-radius: 30px;
+
+  padding: 42px;
+
+  color: #ffffff;
+}
+
+.emptyState h2 {
+  margin-top: 0;
+}
+
+/* CARD */
+
+.teamCard {
+  position: relative;
+
+  width: 320px;
+
+  min-width: 320px;
+
+  height: 380px;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  padding: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #111827,
+      #1f2937
+    );
+
+  color: #ffffff;
+
+  flex-shrink: 0;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(37,99,235,0.22),
+      transparent 50%
+    );
+}
+
+.teamTop {
+  position: relative;
+
+  z-index: 2;
+}
+
+.flag {
+  width: 84px;
+  height: 84px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  margin-bottom: 20px;
+
+  border:
+    3px solid rgba(255,255,255,0.12);
+}
+
+.fifa {
+  margin-bottom: 10px;
+
+  opacity: 0.7;
+
+  font-size: 0.82rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+.teamTop h3 {
+  margin: 0;
+
+  font-size: 2rem;
+
+  line-height: 1.1;
+}
+
+.meta {
+  position: absolute;
+
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.meta span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 0.75rem;
+
+  opacity: 0.65;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+.meta strong {
+  font-size: 1rem;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 340px;
+
+    padding: 32px 24px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.8rem;
+  }
+
+  .teamCard {
+    width: 280px;
+    min-width: 280px;
+    height: 360px;
+  }
+}

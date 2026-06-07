@@ -1,0 +1,206 @@
+.page {
+  min-height: 100vh;
+  background: #050505;
+  color: white;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+
+  min-height: 44vh;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 80px 24px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.45),
+      rgba(0,0,0,0.88)
+    );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+
+  max-width: 900px;
+
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  border:
+    1px solid rgba(255,255,255,0.16);
+
+  margin-bottom: 22px;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+.heroContent h1 {
+  font-size:
+    clamp(2.5rem, 6vw, 5rem);
+
+  line-height: 1.05;
+
+  margin-bottom: 20px;
+
+  font-weight: 800;
+}
+
+.heroContent p {
+  font-size: 1.1rem;
+
+  line-height: 1.8;
+
+  color:
+    rgba(255,255,255,0.82);
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 70px 24px 100px;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.03)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 28px;
+
+  padding: 40px;
+
+  margin-bottom: 28px;
+}
+
+.card h2 {
+  font-size: 2rem;
+
+  margin-bottom: 22px;
+}
+
+.card p,
+.card li {
+  line-height: 1.9;
+
+  color:
+    rgba(255,255,255,0.82);
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+.card li {
+  margin-bottom: 14px;
+}
+
+/* ================= CTA ================= */
+
+.ctaSection {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 18px;
+
+  justify-content: center;
+
+  margin-top: 50px;
+}
+
+.primaryButton,
+.secondaryButton {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 18px 24px;
+
+  border-radius: 16px;
+
+  font-size: 1rem;
+
+  color: white;
+}
+
+.primaryButton {
+  background:
+    linear-gradient(
+      135deg,
+      #0ea5e9,
+      #2563eb
+    );
+}
+
+.secondaryButton {
+  background:
+    rgba(255,255,255,0.08);
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  text-align: center;
+
+  opacity: 0.6;
+
+  line-height: 1.8;
+
+  margin-top: 60px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .card {
+    padding: 30px 22px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.7rem;
+  }
+
+  .card h2 {
+    font-size: 1.7rem;
+  }
+}

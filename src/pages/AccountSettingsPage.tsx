@@ -1,6 +1,12 @@
-import styles from "./AccountSettingsPage.module.css";
-import { useNavigate } from "react-router-dom";
+// src/pages/AccountSettingsPage.tsx
+
 import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import styles from "./AccountSettingsPage.module.css";
+
+import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
 
 export default function AccountSettingsPage() {
   const navigate = useNavigate();
@@ -8,225 +14,298 @@ export default function AccountSettingsPage() {
   /* ================= USER ================= */
 
   const email =
-    localStorage.getItem("raz_user_email") || "No email";
-
-  const tier =
-    sessionStorage.getItem("raz_active_tier") || "freemium";
-
-  const [isCancelling, setIsCancelling] = useState(false);
-  const [cancelled, setCancelled] = useState(false);
+    localStorage.getItem(
+      "sfz_user_email"
+    ) || "supporter@example.com";
 
   /* ================= AVATAR ================= */
 
-  const [avatar, setAvatar] = useState<string | null>(
-    localStorage.getItem("raz_avatar")
-  );
-
-  function handleAvatarUpload(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const result = reader.result as string;
-      setAvatar(result);
-      localStorage.setItem("raz_avatar", result);
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  function removeAvatar() {
-    localStorage.removeItem("raz_avatar");
-    setAvatar(null);
-  }
-
-  /* ================= CANCEL SUBSCRIPTION ================= */
-
-  const handleCancelSubscription = async () => {
-    const confirmCancel = window.confirm(
-      "Are you sure you want to cancel your subscription?\n\nYou will keep access until the end of your billing period."
+  const [avatar, setAvatar] =
+    useState<string | null>(
+      localStorage.getItem(
+        "sfz_avatar"
+      )
     );
-
-    if (!confirmCancel) return;
-
-    try {
-      setIsCancelling(true);
-
-      const token = localStorage.getItem("raz_token");
-
-      if (!token) {
-        alert("You must be logged in.");
-        return;
-      }
-
-      const res = await fetch(
-        "https://rugby-anthem-backend.fly.dev/api/cancel-subscription",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Cancellation failed");
-      }
-
-      setCancelled(true);
-
-    } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Something went wrong.");
-    } finally {
-      setIsCancelling(false);
-    }
-  };
 
   /* ================= HELPERS ================= */
 
-  const planName =
-    tier === "super"
-      ? "Super Premium"
-      : tier === "premium"
-      ? "Premium"
-      : "Freemium";
+  const handleAvatarUpload = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file =
+      e.target.files?.[0];
 
-  /* ================= RENDER ================= */
+    if (!file) return;
+
+    const reader =
+      new FileReader();
+
+    reader.onload = () => {
+      const result =
+        reader.result as string;
+
+      setAvatar(result);
+
+      localStorage.setItem(
+        "sfz_avatar",
+        result
+      );
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const removeAvatar = () => {
+    localStorage.removeItem(
+      "sfz_avatar"
+    );
+
+    setAvatar(null);
+  };
+
+  /* ================= ROUTING ================= */
+
+  const goToRestorePurchase = () => {
+    navigate("/restore-purchase");
+  };
+
+  const goToPrivacy = () => {
+    navigate("/privacy-policy");
+  };
+
+  const goToSupport = () => {
+    navigate("/support");
+  };
+
+  const goToDeleteAccount = () => {
+    navigate("/delete-account");
+  };
+
+  const logout = () => {
+    localStorage.removeItem(
+      "sfz_logged_in"
+    );
+
+    navigate("/login");
+  };
 
   return (
-    <main className={styles.page}>
-      {/* HEADER */}
-      <header className={styles.header}>
-        <h1>Account Settings</h1>
-        <p>Manage your profile and subscription</p>
-      </header>
+    <section className={styles.page}>
+      {/* ================= HERO ================= */}
 
-      {/* ACCOUNT OVERVIEW */}
-      <section className={styles.section}>
-        <h2>Account Overview</h2>
+      <section
+        className={styles.hero}
+        style={{
+          backgroundImage: `url(${heroImage})`,
+        }}
+      >
+        <div className={styles.overlay} />
 
-        <div className={styles.card}>
+        <div className={styles.heroContent}>
+          <div className={styles.badge}>
+            ACCOUNT SETTINGS
+          </div>
+
+          <h1>
+            Your Football
+            Platform Account
+          </h1>
+
           <p>
-            <strong>Email:</strong> {email}
-          </p>
-
-          <p>
-            <strong>Membership:</strong> {planName}
+            Manage your profile,
+            account preferences,
+            security access and
+            football platform settings.
           </p>
         </div>
       </section>
 
-      {/* SUBSCRIPTION */}
-      {tier !== "freemium" && (
-        <section className={styles.section}>
-          <h2>Subscription</h2>
+      {/* ================= CONTENT ================= */}
 
-          <div className={styles.card}>
-            <p>
-              You are currently on the <strong>{planName}</strong> plan.
-            </p>
+      <main className={styles.content}>
+        {/* PROFILE */}
 
-            {!cancelled ? (
-              <>
-                <p>
-                  Your subscription renews automatically. You can cancel at any time.
-                  Access will remain active until the end of your billing period.
-                </p>
+        <section className={styles.card}>
+          <h2>
+            Account Overview
+          </h2>
 
-                <button
-                  className={styles.dangerButton}
-                  onClick={handleCancelSubscription}
-                  disabled={isCancelling}
-                >
-                  {isCancelling
-                    ? "Cancelling..."
-                    : "Cancel Subscription"}
-                </button>
-              </>
-            ) : (
-              <div className={styles.successBox}>
-                <p>
-                  ✅ Your subscription has been cancelled.
-                </p>
-                <p>
-                  You will retain access until the end of your billing period.
-                </p>
+          <div className={styles.infoBox}>
+            <div>
+              <span className={styles.label}>
+                Email
+              </span>
+
+              <div className={styles.value}>
+                {email}
               </div>
-            )}
+            </div>
+
+            <div>
+              <span className={styles.label}>
+                Access
+              </span>
+
+              <div className={styles.value}>
+                Full Global Football Access
+              </div>
+            </div>
           </div>
         </section>
-      )}
 
-      {/* PROFILE IMAGE */}
-      <section className={styles.section}>
-        <h2>Profile Image</h2>
+        {/* AVATAR */}
 
-        <div className={styles.card}>
-          <div className={styles.avatarWrap}>
-            {avatar ? (
-              <img
-                src={avatar}
-                alt="Profile avatar"
-                className={styles.avatar}
-              />
-            ) : (
-              <div className={styles.avatarPlaceholder}>👤</div>
-            )}
-          </div>
+        <section className={styles.card}>
+          <h2>
+            Profile Image
+          </h2>
 
-          <div className={styles.avatarActions}>
-            <label className={styles.button}>
-              Upload Photo
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarUpload}
-                hidden
-              />
-            </label>
+          <div className={styles.avatarSection}>
+            <div className={styles.avatarWrap}>
+              {avatar ? (
+                <img
+                  src={avatar}
+                  alt="Profile avatar"
+                  className={styles.avatar}
+                />
+              ) : (
+                <div
+                  className={
+                    styles.avatarPlaceholder
+                  }
+                >
+                  👤
+                </div>
+              )}
+            </div>
 
-            {avatar && (
-              <button
-                className={styles.secondaryButton}
-                onClick={removeAvatar}
+            <div className={styles.avatarActions}>
+              <label
+                className={styles.primaryButton}
               >
-                Remove Photo
-              </button>
-            )}
+                Upload Photo
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={
+                    handleAvatarUpload
+                  }
+                />
+              </label>
+
+              {avatar && (
+                <button
+                  className={
+                    styles.secondaryButton
+                  }
+                  onClick={removeAvatar}
+                >
+                  Remove Photo
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* SECURITY */}
-      <section className={styles.section}>
-        <h2>Security</h2>
+        {/* SECURITY */}
 
-        <div className={styles.card}>
-          <p>Password management will be available soon.</p>
+        <section className={styles.card}>
+          <h2>
+            Security
+          </h2>
 
-          <button className={styles.disabledButton} disabled>
-            Coming Soon
+          <div className={styles.securityGrid}>
+            <div className={styles.securityItem}>
+  <h3>Password Recovery</h3>
+
+  <p>
+    Need help accessing your account?
+    Visit the Support Center for login,
+    account recovery and access assistance.
+    Additional recovery options may be
+    introduced as platform authentication
+    systems evolve.
+  </p>
+</div>
+
+            <div className={styles.securityItem}>
+              <h3>Protected Access</h3>
+
+              <p>
+                Platform authentication
+                and football account access
+                are protected through secure
+                login systems.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SUPPORT */}
+
+        <section className={styles.card}>
+          <h2>
+            Platform Support
+          </h2>
+
+          <div className={styles.supportGrid}>
+            <button
+              className={styles.supportButton}
+              onClick={
+                goToRestorePurchase
+              }
+            >
+              Restore Purchase
+            </button>
+
+            <button
+              className={styles.supportButton}
+              onClick={goToPrivacy}
+            >
+              Privacy Policy
+            </button>
+
+            <button
+              className={styles.supportButton}
+              onClick={goToSupport}
+            >
+              Support Center
+            </button>
+
+            <button
+              className={
+                styles.dangerButton
+              }
+              onClick={
+                goToDeleteAccount
+              }
+            >
+              Delete Account
+            </button>
+          </div>
+        </section>
+
+        {/* LOGOUT */}
+
+        <section className={styles.logoutSection}>
+          <button
+            className={styles.logoutButton}
+            onClick={logout}
+          >
+            Logout
           </button>
-        </div>
-      </section>
+        </section>
 
-      {/* NAVIGATION */}
-      <section className={styles.section}>
-        <button
-          className={styles.backButton}
-          onClick={() => navigate("/profile")}
-        >
-          ← Back to Profile
-        </button>
-      </section>
-    </main>
+        {/* FOOTER */}
+
+        <footer className={styles.footer}>
+          International Soccer Fans Zone
+          is an independent global football
+          platform built for supporters worldwide.
+        </footer>
+      </main>
+    </section>
   );
 }

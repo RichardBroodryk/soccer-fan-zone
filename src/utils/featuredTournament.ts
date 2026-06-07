@@ -3,7 +3,7 @@ export interface FeaturedTournamentData {
   name: string;
 }
 
-const STORAGE_KEY = "raz_featured_tournament";
+const STORAGE_KEY = "sfz_featured_tournament";
 
 export function saveFeaturedTournament(tournament: FeaturedTournamentData) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tournament));

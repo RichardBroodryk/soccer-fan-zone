@@ -1,0 +1,125 @@
+// src/data/soccer/players/japanPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const japanPlayers: SoccerPlayer[] = [
+  {
+    id: "zion-suzuki",
+    name: "Zion Suzuki",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Parma",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 1,
+  },
+
+  {
+    id: "takehiro-tomiyasu",
+    name: "Takehiro Tomiyasu",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Ajax",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 16,
+  },
+
+  {
+    id: "hiroki-ito",
+    name: "Hiroki Ito",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Bayern Munich",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 21,
+  },
+
+  {
+    id: "ko-itakura",
+    name: "Ko Itakura",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Ajax",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 4,
+  },
+
+  {
+    id: "wataru-endo",
+    name: "Wataru Endo",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Liverpool",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 6,
+    captain: true,
+  },
+
+  {
+    id: "daichi-kamada",
+    name: "Daichi Kamada",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Crystal Palace",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 15,
+  },
+
+  {
+    id: "takefusa-kubo",
+    name: "Takefusa Kubo",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Real Sociedad",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 10,
+  },
+
+  {
+    id: "ritsu-doan",
+    name: "Ritsu Dōan",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Eintracht Frankfurt",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 8,
+  },
+
+  {
+    id: "daizen-maeda",
+    name: "Daizen Maeda",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Celtic",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 11,
+  },
+
+  {
+    id: "ayase-ueda",
+    name: "Ayase Ueda",
+    nation: "Japan",
+    teamId: "japan",
+    club: "Feyenoord",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 9,
+  },
+];

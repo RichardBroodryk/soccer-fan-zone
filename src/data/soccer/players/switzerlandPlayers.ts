@@ -1,0 +1,125 @@
+// src/data/soccer/players/switzerlandPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const switzerlandPlayers: SoccerPlayer[] = [
+  {
+    id: "gregor-kobel",
+    name: "Gregor Kobel",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Borussia Dortmund",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 1,
+  },
+
+  {
+    id: "manuel-akanji",
+    name: "Manuel Akanji",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Inter Milan",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 5,
+  },
+
+  {
+    id: "ricardo-rodriguez",
+    name: "Ricardo Rodríguez",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Real Betis",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 13,
+    captain: true,
+  },
+
+  {
+    id: "nico-elvedi",
+    name: "Nico Elvedi",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Borussia Mönchengladbach",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 4,
+  },
+
+  {
+    id: "granit-xhaka",
+    name: "Granit Xhaka",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Sunderland",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 10,
+  },
+
+  {
+    id: "remo-freuler",
+    name: "Remo Freuler",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Bologna",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 8,
+  },
+
+  {
+    id: "arden-jashari",
+    name: "Ardon Jashari",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "AC Milan",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 16,
+  },
+
+  {
+    id: "ruben-vargas",
+    name: "Ruben Vargas",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Sevilla",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 17,
+  },
+
+  {
+    id: "breel-embolo",
+    name: "Breel Embolo",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Rennes",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 7,
+  },
+
+  {
+    id: "dan-ndoye",
+    name: "Dan Ndoye",
+    nation: "Switzerland",
+    teamId: "switzerland",
+    club: "Nottingham Forest",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 11,
+  },
+];

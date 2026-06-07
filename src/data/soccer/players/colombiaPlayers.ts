@@ -1,0 +1,125 @@
+// src/data/soccer/players/colombiaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const colombiaPlayers: SoccerPlayer[] = [
+  {
+    id: "camilo-vargas",
+    name: "Camilo Vargas",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Atlas",
+    position: "Goalkeeper",
+    squadStatus: "provisional",
+    age: 37,
+    number: 1,
+  },
+
+  {
+    id: "davinson-sanchez",
+    name: "Davinson Sánchez",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Galatasaray",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 30,
+    number: 23,
+  },
+
+  {
+    id: "jhon-lucumi",
+    name: "Jhon Lucumí",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Bologna",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 27,
+    number: 3,
+  },
+
+  {
+    id: "daniel-munoz",
+    name: "Daniel Muñoz",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Crystal Palace",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 30,
+    number: 21,
+  },
+
+  {
+    id: "james-rodriguez",
+    name: "James Rodríguez",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "León",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 35,
+    number: 10,
+    captain: true,
+  },
+
+  {
+    id: "richard-rios",
+    name: "Richard Ríos",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Palmeiras",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 26,
+    number: 6,
+  },
+
+  {
+    id: "jefferson-lerma",
+    name: "Jefferson Lerma",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Crystal Palace",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 31,
+    number: 16,
+  },
+
+  {
+    id: "luis-diaz",
+    name: "Luis Díaz",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Liverpool",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 29,
+    number: 7,
+  },
+
+  {
+    id: "jhon-cordoba",
+    name: "Jhon Córdoba",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Krasnodar",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 33,
+    number: 9,
+  },
+
+  {
+    id: "rafael-santos-borre",
+    name: "Rafael Santos Borré",
+    nation: "Colombia",
+    teamId: "colombia",
+    club: "Internacional",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 31,
+    number: 19,
+  },
+];

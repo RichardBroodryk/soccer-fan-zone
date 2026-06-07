@@ -1,107 +1,206 @@
-// --------------------------------------------------
-// RAZ DEBUG PAGE — API SPORTS (LEAGUES DISCOVERY)
-// Phase 4.1 — Step 0 (FINAL FIXED)
-// --------------------------------------------------
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import { useEffect, useState } from "react";
-import { fetchRugbyLeagues } from "../services/apiSportsRugby";
+import {
+  fetchLiveFixtures,
+} from "../services/apiFootball";
 
-/**
- * PURPOSE:
- * - Fetch ALL rugby leagues from API-Sports
- * - Display raw output safely
- * - Handle multiple API response shapes
- *
- * 🔒 RULE:
- * This page is TEMPORARY and used ONLY for data discovery.
- */
+import {
+  convertApiSportsFixtures,
+} from "../utils/apiSportsConverter";
+
+import type {
+  SoccerMatch,
+} from "../data/soccer/types";
 
 export default function StatsApiDebugPage() {
-  const [leagues, setLeagues] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+  const [
+    error,
+    setError,
+  ] = useState("");
+
+  const [
+    matches,
+    setMatches,
+  ] = useState<
+    SoccerMatch[]
+  >([]);
 
   useEffect(() => {
-    async function loadLeagues() {
+    async function loadFixtures() {
       try {
-        const data = await fetchRugbyLeagues();
+        setLoading(true);
 
-        console.log("🏉 ALL RUGBY LEAGUES:", data);
+        const response =
+          await fetchLiveFixtures(
+          );
 
-        setLeagues(data);
-      } catch (error) {
-        console.error("❌ Failed to fetch leagues:", error);
+        console.log(
+          "RAW API:",
+          response
+        );
+
+        const converted =
+          convertApiSportsFixtures(
+            response
+          );
+
+        console.log(
+          "CONVERTED:",
+          converted
+        );
+
+        setMatches(
+          converted
+        );
+      } catch (err: any) {
+        console.error(err);
+
+        setError(
+          err.message ||
+            "API Failure"
+        );
       } finally {
         setLoading(false);
       }
     }
 
-    loadLeagues();
+    loadFixtures();
   }, []);
 
   return (
-    <div
+    <main
       style={{
-        padding: "20px",
-        background: "#0f172a",
         minHeight: "100vh",
-        color: "#fff",
+
+        background:
+          "#020617",
+
+        color: "#ffffff",
+
+        padding: "40px",
       }}
     >
-      <h1 style={{ marginBottom: "20px" }}>
-        RAZ — API Debug (Leagues)
+      <h1
+        style={{
+          fontSize: "3rem",
+
+          marginBottom: "30px",
+
+          fontWeight: 900,
+        }}
+      >
+        FIFA WORLD CUP API
       </h1>
 
-      {loading && <p>Loading leagues...</p>}
-
-      {!loading && leagues.length === 0 && (
-        <p>No leagues returned</p>
-      )}
-
-      {!loading && leagues.length > 0 && (
+      {loading && (
         <div>
-          <h2 style={{ marginBottom: "16px" }}>
-            Total Leagues: {leagues.length}
-          </h2>
-
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            {leagues.map((item, index) => {
-              /**
-               * 🔥 CRITICAL FIX:
-               * Handle BOTH API shapes:
-               *
-               * Shape A:
-               * { league: {...}, country: {...} }
-               *
-               * Shape B:
-               * { id, name, type }
-               */
-              const league = item.league ?? item;
-              const country = item.country ?? {};
-
-              return (
-                <li
-                  key={index}
-                  style={{
-                    marginBottom: "12px",
-                    padding: "12px",
-                    border: "1px solid #334155",
-                    borderRadius: "8px",
-                    background: "#1e293b",
-                  }}
-                >
-                  <strong style={{ fontSize: "16px" }}>
-                    {league?.name ?? "Unknown League"}
-                  </strong>
-
-                  <div>ID: {league?.id ?? "N/A"}</div>
-                  <div>Type: {league?.type ?? "N/A"}</div>
-                  <div>Country: {country?.name ?? "N/A"}</div>
-                </li>
-              );
-            })}
-          </ul>
+          Loading fixtures...
         </div>
       )}
-    </div>
+
+      {error && (
+        <div
+          style={{
+            color: "#ef4444",
+
+            marginBottom:
+              "20px",
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      <div
+        style={{
+          display: "grid",
+
+          gap: "20px",
+        }}
+      >
+        {matches.map(
+          (match) => (
+            <div
+              key={match.id}
+              style={{
+                border:
+                  "1px solid rgba(255,255,255,0.1)",
+
+                borderRadius:
+                  "24px",
+
+                padding: "24px",
+
+                background:
+                  "rgba(255,255,255,0.05)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize:
+                    "1.4rem",
+
+                  fontWeight: 800,
+
+                  marginBottom:
+                    "10px",
+                }}
+              >
+                {match.home}
+                {" vs "}
+                {match.away}
+              </div>
+
+              <div
+                style={{
+                  color:
+                    "rgba(255,255,255,0.7)",
+
+                  marginBottom:
+                    "10px",
+                }}
+              >
+                {match.stage}
+              </div>
+
+              <div
+                style={{
+                  fontSize:
+                    "1.2rem",
+
+                  fontWeight: 700,
+
+                  marginBottom:
+                    "10px",
+                }}
+              >
+                {match.homeScore ??
+                  "-"}
+                {" : "}
+                {match.awayScore ??
+                  "-"}
+              </div>
+
+              <div
+                style={{
+                  color:
+                    "#38bdf8",
+                }}
+              >
+                {match.status}
+              </div>
+            </div>
+          )
+        )}
+      </div>
+    </main>
   );
 }

@@ -4,416 +4,461 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useEffect } from "react";
+
 import type { ReactNode } from "react";
 
 import ScrollToTop from "./utils/ScrollToTop";
 
-import { getToken } from "./services/auth";
+/* ================= ONBOARDING ================= */
 
-/* ================= SPLASH / ONBOARDING ================= */
 import SplashPage from "./pages/SplashPage";
 import SecondarySplashPage from "./pages/SecondarySplashPage";
 import WelcomePage from "./pages/WelcomePage";
-import WhatYouGetPage from "./pages/WhatYouGetPage";
 import TermsPage from "./pages/TermsPage";
-import AccessPendingPage from "./pages/AccessPendingPage";
+import AccountSetupPage from "./pages/AccountSetupPage";
 import LoginPage from "./pages/LoginPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import AccountSettingsPage from "./pages/AccountSettingsPage";
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import RestorePurchasePage from "./pages/RestorePurchasePage";
+import DeleteAccountPage from "./pages/DeleteAccountPage";
+import SupportPage from "./pages/SupportPage";
 
-/* ================= SIGNUP ================= */
-import FreemiumSignupPage from "./pages/FreemiumSignupPage";
-import PremiumSignupPage from "./pages/PremiumSignupPage";
-import SuperPremiumSignupPage from "./pages/SuperPremiumSignupPage";
+/* ================= SUPPORT / LEGAL ================= */
 
-/* ================= HOMES ================= */
-import FreemiumHomePage from "./pages/FreemiumHomePage";
-import HomePage from "./pages/HomePage";
-import SuperHomePage from "./pages/SuperHomePage";
+import ContactPage from "./pages/contact/ContactPage";
 
-import ProfilePage from "./pages/ProfilePage";
+/* ================= OPTIONAL LEGACY CONTENT ================= */
 
-import ContactPage from "./pages/ContactPage";
-
-/* ================= ANTHEMS ================= */
 import NationalAnthemsDirectory from "./pages/NationalAnthemsDirectory";
 import NationalAnthemPage from "./pages/NationalAnthemPage";
 
-/* ================= TOURNAMENTS ================= */
-import TournamentsHubPage from "./pages/TournamentsHubPage";
-import MensTournamentsPage from "./pages/MensTournamentsPage";
-import WomensTournamentsPage from "./pages/WomensTournamentsPage";
-import TournamentPage from "./pages/TournamentPage";
+/* ================= SOCCER CORE ================= */
 
-import SVNSPage from "./pages/SVNSPage";
-import SVNSMatchesPage from "./pages/SVNSMatchesPage";
-import SVNSPoolsPage from "./pages/SVNSPoolsPage";
+import SoccerHomePage from "./pages/soccer/SoccerHomePage";
 
-/* ================= RANKINGS ================= */
-import RankingsMenPage from "./pages/RankingsMenPage";
-import RankingsWomenPage from "./pages/RankingsWomenPage";
+import SoccerTeamsPage from "./pages/soccer/SoccerTeamsPage";
+import SoccerTeamPage from "./pages/soccer/SoccerTeamPage";
 
-/* ================= MATCH CENTER ================= */
-import MatchCenterPage from "./pages/MatchCenterPage";
-import LiveScoresPage from "./pages/LiveScoresPage";
-import FixturesPage from "./pages/FixturesPage";
-import ResultsPage from "./pages/ResultsPage";
-import StatsPage from "./pages/StatsPage";
-import MatchPage from "./pages/MatchPage";
-import DomesticTablesPage from "./pages/match-center/DomesticTablesPage";
-import LeagueTablePage from "./pages/match-center/LeagueTablePage";
+import SoccerMatchesPage from "./pages/soccer/SoccerMatchesPage";
+import SoccerMatchPage from "./pages/soccer/SoccerMatchPage";
 
-/* ================= STADIUMS ================= */
-import StadiumHubPage from "./pages/StadiumHubPage";
-import StadiumPage from "./pages/StadiumPage";
-import StadiumMatchdayPage from "./pages/StadiumMatchdayPage";
+import SoccerMatchCenterPage from "./pages/soccer/SoccerMatchCenterPage";
+
+import SoccerFixturesPage from "./pages/soccer/SoccerFixturesPage";
+import SoccerLivePage from "./pages/soccer/SoccerLivePage";
+import SoccerResultsPage from "./pages/soccer/SoccerResultsPage";
+import SoccerStatsPage from "./pages/soccer/SoccerStatsPage";
+
+import SoccerGroupsPage from "./pages/soccer/SoccerGroupsPage";
+import SoccerGroupPage from "./pages/soccer/SoccerGroupPage";
+import SoccerGroupsOverviewPage from "./pages/soccer/SoccerGroupsOverviewPage";
+
+import SoccerBracketPage from "./pages/soccer/SoccerBracketPage";
+import SoccerKnockoutHubPage from "./pages/soccer/SoccerKnockoutHubPage";
+import SoccerKnockoutProjectionPage from "./pages/soccer/SoccerKnockoutProjectionPage";
+
+import SoccerTournamentCenterPage from "./pages/soccer/SoccerTournamentCenterPage";
+
+import SoccerWorldCupHubPage from "./pages/soccer/SoccerWorldCupHubPage";
+
+import SoccerStadiumHubPage from "./pages/soccer/SoccerStadiumHubPage";
+import SoccerStadiumPage from "./pages/soccer/SoccerStadiumPage";
+
+import SoccerSearchPage from "./pages/soccer/SoccerSearchPage";
+
+import SoccerNationPage from "./pages/soccer/SoccerNationPage";
+import SoccerPlayerPage from "./pages/soccer/SoccerPlayerPage";
 
 /* ================= MEDIA ================= */
-import MediaHubPage from "./pages/MediaHubPage";
-import MatchVideosPage from "./pages/MatchVideosPage";
-import PodcastsPage from "./pages/PodcastsPage";
-import GreatestHits from "./pages/GreatestHits";
-import FanComments from "./pages/FanComments";
 
-/* ================= DEFINING MOMENTS ================= */
-import DefiningMomentsPage from "./pages/DefiningMomentsPage";
-import WorldCupTurningPoints from "./pages/moments/WorldCupTurningPoints";
-import TacticalShifts from "./pages/moments/TacticalShifts";
-import LawChanges from "./pages/moments/LawChanges";
-import CallsAndDecisions from "./pages/moments/CallsAndDecisions";
-import EraDefiningRivalries from "./pages/moments/EraDefiningRivalries";
-import CulturalMoments from "./pages/moments/CulturalMoments";
-
-/* ================= INSIDE THE GAME ================= */
-import InsideTheGameHubPage from "./pages/InsideTheGameHubPage";
-import RefereeHub from "./pages/RefereeHub";
-import FantasyLeagueHubPage from "./pages/FantasyLeagueHubPage";
-import BreakdownRucksPage from "./pages/inside-the-game/referees/BreakdownRucksPage";
-import TMOReviewsPage from "./pages/inside-the-game/referees/TMOReviewsPage";
-import LawUpdatesPage from "./pages/inside-the-game/referees/LawUpdatesPage";
-import PlayingCharterPage from "./pages/PlayingCharterPage";
+import SoccerMediaHubPage from "./pages/soccer/SoccerMediaHubPage";
+import SoccerVideosPage from "./pages/soccer/SoccerVideosPage";
+import SoccerNewsHubPage from "./pages/soccer/SoccerNewsHubPage";
+import SoccerPodcastsPage from "./pages/soccer/SoccerPodcastsPage";
 
 /* ================= FANZONE ================= */
-import FanzoneHubPage from "./pages/FanzoneHubPage";
-import LoyaltyPage from "./pages/LoyaltyPage";
-import LiveMatchAudioPage from "./pages/LiveMatchAudioPage";
-import PPVPage from "./pages/PPVPage";
 
-/* ================= NEWS ================= */
-import NewsHubPage from "./pages/NewsHubPage";
-import MyFeedPage from "./pages/MyFeedPage";
+import SoccerFanzonePage from "./pages/soccer/SoccerFanzonePage";
 
-/* ================= MATCHDAY JOURNEYS ================= */
-import MatchdayJourneysPage from "./pages/MatchdayJourneysPage";
-import MatchdayPlannerPage from "./pages/MatchdayPlannerPage";
+import SoccerMyFeedPage from "./pages/soccer/SoccerMyFeedPage";
+import SoccerLoyaltyPage from "./pages/soccer/SoccerLoyaltyPage";
+import SoccerLiveAudioPage from "./pages/soccer/SoccerLiveAudioPage";
+import SoccerNotificationsPage from "./pages/soccer/SoccerNotificationsPage";
 
-/* ================= TRAVEL ================= */
-import TicketsPage from "./pages/TicketsPage";
-import FlightsPage from "./pages/FlightsPage";
-import HotelsPage from "./pages/HotelsPage";
-import TransportPage from "./pages/TransportPage";
+import SoccerCalendarPage from "./pages/soccer/calendar/SoccerCalendarPage";
 
-/* ================= CALENDAR & MERCH ================= */
-import CalendarPage from "./pages/CalendarPage";
-import MerchPage from "./pages/MerchPage";
+import SoccerPremiumViewingPage from "./pages/soccer/fanzone/SoccerPremiumViewingPage";
 
-/* ================= MERCH NATIONS ================= */
-import SouthAfricaMerchPage from "./pages/merch/SouthAfricaMerchPage";
-import NewZealandMerchPage from "./pages/merch/NewZealandMerchPage";
-import EnglandMerchPage from "./pages/merch/EnglandMerchPage";
-import FranceMerchPage from "./pages/merch/FranceMerchPage";
-import WalesMerchPage from "./pages/merch/WalesMerchPage";
-import IrelandMerchPage from "./pages/merch/IrelandMerchPage";
-import ScotlandMerchPage from "./pages/merch/ScotlandMerchPage";
-import ItalyMerchPage from "./pages/merch/ItalyMerchPage";
-import AustraliaMerchPage from "./pages/merch/AustraliaMerchPage";
-import JapanMerchPage from "./pages/merch/JapanMerchPage";
-import FijiMerchPage from "./pages/merch/FijiMerchPage";
-import ArgentinaMerchPage from "./pages/merch/ArgentinaMerchPage";
+import SoccerMyTeamsPage from "./pages/soccer/SoccerMyTeamsPage";
+import SoccerMyTeamsManagePage from "./pages/soccer/SoccerMyTeamsManagePage";
 
-/* ================= ENGAGEMENT ================= */
-import MyTeamsPage from "./pages/MyTeamsPage";
-import MyTeamsManagePage from "./pages/MyTeamsManagePage";
-import NotificationsPage from "./pages/NotificationsPage";
+import SoccerProfilePage from "./pages/soccer/SoccerProfilePage";
 
-/* ================= HERITAGE ================= */
-import HeritageHub from "./pages/heritage/HeritageHub";
-import LegendsHub from "./pages/heritage/LegendsHub";
-import LegendsMen from "./pages/heritage/LegendsMen";
-import LegendsWomen from "./pages/heritage/LegendsWomen";
-import SquadsHub from "./pages/heritage/squads/SquadsHub";
-import ChampionsHub from "./pages/heritage/ChampionsHub";
-import CoachesSupportHub from "./pages/heritage/CoachesSupportHub";
-import OfficialsHub from "./pages/heritage/OfficialsHub";
+import TacticalRoomPage from "./pages/soccer/TacticalRoomPage";
 
-import SquadsMen from "./pages/heritage/squads/SquadsMen";
-import SquadsWomen from "./pages/heritage/squads/SquadsWomen";
-import ChampionsMen from "./pages/heritage/ChampionsMen";
-import ChampionsWomen from "./pages/heritage/ChampionsWomen";
+/* ================= LAYOUT ================= */
 
-/* HEAD COACHES */
-import HeadCoaches from "./pages/heritage/HeadCoaches";
-import HeadCoachesWomen from "./pages/heritage/HeadCoachesWomen";
-
-/* ASSISTANT COACHES */
-import AssistantCoaches from "./pages/heritage/AssistantCoaches";
-import AssistantCoachesWomen from "./pages/heritage/AssistantCoachesWomen";
-
-/* SUPPORT STAFF */
-import SupportStaff from "./pages/heritage/SupportStaff";
-import SupportStaffWomen from "./pages/heritage/SupportStaffWomen";
-
-/* OFFICIALS */
-import OfficialsMen from "./pages/heritage/OfficialsMen";
-import OfficialsWomen from "./pages/heritage/OfficialsWomen";
-import OfficialsMenEras from "./pages/heritage/OfficialsMenEras";
-import OfficialsWomenEras from "./pages/heritage/OfficialsWomenEras";
-
-import SquadNation2026 from "./pages/heritage/squads/SquadNation2026";
-
-/* ================= LAYOUTS ================= */
-import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
-import SuperLayout from "./layouts/SuperLayout";
+
+/* ================= DEBUG ================= */
 
 import StatsApiDebugPage from "./pages/StatsApiDebugPage";
 
-import CheckoutPage from "./pages/CheckoutPage";
-
 /* ================= AUTH GUARD ================= */
-function RequireAuth({ children }: { children: ReactNode }) {
-  const token = getToken();
-  const isDev = process.env.NODE_ENV === "development";
 
-  if (!token && !isDev) {
-    return <Navigate to="/login" replace />;
-  }
-
+function RequireAuth({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return <>{children}</>;
 }
-
-function DevHomeEntry() {
-  const isDev = process.env.NODE_ENV === "development";
-  const isLocalhost = window.location.hostname === "localhost";
-
-  // 🔒 BLOCK IN PRODUCTION
-  if (!isDev || !isLocalhost) {
-    return <Navigate to="/" replace />;
-  }
-
-  // ✅ NO HOOK — SAFE
-  const params = new URLSearchParams(window.location.search);
-  const devTier = params.get("devTier");
-
-  if (devTier === "freemium") return <Navigate to="/home-free" replace />;
-  if (devTier === "premium") return <Navigate to="/home" replace />;
-  if (devTier === "super") return <Navigate to="/home-super" replace />;
-
-  return <Navigate to="/" replace />;
-}
 export default function App() {
-  const isDev = process.env.NODE_ENV === "development";
-
-  // 🌐 Canonical redirect to www
-  useEffect(() => {
-    if (window.location.hostname === "rugbyanthemzone.com") {
-      window.location.replace(
-        "https://www.rugbyanthemzone.com" +
-          window.location.pathname +
-          window.location.search
-      );
-    }
-  }, []);
+  /* ================= DOMAIN REDIRECT ================= */
 
   return (
     <Router>
-       <ScrollToTop />
+      <ScrollToTop />
 
       <Routes>
-        {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
+        {/* ================= ONBOARDING FLOW ================= */}
 
-        <Route path="/account/settings" element={<AccountSettingsPage />} />
+        <Route
+          path="/"
+          element={<SplashPage />}
+        />
 
-        {/* ================= FREEMIUM ================= */}
-        <Route element={<FreemiumLayout />}>
-          <Route path="/" element={<SplashPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/splash-intro" element={<SecondarySplashPage />} />
-          <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/what-you-get/:tier" element={<WhatYouGetPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/access-pending" element={<AccessPendingPage />} />
-          <Route path="/signup/free" element={<FreemiumSignupPage />} />
-          <Route path="/signup/premium" element={<PremiumSignupPage />} />
-          <Route path="/signup/super" element={<SuperPremiumSignupPage />} />
-          <Route path="/home-free" element={<FreemiumHomePage />} />
-          <Route path="/free/anthems" element={<NationalAnthemsDirectory />} />
-          <Route path="/free/anthems/:nationId" element={<NationalAnthemPage />} />
+        <Route
+          path="/splash-intro"
+          element={<SecondarySplashPage />}
+        />
+
+        <Route
+          path="/soccer/welcome"
+          element={<WelcomePage />}
+        />
+
+        <Route
+          path="/terms"
+          element={<TermsPage />}
+        />
+
+        <Route
+          path="/account-setup"
+          element={<AccountSetupPage />}
+        />
+
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+
+        <Route
+          path="/checkout"
+          element={<CheckoutPage />}
+        />
+
+               <Route
+  path="/purchase-success"
+  element={<PurchaseSuccessPage />}
+/>
+
+        <Route
+  path="/privacy-policy"
+  element={<PrivacyPolicyPage />}
+/>
+
+<Route
+  path="/restore-purchase"
+  element={<RestorePurchasePage />}
+/>
+
+<Route
+  path="/delete-account"
+  element={<DeleteAccountPage />}
+/>
+
+<Route
+  path="/support"
+  element={<SupportPage />}
+/>
+
+        {/* ================= ACCOUNT ================= */}
+
+        <Route
+          path="/account/settings"
+          element={<AccountSettingsPage />}
+        />
+
+        {/* ================= MAIN APP ================= */}
+
+        <Route
+          path="/soccer"
+          element={
+            <RequireAuth>
+              <AppLayout />
+            </RequireAuth>
+          }
+        >
+          <Route
+            index
+            element={<SoccerHomePage />}
+          />
+
+          {/* MATCH CENTER */}
+
+          <Route
+            path="match-center"
+            element={<SoccerMatchCenterPage />}
+          />
+
+          <Route
+            path="live"
+            element={<SoccerLivePage />}
+          />
+
+          <Route
+            path="fixtures"
+            element={<SoccerFixturesPage />}
+          />
+
+          <Route
+            path="results"
+            element={<SoccerResultsPage />}
+          />
+
+          <Route
+            path="stats"
+            element={<SoccerStatsPage />}
+          />
+
+          {/* MATCHES */}
+
+          <Route
+            path="matches"
+            element={<SoccerMatchesPage />}
+          />
+
+          <Route
+            path="matches/:matchId"
+            element={<SoccerMatchPage />}
+          />
+
+          {/* TEAMS */}
+
+          <Route
+            path="teams"
+            element={<SoccerTeamsPage />}
+          />
+
+          <Route
+            path="teams/:teamId"
+            element={<SoccerTeamPage />}
+          />
+
+          {/* GROUPS */}
+
+          <Route
+            path="groups"
+            element={<SoccerGroupsOverviewPage />}
+          />
+
+          <Route
+            path="groups/all"
+            element={<SoccerGroupsPage />}
+          />
+
+          <Route
+            path="groups/:groupId"
+            element={<SoccerGroupPage />}
+          />
+
+          {/* WORLD CUP */}
+
+          <Route
+            path="world-cup"
+            element={<SoccerWorldCupHubPage />}
+          />
+
+          <Route
+  path="tournament-center"
+  element={<SoccerTournamentCenterPage />}
+/>
+
+          {/* KNOCKOUT */}
+
+          <Route
+            path="knockout"
+            element={<SoccerKnockoutHubPage />}
+          />
+
+          <Route
+            path="bracket"
+            element={<SoccerBracketPage />}
+          />
+
+          <Route
+  path="knockout-projections"
+  element={
+    <SoccerKnockoutProjectionPage />
+  }
+/>
+
+          {/* STADIUMS */}
+
+          <Route
+            path="stadiums"
+            element={<SoccerStadiumHubPage />}
+          />
+
+          <Route
+            path="stadiums/:stadiumId"
+            element={<SoccerStadiumPage />}
+          />
+
+          {/* SEARCH */}
+
+          <Route
+            path="search"
+            element={<SoccerSearchPage />}
+          />
+
+          {/* PLAYERS / NATIONS */}
+
+          <Route
+            path="players/:id"
+            element={<SoccerPlayerPage />}
+          />
+
+          <Route
+            path="nations/:nation"
+            element={<SoccerNationPage />}
+          />
+
+          {/* MEDIA */}
+
+          <Route
+            path="media"
+            element={<SoccerMediaHubPage />}
+          />
+
+          <Route
+            path="videos"
+            element={<SoccerVideosPage />}
+          />
+
+          <Route
+            path="news"
+            element={<SoccerNewsHubPage />}
+          />
+
+          <Route
+            path="podcasts"
+            element={<SoccerPodcastsPage />}
+          />
+
+          {/* FANZONE */}
+
+          <Route
+            path="fanzone"
+            element={<SoccerFanzonePage />}
+          />
+
+          <Route
+            path="fanzone/loyalty"
+            element={<SoccerLoyaltyPage />}
+          />
+
+          <Route
+            path="fanzone/audio"
+            element={<SoccerLiveAudioPage />}
+          />
+
+          <Route
+            path="fanzone/ppv"
+            element={<SoccerPremiumViewingPage />}
+          />
+
+         <Route
+  path="tactical-room"
+  element={<TacticalRoomPage />}
+/>
+
+          {/* USER */}
+
+          <Route
+            path="my-feed"
+            element={<SoccerMyFeedPage />}
+          />
+
+          <Route
+            path="notifications"
+            element={<SoccerNotificationsPage />}
+          />
+
+          <Route
+            path="calendar"
+            element={<SoccerCalendarPage />}
+          />
+
+          <Route
+            path="my-teams"
+            element={<SoccerMyTeamsPage />}
+          />
+
+          <Route
+            path="my-teams/manage"
+            element={<SoccerMyTeamsManagePage />}
+          />
+
+          <Route
+            path="profile"
+            element={<SoccerProfilePage />}
+          />
         </Route>
 
-        {/* ================= PREMIUM ================= */}
-        <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
-          <Route path="/home" element={<HomePage />} />
+        <Route
+          path="/free/anthems"
+          element={<NationalAnthemsDirectory />}
+        />
 
-          <Route path="/anthems" element={<NationalAnthemsDirectory />} />
-          <Route path="/anthems/:nationId" element={<NationalAnthemPage />} />
+        <Route
+          path="/free/anthems/:nationId"
+          element={<NationalAnthemPage />}
+        />
 
-          <Route path="/tournaments" element={<TournamentsHubPage />} />
-          <Route path="/tournaments/men" element={<MensTournamentsPage />} />
-          <Route path="/tournaments/women" element={<WomensTournamentsPage />} />
-          <Route path="/tournaments/:slug" element={<TournamentPage />} />
-          <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
-          <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
+        <Route
+          path="/anthems"
+          element={<NationalAnthemsDirectory />}
+        />
 
-          <Route path="/svns" element={<SVNSPage />} />
-          <Route path="/svns/matches" element={<SVNSMatchesPage />} />
-          <Route path="/svns/pools" element={<SVNSPoolsPage />} />
+        <Route
+          path="/anthems/:nationId"
+          element={<NationalAnthemPage />}
+        />
 
-          <Route path="/rankings/men" element={<RankingsMenPage />} />
-          <Route path="/rankings/women" element={<RankingsWomenPage />} />
+        {/* ================= SUPPORT ================= */}
 
-          <Route path="/match/:id" element={<MatchPage />} />
-          <Route path="/match-center" element={<MatchCenterPage />} />
-          <Route path="/live-scores" element={<LiveScoresPage />} />
-          <Route path="/fixtures" element={<FixturesPage />} />
-          <Route path="/results" element={<ResultsPage />} />
-          <Route path="/stats" element={<StatsPage />} />
-          <Route path="/match-center/domestic" element={<DomesticTablesPage />} />
-          <Route path="/match-center/domestic/:leagueId" element={<LeagueTablePage />} />
+        <Route
+          path="/contact"
+          element={<ContactPage />}
+        />
 
-          <Route path="/stadiums" element={<StadiumHubPage />} />
-          <Route path="/stadium/:slug" element={<StadiumPage />} />
-          <Route path="/stadium/:slug/matchday" element={<StadiumMatchdayPage />} />
+        {/* ================= DEBUG ================= */}
 
-          <Route path="/media" element={<MediaHubPage />} />
-          <Route path="/videos" element={<MatchVideosPage />} />
-          <Route path="/podcasts" element={<PodcastsPage />} />
-          <Route path="/greatest-hits" element={<GreatestHits />} />
-          <Route path="/comments" element={<FanComments />} />
+        <Route
+          path="/debug/api"
+          element={<StatsApiDebugPage />}
+        />
 
-          <Route path="/defining-moments" element={<DefiningMomentsPage />} />
-          <Route path="/moments/world-cup-turning-points" element={<WorldCupTurningPoints />} />
-          <Route path="/moments/tactical-shifts" element={<TacticalShifts />} />
-          <Route path="/moments/law-changes" element={<LawChanges />} />
-          <Route path="/moments/calls-decisions" element={<CallsAndDecisions />} />
-          <Route path="/moments/era-defining-rivalries" element={<EraDefiningRivalries />} />
-          <Route path="/moments/cultural-moments" element={<CulturalMoments />} />
+        {/* ================= FALLBACK ================= */}
 
-          <Route path="/inside-the-game" element={<InsideTheGameHubPage />} />
-          <Route path="/inside-the-game/referees" element={<RefereeHub />} />
-          <Route path="/inside-the-game/referees/breakdown" element={<BreakdownRucksPage />} />
-          <Route path="/inside-the-game/referees/tmo" element={<TMOReviewsPage />} />
-          <Route path="/inside-the-game/referees/law-updates" element={<LawUpdatesPage />} />
-          <Route path="/inside-the-game/fantasy" element={<FantasyLeagueHubPage />} />
-          <Route path="/inside-the-game/playing-charter" element={<PlayingCharterPage />} />
-
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/merch" element={<MerchPage />} />
-          <Route path="/merch/south-africa" element={<SouthAfricaMerchPage />} />
-          <Route path="/merch/new-zealand" element={<NewZealandMerchPage />} />
-          <Route path="/merch/england" element={<EnglandMerchPage />} />
-          <Route path="/merch/france" element={<FranceMerchPage />} />
-          <Route path="/merch/wales" element={<WalesMerchPage />} />
-          <Route path="/merch/ireland" element={<IrelandMerchPage />} />
-          <Route path="/merch/scotland" element={<ScotlandMerchPage />} />
-          <Route path="/merch/italy" element={<ItalyMerchPage />} />
-          <Route path="/merch/australia" element={<AustraliaMerchPage />} />
-          <Route path="/merch/japan" element={<JapanMerchPage />} />
-          <Route path="/merch/fiji" element={<FijiMerchPage />} />
-          <Route path="/merch/argentina" element={<ArgentinaMerchPage />} />
-
-          <Route path="/matchday-journeys" element={<MatchdayJourneysPage />} />
-          <Route path="/matchday-planner" element={<MatchdayPlannerPage />} />
-
-          <Route path="/tickets" element={<TicketsPage />} />
-          <Route path="/flights" element={<FlightsPage />} />
-          <Route path="/hotels" element={<HotelsPage />} />
-          <Route path="/transport" element={<TransportPage />} />
-
-          <Route path="/my-teams" element={<MyTeamsPage />} />
-          <Route path="/my-teams/manage" element={<MyTeamsManagePage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
-
-          <Route path="/profile" element={<ProfilePage />} />
-
-          <Route path="/contact" element={<ContactPage />} />
-
-          <Route path="/news" element={<NewsHubPage />} />
-          <Route path="/news/feed" element={<MyFeedPage />} />
-
-          <Route path="/fanzone" element={<FanzoneHubPage />} />
-          <Route path="/fanzone/loyalty" element={<LoyaltyPage />} />
-          <Route path="/fanzone/audio" element={<LiveMatchAudioPage />} />
-          <Route path="/fanzone/ppv" element={<PPVPage />} />
-
-          <Route path="/heritage" element={<HeritageHub />} />
-          <Route path="/heritage/legends" element={<LegendsHub />} />
-          <Route path="/heritage/legends/men" element={<LegendsMen />} />
-          <Route path="/heritage/legends/women" element={<LegendsWomen />} />
-          <Route path="/heritage/squads" element={<SquadsHub />} />
-          <Route path="/heritage/champions" element={<ChampionsHub />} />
-          <Route path="/heritage/coaches" element={<CoachesSupportHub />} />
-          <Route path="/heritage/officials" element={<OfficialsHub />} />
-        </Route>
-
-        {/* Deep Heritage */}
-        <Route path="/heritage/squads/men" element={<SquadsMen />} />
-        <Route path="/heritage/squads/women" element={<SquadsWomen />} />
-        <Route path="/heritage/squads/men/:nation" element={<SquadNation2026 />} />
-        <Route path="/heritage/squads/women/:nation" element={<SquadNation2026 />} />
-        <Route path="/heritage/champions/men" element={<ChampionsMen />} />
-        <Route path="/heritage/champions/women" element={<ChampionsWomen />} />
-        <Route path="/heritage/coaches/head-coaches" element={<HeadCoaches />} />
-        <Route path="/heritage/coaches/assistant-coaches" element={<AssistantCoaches />} />
-        <Route path="/heritage/coaches/support-staff" element={<SupportStaff />} />
-        {/* COACHES HUB */}
-<Route path="/heritage/coaches" element={<CoachesSupportHub />} />
-
-{/* HEAD COACHES */}
-<Route
-  path="/heritage/coaches/head-coaches-men"
-  element={<HeadCoaches />}
-/>
-<Route
-  path="/heritage/coaches/head-coaches-women"
-  element={<HeadCoachesWomen />}
-/>
-
-{/* ASSISTANT COACHES */}
-<Route
-  path="/heritage/coaches/assistant-coaches-men"
-  element={<AssistantCoaches />}
-/>
-<Route
-  path="/heritage/coaches/assistant-coaches-women"
-  element={<AssistantCoachesWomen />}
-/>
-
-{/* SUPPORT STAFF */}
-<Route
-  path="/heritage/coaches/support-staff-men"
-  element={<SupportStaff />}
-/>
-<Route
-  path="/heritage/coaches/support-staff-women"
-  element={<SupportStaffWomen />}
-/>
-        <Route path="/heritage/officials/men" element={<OfficialsMen />} />
-        <Route path="/heritage/officials/men/eras" element={<OfficialsMenEras />} />
-        <Route path="/heritage/officials/women" element={<OfficialsWomen />} />
-        <Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
-
-       {/* ================= DEBUG (BYPASS SYSTEM) ================= */}
-<Route path="/debug/api" element={<StatsApiDebugPage />} />
-
-<Route path="/checkout" element={<CheckoutPage />} />
-
-        {/* SUPER */}
-        <Route element={<RequireAuth><SuperLayout /></RequireAuth>}>
-          <Route path="/home-super" element={<SuperHomePage />} />
-        </Route>
-
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route
+          path="*"
+          element={<Navigate to="/" replace />}
+        />
       </Routes>
     </Router>
   );

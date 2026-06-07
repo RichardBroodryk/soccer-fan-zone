@@ -1,0 +1,128 @@
+// src/data/soccer/players/netherlandsPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const netherlandsPlayers: SoccerPlayer[] = [
+  {
+    id: "bart-verbruggen",
+    name: "Bart Verbruggen",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Brighton",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 1,
+  },
+
+  {
+    id: "virgil-van-dijk",
+    name: "Virgil van Dijk",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Liverpool",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 4,
+    captain: true,
+    goals: 1,
+    assists: 1,
+    caps: 78,
+  },
+
+  {
+    id: "micky-van-de-ven",
+    name: "Micky van de Ven",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Tottenham Hotspur",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 5,
+  },
+
+  {
+    id: "jeremie-frimpong",
+    name: "Jeremie Frimpong",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Liverpool",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 12,
+  },
+
+  {
+    id: "frenkie-de-jong",
+    name: "Frenkie de Jong",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Barcelona",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 21,
+  },
+
+  {
+    id: "xavi-simons",
+    name: "Xavi Simons",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "RB Leipzig",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 10,
+  },
+
+  {
+    id: "teun-koopmeiners",
+    name: "Teun Koopmeiners",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Juventus",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 8,
+  },
+
+  {
+    id: "cody-gakpo",
+    name: "Cody Gakpo",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Liverpool",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 11,
+  },
+
+  {
+    id: "memphis-depay",
+    name: "Memphis Depay",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Corinthians",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 10,
+  },
+
+  {
+    id: "donyell-malen",
+    name: "Donyell Malen",
+    nation: "Netherlands",
+    teamId: "netherlands",
+    club: "Aston Villa",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 18,
+  },
+];

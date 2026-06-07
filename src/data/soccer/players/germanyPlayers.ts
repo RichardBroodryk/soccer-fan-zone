@@ -1,0 +1,137 @@
+// src/data/soccer/players/germanyPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const germanyPlayers: SoccerPlayer[] = [
+  {
+    id: "manuel-neuer",
+    name: "Manuel Neuer",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Bayern Munich",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 40,
+    number: 1,
+    captain: true,
+  },
+
+  {
+    id: "oliver-baumann",
+    name: "Oliver Baumann",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Hoffenheim",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 36,
+    number: 12,
+  },
+
+  {
+    id: "antonio-rudiger",
+    name: "Antonio Rüdiger",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Real Madrid",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 2,
+  },
+
+  {
+    id: "jonathan-tah",
+    name: "Jonathan Tah",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Bayern Munich",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 4,
+  },
+
+  {
+    id: "joshua-kimmich",
+    name: "Joshua Kimmich",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Bayern Munich",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 6,
+  },
+
+  {
+    id: "jamal-musiala",
+    name: "Jamal Musiala",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Bayern Munich",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 10,
+  },
+
+  {
+    id: "florian-wirtz",
+    name: "Florian Wirtz",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Liverpool",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 17,
+  },
+
+  {
+    id: "leroy-sane",
+    name: "Leroy Sané",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Galatasaray",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 19,
+  },
+
+  {
+    id: "kai-havertz",
+    name: "Kai Havertz",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Arsenal",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 7,
+  },
+
+  {
+    id: "deniz-undav",
+    name: "Deniz Undav",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Stuttgart",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 13,
+  },
+
+  {
+    id: "maximilian-beier",
+    name: "Maximilian Beier",
+    nation: "Germany",
+    teamId: "germany",
+    club: "Borussia Dortmund",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 14,
+  },
+];

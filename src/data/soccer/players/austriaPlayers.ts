@@ -1,0 +1,125 @@
+// src/data/soccer/players/austriaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const austriaPlayers: SoccerPlayer[] = [
+  {
+    id: "patrick-pentz",
+    name: "Patrick Pentz",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Brøndby",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 1,
+  },
+
+  {
+    id: "david-alaba",
+    name: "David Alaba",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Real Madrid",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 8,
+    captain: true,
+  },
+
+  {
+    id: "kevin-danso",
+    name: "Kevin Danso",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Tottenham Hotspur",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 4,
+  },
+
+  {
+    id: "philipp-lienhart",
+    name: "Philipp Lienhart",
+    nation: "Austria",
+    teamId: "austria",
+    club: "SC Freiburg",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 15,
+  },
+
+  {
+    id: "konrad-laimer",
+    name: "Konrad Laimer",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Bayern Munich",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 20,
+  },
+
+  {
+    id: "marcel-sabitzer",
+    name: "Marcel Sabitzer",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Borussia Dortmund",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 9,
+  },
+
+  {
+    id: "christoph-baumgartner",
+    name: "Christoph Baumgartner",
+    nation: "Austria",
+    teamId: "austria",
+    club: "RB Leipzig",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 19,
+  },
+
+  {
+    id: "romano-schmid",
+    name: "Romano Schmid",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Werder Bremen",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 10,
+  },
+
+  {
+    id: "marko-arnautovic",
+    name: "Marko Arnautović",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Crvena Zvezda",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 37,
+    number: 7,
+  },
+
+  {
+    id: "michael-gregoritsch",
+    name: "Michael Gregoritsch",
+    nation: "Austria",
+    teamId: "austria",
+    club: "Augsburg",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 11,
+  },
+];

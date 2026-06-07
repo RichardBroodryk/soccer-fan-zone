@@ -1,0 +1,125 @@
+// src/data/soccer/players/algeriaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const algeriaPlayers: SoccerPlayer[] = [
+  {
+    id: "luca-zidane",
+    name: "Luca Zidane",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Granada",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 1,
+  },
+
+  {
+    id: "rayan-ait-nouri",
+    name: "Rayan Aït-Nouri",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Manchester City",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 3,
+  },
+
+  {
+    id: "ramy-bensebaini",
+    name: "Ramy Bensebaïni",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Borussia Dortmund",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 21,
+  },
+
+  {
+    id: "aissa-mandi",
+    name: "Aïssa Mandi",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Lille",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 2,
+    captain: true,
+  },
+
+  {
+    id: "nabil-bentaleb",
+    name: "Nabil Bentaleb",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Lille",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 6,
+  },
+
+  {
+    id: "houssem-aouar",
+    name: "Houssem Aouar",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Al-Ittihad",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 8,
+  },
+
+  {
+    id: "fares-chaibi",
+    name: "Farès Chaïbi",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Eintracht Frankfurt",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 10,
+  },
+
+  {
+    id: "riyad-mahrez",
+    name: "Riyad Mahrez",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Al-Ahli",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 7,
+  },
+
+  {
+    id: "amine-gouiri",
+    name: "Amine Gouiri",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Marseille",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 11,
+  },
+
+  {
+    id: "mohamed-amoura",
+    name: "Mohamed Amoura",
+    nation: "Algeria",
+    teamId: "algeria",
+    club: "Wolfsburg",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 9,
+  },
+];

@@ -1,0 +1,125 @@
+// src/data/soccer/players/newZealandPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const newZealandPlayers: SoccerPlayer[] = [
+  {
+    id: "max-crocombe",
+    name: "Max Crocombe",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Millwall",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 1,
+  },
+
+  {
+    id: "michael-boxall",
+    name: "Michael Boxall",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Minnesota United",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 38,
+    number: 5,
+    captain: true,
+  },
+
+  {
+    id: "liberato-cacace",
+    name: "Liberato Cacace",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Wrexham",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 13,
+  },
+
+  {
+    id: "tyler-bindon",
+    name: "Tyler Bindon",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Nottingham Forest",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 21,
+    number: 4,
+  },
+
+  {
+    id: "joe-bell",
+    name: "Joe Bell",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Viking FK",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 8,
+  },
+
+  {
+    id: "sarpreet-singh",
+    name: "Sarpreet Singh",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Wellington Phoenix",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 10,
+  },
+
+  {
+    id: "marko-stamenic",
+    name: "Marko Stamenic",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Swansea City",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 6,
+  },
+
+  {
+    id: "chris-wood",
+    name: "Chris Wood",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Nottingham Forest",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 9,
+  },
+
+  {
+    id: "kosta-barbarouses",
+    name: "Kosta Barbarouses",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Western Sydney Wanderers",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 36,
+    number: 7,
+  },
+
+  {
+    id: "ben-old",
+    name: "Ben Old",
+    nation: "New Zealand",
+    teamId: "new-zealand",
+    club: "Saint-Étienne",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 11,
+  },
+];

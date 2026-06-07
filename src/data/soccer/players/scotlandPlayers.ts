@@ -1,0 +1,125 @@
+// src/data/soccer/players/scotlandPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const scotlandPlayers: SoccerPlayer[] = [
+  {
+    id: "angus-gunn",
+    name: "Angus Gunn",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Norwich City",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 1,
+  },
+
+  {
+    id: "andy-robertson",
+    name: "Andy Robertson",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Liverpool",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 3,
+    captain: true,
+  },
+
+  {
+    id: "kieran-tierney",
+    name: "Kieran Tierney",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Celtic",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 6,
+  },
+
+  {
+    id: "aaron-hickey",
+    name: "Aaron Hickey",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Brentford",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 2,
+  },
+
+  {
+    id: "billy-gilmour",
+    name: "Billy Gilmour",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Napoli",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 14,
+  },
+
+  {
+    id: "scott-mctominay",
+    name: "Scott McTominay",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Napoli",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 4,
+  },
+
+  {
+    id: "john-mcginn",
+    name: "John McGinn",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Aston Villa",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 7,
+  },
+
+  {
+    id: "ryan-christie",
+    name: "Ryan Christie",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Bournemouth",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 11,
+  },
+
+  {
+    id: "che-adams",
+    name: "Che Adams",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Torino",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 10,
+  },
+
+  {
+    id: "lawrence-shankland",
+    name: "Lawrence Shankland",
+    nation: "Scotland",
+    teamId: "scotland",
+    club: "Hearts",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 9,
+  },
+];

@@ -1,37 +1,57 @@
-import type { MatchData } from "../data/matches/types";
-import { API_TO_CONCEPT_MAP } from "../contracts/competitionIdMap";
+import type {
+  SoccerMatch,
+} from "../data/soccer/types";
+
+import {
+  API_TO_CONCEPT_MAP,
+} from "../contracts/competitionIdMap";
 
 /* ==================================================
    NORMALIZERS
    ================================================== */
 
-function normalizeKey(value?: string): string {
-  if (!value) return "unknown";
+function normalizeKey(
+  value?: string
+): string {
+  if (!value) {
+    return "unknown";
+  }
 
   return value
     .toLowerCase()
-    .replace(/\b(women|w|7s|sevens)\b/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
     .trim();
 }
 
-function normalizeDate(date?: string): string {
-  if (!date) return "";
+function normalizeDate(
+  date?: string
+): string {
+  if (!date) {
+    return "";
+  }
 
   const d = new Date(date);
-  if (isNaN(d.getTime())) return "";
 
-  return d.toISOString().split("T")[0];
+  if (isNaN(d.getTime())) {
+    return "";
+  }
+
+  return d
+    .toISOString()
+    .split("T")[0];
 }
 
-function normalizeCountry(name?: string): string {
-  if (!name) return "unknown";
+function normalizeCountry(
+  name?: string
+): string {
+  if (!name) {
+    return "unknown";
+  }
 
   return name
     .toLowerCase()
-    .replace(/\b(7s|sevens|women|w)\b/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
@@ -40,93 +60,166 @@ function normalizeCountry(name?: string): string {
 }
 
 /* ==================================================
-   CONVERTER
+   API → SOCCER MATCH
    ================================================== */
 
 export function convertApiSportsFixture(
   fixture: any
-): MatchData | null {
-  const home = fixture.teams?.home;
-  const away = fixture.teams?.away;
+): SoccerMatch | null {
+  const homeTeam =
+    fixture.teams?.home;
 
-  const homeScore =
-    fixture.scores?.home?.total ??
-    fixture.scores?.home ??
-    null;
+  const awayTeam =
+    fixture.teams?.away;
 
-  const awayScore =
-    fixture.scores?.away?.total ??
-    fixture.scores?.away ??
-    null;
+  const homeGoals =
+    fixture.goals?.home ??
+    undefined;
 
-  const leagueId = fixture.league?.id;
+  const awayGoals =
+    fixture.goals?.away ??
+    undefined;
 
-  const competitionId = API_TO_CONCEPT_MAP[leagueId];
-  if (!competitionId) return null;
+  const leagueId =
+    fixture.league?.id;
 
-  let state: MatchData["state"] = "upcoming";
+  const tournamentId =
+    API_TO_CONCEPT_MAP[
+      leagueId
+    ];
 
-  const status = fixture.fixture?.status?.short;
+  if (!tournamentId) {
+    return null;
+  }
 
-  if (status === "FT") state = "final";
-  else if (status === "1H" || status === "2H") state = "live";
-  else if (status === "NS") state = "upcoming";
+  let status:
+    | "upcoming"
+    | "live"
+    | "final" =
+    "upcoming";
+
+  const apiStatus =
+    fixture.fixture?.status
+      ?.short;
+
+  if (
+    [
+      "FT",
+      "AET",
+      "PEN",
+    ].includes(apiStatus)
+  ) {
+    status = "final";
+  } else if (
+    [
+      "1H",
+      "2H",
+      "HT",
+      "ET",
+      "LIVE",
+    ].includes(apiStatus)
+  ) {
+    status = "live";
+  }
+
+  const venueName =
+    fixture.fixture?.venue
+      ?.name || "";
+
+  const venueCity =
+    fixture.fixture?.venue
+      ?.city || "";
 
   const normalizedDate =
-    normalizeDate(fixture.fixture?.date) || "unknown";
+    normalizeDate(
+      fixture.fixture?.date
+    ) || "unknown";
+
+    console.log(
+  "API ROUND:",
+  fixture.league?.round
+);
 
   return {
-    id: Number(fixture.fixture?.id) || Date.now() + Math.random(),
+    id: String(
+      fixture.fixture?.id
+    ),
 
-    matchKey: [
-      competitionId,
-      normalizedDate,
-      normalizeKey(home?.name),
-      normalizeKey(away?.name),
-    ].join("_"),
+    tournamentId,
 
-    competitionId,
+    home:
+      homeTeam?.name ??
+      "Unknown",
 
-    tournament: fixture.league?.name ?? "Unknown",
+    away:
+      awayTeam?.name ??
+      "Unknown",
 
-    stage:
-      fixture.fixture?.stage ||
-      fixture.fixture?.round ||
-      fixture.league?.round ||
+    homeScore:
+      homeGoals,
+
+    awayScore:
+      awayGoals,
+
+    date:
+      fixture.fixture?.date ??
       "",
 
-    date: fixture.fixture?.date ?? "",
-    venue: fixture.fixture?.venue?.name || "",
+    stadium: venueName,
 
-    home: {
-      name: home?.name ?? "Unknown",
-      country: normalizeCountry(home?.name),
-    },
+    stadiumId:
+      normalizeKey(
+        venueName
+      ),
 
-    away: {
-      name: away?.name ?? "Unknown",
-      country: normalizeCountry(away?.name),
-    },
+    city: venueCity,
 
-    score:
-      homeScore != null && awayScore != null
-        ? { home: homeScore, away: awayScore }
-        : undefined,
+    country:
+      fixture.league?.country ??
+      "",
 
-    state,
+    status,
 
-    importance: 50,
+    stage:
+      fixture.league?.round ??
+      "",
+
+    round:
+      fixture.league?.round ??
+      "",
+
+    venue: venueName,
+
+    importance: 100,
+
+    matchKey: [
+      tournamentId,
+      normalizedDate,
+      normalizeCountry(
+        homeTeam?.name
+      ),
+      normalizeCountry(
+        awayTeam?.name
+      ),
+    ].join("_"),
   };
 }
 
 /* ==================================================
-   BATCH
+   BATCH CONVERTER
    ================================================== */
 
 export function convertApiSportsFixtures(
   fixtures: any[]
-): MatchData[] {
+): SoccerMatch[] {
   return fixtures
-    .map(convertApiSportsFixture)
-    .filter((m): m is MatchData => m !== null);
+    .map(
+      convertApiSportsFixture
+    )
+    .filter(
+      (
+        match
+      ): match is SoccerMatch =>
+        match !== null
+    );
 }

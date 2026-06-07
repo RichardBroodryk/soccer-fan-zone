@@ -1,0 +1,125 @@
+// src/data/soccer/players/southAfricaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const southAfricaPlayers: SoccerPlayer[] = [
+  {
+    id: "ronwen-williams",
+    name: "Ronwen Williams",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 1,
+    captain: true,
+  },
+
+  {
+    id: "khuliso-mudau",
+    name: "Khuliso Mudau",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 20,
+  },
+
+  {
+    id: "aubrey-modiba",
+    name: "Aubrey Modiba",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 6,
+  },
+
+  {
+    id: "nkosinathi-sibisi",
+    name: "Nkosinathi Sibisi",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Orlando Pirates",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 5,
+  },
+
+  {
+    id: "temba-zwane",
+    name: "Themba Zwane",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 37,
+    number: 11,
+  },
+
+  {
+    id: "teboho-mokoena",
+    name: "Teboho Mokoena",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 4,
+  },
+
+  {
+    id: "jayden-adams",
+    name: "Jayden Adams",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 8,
+  },
+
+  {
+    id: "lyle-foster",
+    name: "Lyle Foster",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Burnley",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 9,
+  },
+
+  {
+    id: "relebohile-mofokeng",
+    name: "Relebohile Mofokeng",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Orlando Pirates",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 22,
+    number: 10,
+  },
+
+  {
+    id: "iqraam-rayners",
+    name: "Iqraam Rayners",
+    nation: "South Africa",
+    teamId: "south-africa",
+    club: "Mamelodi Sundowns",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 13,
+  },
+];

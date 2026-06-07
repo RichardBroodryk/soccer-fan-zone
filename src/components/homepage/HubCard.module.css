@@ -1,90 +1,378 @@
 .hub {
   position: relative;
-  min-height: 220px;
-  border-radius: 20px;
+
+  isolation: isolate;
+
+  min-height: 240px;
+
+  border-radius: 28px;
+
   overflow: hidden;
+
   cursor: pointer;
 
-  /* 🔥 CRITICAL FIX */
   width: 100%;
+
   max-width: 100%;
+
   display: block;
+
   box-sizing: border-box;
+
+  background: #ffffff;
+
+  border:
+    1px solid rgba(255,255,255,0.7);
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-/* IMAGE */
+/* ======================================================
+   HOVER
+   ====================================================== */
+
+.hub:hover {
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.14);
+}
+
+/* ======================================================
+   BACKGROUND
+   ====================================================== */
+
 .background {
   position: absolute;
+
   inset: 0;
+
   background-size: cover;
+
   background-position: center;
+
+  transform: scale(1.03);
+
+  transition:
+    transform 0.6s ease;
 }
 
-/* OVERLAY */
+.hub:hover .background {
+  transform: scale(1.08);
+}
+
+/* ======================================================
+   LIGHT OVERLAY
+   ====================================================== */
+
 .overlay {
   position: absolute;
+
   inset: 0;
-  background: rgba(0, 0, 0, 0.25);
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(255,255,255,0.92),
+      rgba(255,255,255,0.35),
+      rgba(255,255,255,0.08)
+    );
 }
 
-/* CONTENT */
+/* ======================================================
+   CONTENT
+   ====================================================== */
+
 .content {
   position: relative;
+
+  z-index: 5;
+
   height: 100%;
-  padding: 28px;
+
+  padding: 30px;
+
   display: flex;
+
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 12px;
-  color: #ffffff;
-  z-index: 2;
+
+  justify-content: flex-end;
+
+  gap: 16px;
 }
 
-/* TITLE */
+/* ======================================================
+   TITLE
+   ====================================================== */
+
 .title {
-  font-size: 1.6rem;
-  font-weight: 800;
   margin: 0;
+
+  font-size:
+    clamp(
+      1.4rem,
+      2vw,
+      2rem
+    );
+
+  font-weight: 900;
+
+  line-height: 1.08;
+
+  letter-spacing: -0.02em;
+
+  color: #111827;
 }
 
-/* FEATURES */
+/* ======================================================
+   FEATURES
+   ====================================================== */
+
 .features {
   display: flex;
+
   flex-wrap: wrap;
-  gap: 14px;
+
+  gap: 12px;
 }
 
-/* FEATURE ITEM */
 .feature {
   display: inline-flex;
+
   align-items: center;
+
   gap: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
+
+  padding:
+    9px 12px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.88);
+
+  border:
+    1px solid rgba(255,255,255,0.9);
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
   white-space: nowrap;
+
+  color: #111827;
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.06);
 }
 
-/* ICON SLOT */
+/* ======================================================
+   ICON
+   ====================================================== */
+
 .icon {
   display: inline-flex;
+
   align-items: center;
+
   justify-content: center;
+
+  color: #2563eb;
 }
 
-/* SVG ICON SIZE */
 .icon svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+
+  height: 15px;
+
   stroke: currentColor;
 }
 
-/* MOBILE */
+/* ======================================================
+   BADGES
+   ====================================================== */
+
+.liveBadge {
+  position: absolute;
+
+  top: 18px;
+
+  right: 18px;
+
+  z-index: 6;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: #dc2626;
+
+  color: #ffffff;
+
+  font-weight: 900;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 8px 24px rgba(220,38,38,0.3);
+}
+
+.liveDot {
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  animation:
+    pulseLive 1.2s infinite;
+}
+
+.featuredBadge {
+  position: absolute;
+
+  top: 18px;
+
+  right: 18px;
+
+  z-index: 6;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: #facc15;
+
+  color: #111827;
+
+  font-weight: 900;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 8px 24px rgba(250,204,21,0.28);
+}
+
+.matchLabel {
+  position: absolute;
+
+  top: 18px;
+
+  left: 18px;
+
+  z-index: 6;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.9);
+
+  color: #111827;
+
+  font-weight: 800;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.08);
+}
+
+/* ======================================================
+   FOCUS
+   ====================================================== */
+
+.hub:focus-visible {
+  outline:
+    3px solid rgba(37,99,235,0.8);
+
+  outline-offset: 3px;
+}
+
+/* ======================================================
+   ACTIVE
+   ====================================================== */
+
+.hub:active {
+  transform:
+    scale(0.99);
+}
+
+/* ======================================================
+   ANIMATION
+   ====================================================== */
+
+@keyframes pulseLive {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ======================================================
+   MOBILE
+   ====================================================== */
+
 @media (max-width: 768px) {
   .hub {
-    min-height: 180px;
+    min-height: 210px;
+
+    border-radius: 24px;
+  }
+
+  .content {
+    padding: 22px;
   }
 
   .title {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+  }
+
+  .features {
+    gap: 10px;
+  }
+
+  .feature {
+    font-size: 0.76rem;
+
+    padding:
+      8px 10px;
   }
 }

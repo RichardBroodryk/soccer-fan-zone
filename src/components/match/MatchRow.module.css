@@ -1,21 +1,34 @@
 .row {
   background: #ffffff;
+
   border-radius: 18px;
+
   padding: 16px 18px;
+
   cursor: pointer;
+
   margin-bottom: 14px;
 
-  box-shadow: inset 6px 0 0 #e5e7eb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
 
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-shadow:
+    inset 6px 0 0 #e5e7eb,
+    0 8px 22px rgba(15, 23, 42, 0.08);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
 .row:hover {
-  background: #f9fafb;
+  background: #f8fafc;
+
   transform: translateY(-2px);
+
   box-shadow:
     inset 6px 0 0 #e5e7eb,
-    0 6px 16px rgba(0, 0, 0, 0.06);
+    0 10px 24px rgba(15, 23, 42, 0.12);
 }
 
 /* =================
@@ -23,19 +36,27 @@
    ================= */
 
 .live {
-  box-shadow: inset 6px 0 0 #dc2626;
+  box-shadow:
+    inset 6px 0 0 #dc2626,
+    0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
 .final {
-  box-shadow: inset 6px 0 0 #111827;
+  box-shadow:
+    inset 6px 0 0 #111827,
+    0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
 .upcoming {
-  box-shadow: inset 6px 0 0 #64748b;
+  box-shadow:
+    inset 6px 0 0 #64748b,
+    0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
 .stats {
-  box-shadow: inset 6px 0 0 #64748b;
+  box-shadow:
+    inset 6px 0 0 #64748b,
+    0 8px 22px rgba(15, 23, 42, 0.08);
 }
 
 /* =================
@@ -44,9 +65,13 @@
 
 .teamsGrid {
   display: grid;
-  grid-template-columns: 1fr 64px 1fr;
+
+  grid-template-columns:
+    1fr 64px 1fr;
+
   align-items: center;
-  font-weight: 500;
+
+  font-weight: 600;
 }
 
 /* =================
@@ -56,8 +81,11 @@
 .teamLeft,
 .teamRight {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
+
   min-width: 0;
 }
 
@@ -75,8 +103,14 @@
 
 .teamName {
   white-space: nowrap;
+
   overflow: hidden;
+
   text-overflow: ellipsis;
+
+  color: #111827;
+
+  font-weight: 700;
 }
 
 /* =================
@@ -85,13 +119,18 @@
 
 .center {
   display: flex;
+
   justify-content: center;
+
   align-items: center;
 }
 
 .vs {
-  opacity: 0.5;
+  color: #475569;
+
   font-size: 0.85rem;
+
+  font-weight: 700;
 }
 
 /* =================
@@ -100,35 +139,48 @@
 
 .livePulse {
   display: flex;
+
   align-items: center;
+
   gap: 6px;
+
   font-size: 0.75rem;
+
   font-weight: 700;
+
   letter-spacing: 0.04em;
+
   color: #dc2626;
 }
 
 .pulseDot {
   width: 8px;
+
   height: 8px;
+
   border-radius: 50%;
+
   background: #dc2626;
+
   animation: pulse 1.4s infinite;
 }
 
 @keyframes pulse {
   0% {
     transform: scale(1);
+
     opacity: 1;
   }
 
   50% {
     transform: scale(1.4);
+
     opacity: 0.6;
   }
 
   100% {
     transform: scale(1);
+
     opacity: 1;
   }
 }
@@ -138,8 +190,10 @@
    ================= */
 
 .score {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 1rem;
+
+  font-weight: 800;
+
   color: #111827;
 }
 
@@ -148,16 +202,49 @@
    ================= */
 
 .meta {
-  margin-top: 6px;
+  margin-top: 10px;
+
   display: flex;
+
   justify-content: space-between;
-  font-size: 0.8rem;
-  color: #6b7280;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  font-size: 0.82rem;
+
+  color: #475569;
 }
 
 .tag {
-  font-weight: 700;
-  color: #111827;
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.tag:hover {
+  background: #bfdbfe;
+
+  transform: translateY(-1px);
 }
 
 /* =================
@@ -167,11 +254,50 @@
 .clickable {
   cursor: pointer;
 }
+
 .flag {
   width: 20px;
+
   height: 14px;
+
   object-fit: cover;
+
   border-radius: 2px;
+
   margin: 0 6px;
-  flex-shrink: 0; /* 🔑 prevents squashing */
+
+  flex-shrink: 0;
+}
+
+/* =================
+   MOBILE
+   ================= */
+
+@media (max-width: 768px) {
+  .row {
+    padding: 14px 14px;
+  }
+
+  .teamsGrid {
+    grid-template-columns:
+      1fr 52px 1fr;
+  }
+
+  .teamName {
+    font-size: 0.9rem;
+  }
+
+  .score {
+    font-size: 0.9rem;
+  }
+
+  .meta {
+    font-size: 0.74rem;
+  }
+
+  .tag {
+    width: 100%;
+
+    justify-content: center;
+  }
 }

@@ -1,0 +1,125 @@
+// src/data/soccer/players/croatiaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const croatiaPlayers: SoccerPlayer[] = [
+  {
+    id: "dominik-livakovic",
+    name: "Dominik Livaković",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Fenerbahçe",
+    position: "Goalkeeper",
+    squadStatus: "provisional",
+    age: 32,
+    number: 1,
+  },
+
+  {
+    id: "josko-gvardiol",
+    name: "Joško Gvardiol",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Manchester City",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 24,
+    number: 4,
+  },
+
+  {
+    id: "josip-sutalo",
+    name: "Josip Šutalo",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Ajax",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 26,
+    number: 5,
+  },
+
+  {
+    id: "borna-sosa",
+    name: "Borna Sosa",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Torino",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 28,
+    number: 3,
+  },
+
+  {
+    id: "luka-modric",
+    name: "Luka Modrić",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Real Madrid",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 41,
+    number: 10,
+    captain: true,
+  },
+
+  {
+    id: "mateo-kovacic",
+    name: "Mateo Kovačić",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Manchester City",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 32,
+    number: 8,
+  },
+
+  {
+    id: "lovro-majer",
+    name: "Lovro Majer",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Wolfsburg",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 28,
+    number: 7,
+  },
+
+  {
+    id: "andrej-kramaric",
+    name: "Andrej Kramarić",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Hoffenheim",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 35,
+    number: 9,
+  },
+
+  {
+    id: "bruno-petkovic",
+    name: "Bruno Petković",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Dinamo Zagreb",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 32,
+    number: 17,
+  },
+
+  {
+    id: "marco-pjaca",
+    name: "Marko Pjaca",
+    nation: "Croatia",
+    teamId: "croatia",
+    club: "Rijeka",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 31,
+    number: 20,
+  },
+];

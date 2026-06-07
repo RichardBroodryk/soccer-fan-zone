@@ -1,0 +1,82 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding-bottom: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* HERO */
+
+.heroCard {
+  border-radius: 34px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* GLOBAL SECTION TITLES */
+
+.sectionBlock {
+  padding-inline: 6px;
+}
+
+.sectionTitle {
+  color: #111827;
+}
+
+/* GLOBAL SECTION PARAGRAPHS */
+
+.sectionSubtext {
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* BACK BUTTON */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: -6px;
+  margin-bottom: 10px;
+}
+
+.backButton {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 14px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: 0.25s ease;
+}
+
+.backButton:hover {
+  transform: translateY(-2px);
+}
+
+/* SECTION SPACING */
+
+.sectionSpacing {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .page {
+    gap: 26px;
+  }
+
+  .backWrap {
+    margin-top: 0;
+  }
+
+  .sectionTitle {
+    font-size: 1.7rem !important;
+  }
+}

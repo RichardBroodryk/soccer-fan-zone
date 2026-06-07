@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './SplashPage.module.css';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./SplashPage.module.css";
 
-import razSplash from '../assets/images/raz/raz-splash.png';
+import splashImage from "../assets/soccer/ui/splash-image.png";
 
-const SPLASH_DURATION = 4000; // 4 seconds total
+const SPLASH_DURATION = 4000;
 
 const SplashPage = () => {
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ const SplashPage = () => {
   useEffect(() => {
     const fadeTimer = setTimeout(() => {
       setFadeOut(true);
-    }, SPLASH_DURATION - 800); // longer, smoother fade window
+    }, SPLASH_DURATION - 800);
 
     const navTimer = setTimeout(() => {
-      navigate('/splash-intro');
+      navigate("/splash-intro");
     }, SPLASH_DURATION);
 
     return () => {
@@ -26,10 +26,10 @@ const SplashPage = () => {
   }, [navigate]);
 
   return (
-    <div className={`${styles.splash} ${fadeOut ? styles.fadeOut : ''}`}>
+    <div className={`${styles.splash} ${fadeOut ? styles.fadeOut : ""}`}>
       <img
-        src={razSplash}
-        alt="Rugby Anthem Zone"
+        src={splashImage}
+        alt="Soccer Fan Zone"
         className={styles.image}
       />
     </div>

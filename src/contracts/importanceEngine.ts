@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /* ✅ IMPORT TYPE ONLY (FIXED PATH) */
-import type { MatchData } from "../data/matches/types";
+import type { MatchData } from "../archive/rugby-data/matches/types";
 
 import { COMPETITIONS } from "./competitionRegistry";
 

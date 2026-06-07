@@ -1,0 +1,125 @@
+// src/data/soccer/players/belgiumPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const belgiumPlayers: SoccerPlayer[] = [
+  {
+    id: "thibaut-courtois",
+    name: "Thibaut Courtois",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Real Madrid",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 1,
+  },
+
+  {
+    id: "timothy-castagne",
+    name: "Timothy Castagne",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Fulham",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 21,
+  },
+
+  {
+    id: "arthur-theate",
+    name: "Arthur Theate",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Eintracht Frankfurt",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 3,
+  },
+
+  {
+    id: "kevin-de-bruyne",
+    name: "Kevin De Bruyne",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Napoli",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 7,
+    captain: true,
+  },
+
+  {
+    id: "amadou-onana",
+    name: "Amadou Onana",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Aston Villa",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 24,
+  },
+
+  {
+    id: "youri-tielemans",
+    name: "Youri Tielemans",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Aston Villa",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 8,
+  },
+
+  {
+    id: "jeremy-doku",
+    name: "Jérémy Doku",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Manchester City",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 11,
+  },
+
+  {
+    id: "romelu-lukaku",
+    name: "Romelu Lukaku",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Napoli",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 9,
+  },
+
+  {
+    id: "leandro-trossard",
+    name: "Leandro Trossard",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Arsenal",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 17,
+  },
+
+  {
+    id: "charles-de-ketelaere",
+    name: "Charles De Ketelaere",
+    nation: "Belgium",
+    teamId: "belgium",
+    club: "Atalanta",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 10,
+  },
+];

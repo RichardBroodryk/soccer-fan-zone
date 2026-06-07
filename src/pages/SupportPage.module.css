@@ -1,0 +1,305 @@
+.page {
+  min-height: 100vh;
+  background: #050505;
+  color: white;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+
+  min-height: 44vh;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 80px 24px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.45),
+      rgba(0,0,0,0.88)
+    );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+
+  max-width: 900px;
+
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  border:
+    1px solid rgba(255,255,255,0.16);
+
+  margin-bottom: 22px;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+.heroContent h1 {
+  font-size:
+    clamp(2.5rem, 6vw, 5rem);
+
+  line-height: 1.05;
+
+  margin-bottom: 20px;
+
+  font-weight: 800;
+}
+
+.heroContent p {
+  font-size: 1.1rem;
+
+  line-height: 1.8;
+
+  color:
+    rgba(255,255,255,0.82);
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 70px 24px 100px;
+}
+
+/* ================= SUPPORT GRID ================= */
+
+.supportGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(260px, 1fr));
+
+  gap: 24px;
+
+  margin-bottom: 40px;
+}
+
+.supportCard {
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 24px;
+
+  padding: 30px;
+}
+
+.supportCard h3 {
+  margin-bottom: 14px;
+
+  font-size: 1.3rem;
+}
+
+.supportCard p {
+  line-height: 1.8;
+
+  opacity: 0.82;
+}
+
+/* ================= FORM ================= */
+
+.formCard {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.03)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 28px;
+
+  padding: 40px;
+}
+
+.formCard h2 {
+  font-size: 2rem;
+
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  line-height: 1.8;
+
+  opacity: 0.82;
+
+  margin-bottom: 30px;
+}
+
+/* ================= FORM FIELDS ================= */
+
+.field {
+  margin-bottom: 24px;
+}
+
+.field label {
+  display: block;
+
+  margin-bottom: 10px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.05);
+
+  color: white;
+
+  font-size: 1rem;
+
+  outline: none;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color:
+    rgba(255,255,255,0.45);
+}
+
+/* ================= ALERTS ================= */
+
+.success {
+  background:
+    rgba(0,180,120,0.12);
+
+  border:
+    1px solid rgba(0,180,120,0.28);
+
+  color: #7dffb2;
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  margin-bottom: 22px;
+}
+
+.error {
+  background:
+    rgba(255,70,70,0.12);
+
+  border:
+    1px solid rgba(255,70,70,0.28);
+
+  color: #ff8c8c;
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  margin-bottom: 22px;
+}
+
+/* ================= BUTTONS ================= */
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.primaryButton,
+.secondaryButton {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 18px 24px;
+
+  border-radius: 16px;
+
+  font-size: 1rem;
+
+  color: white;
+}
+
+.primaryButton {
+  background:
+    linear-gradient(
+      135deg,
+      #0ea5e9,
+      #2563eb
+    );
+}
+
+.secondaryButton {
+  background:
+    rgba(255,255,255,0.08);
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  text-align: center;
+
+  opacity: 0.6;
+
+  line-height: 1.8;
+
+  margin-top: 60px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .formCard {
+    padding: 30px 22px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.7rem;
+  }
+
+  .formCard h2 {
+    font-size: 1.7rem;
+  }
+}

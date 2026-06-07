@@ -1,0 +1,407 @@
+.page {
+  min-height: 100vh;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* HERO */
+
+.hero {
+  height: 420px;
+  display: flex;
+  align-items: flex-end;
+  padding: 56px;
+  background-size: cover;
+  background-position: center;
+}
+
+.heroContent {
+  max-width: 760px;
+}
+
+.heroContent h1 {
+  margin: 0 0 18px;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 0.95;
+}
+
+.heroContent p {
+  margin: 0;
+  max-width: 620px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.88);
+}
+
+/* CONTENT */
+
+.content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 24px 90px;
+}
+
+/* MAIN LAYOUT */
+
+.mainGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* LEFT COLUMN */
+
+.leftColumn {
+  width: 100%;
+}
+
+/* RIGHT COLUMN */
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+/* CARDS */
+
+.statusCard,
+.pulseCard,
+.alertCard,
+.categoryCard {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,24,39,0.96),
+      rgba(31,41,55,0.94)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 26px;
+}
+
+.statusCard,
+.pulseCard,
+.categoryCard {
+  padding: 24px;
+}
+
+/* LABELS */
+
+.cardLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+.statusCard h3,
+.pulseCard h3 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.statusCard p,
+.pulseCard p {
+  margin: 0;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.74);
+}
+
+/* BUTTON */
+
+.enableButton {
+  margin-top: 18px;
+  width: 100%;
+  border: none;
+  padding: 14px;
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* PULSE */
+
+.pulseTop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.liveDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #ef4444;
+
+  box-shadow:
+    0 0 18px rgba(239,68,68,0.8);
+}
+
+.pulseGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.pulseGrid div {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+}
+
+.pulseGrid span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  font-weight: 700;
+}
+
+.pulseGrid strong {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+/* SECTION HEADERS - FIXED FOR DARK NAVY TEXT */
+
+.sectionHeader {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.sectionHeader h2 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #0f172a; /* Dark navy blue */
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: #1e293b; /* Slightly lighter dark navy for description text */
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+/* ALERTS SECTION */
+
+.rightColumn > div:first-child + div {
+  margin-top: 0;
+}
+
+.alertList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.alertCard {
+  width: 100%;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 24px;
+  color: #ffffff;
+}
+
+.alertTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.alertTop strong {
+  display: block;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.alertTop p {
+  margin: 0;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.68);
+}
+
+.alertBadge {
+  flex-shrink: 0;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* CATEGORIES */
+
+.categoryGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(320px, 1fr)
+    );
+
+  gap: 20px;
+}
+
+.categoryCard {
+  min-height: 220px;
+}
+
+.categoryTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.categoryTop h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.categoryCard p {
+  margin: 0;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.68);
+}
+
+.activeButton,
+.offButton {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.activeButton {
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
+
+  color: #ffffff;
+}
+
+.offButton {
+  background:
+    rgba(255,255,255,0.08);
+
+  color:
+    rgba(255,255,255,0.75);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .hero {
+    height: 320px;
+    padding: 28px 20px;
+  }
+
+  .content {
+    padding: 30px 16px 80px;
+  }
+
+  .rightColumn {
+    gap: 28px;
+  }
+
+  .pulseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .categoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .alertTop,
+  .categoryTop {
+    flex-direction: column;
+  }
+
+  .activeButton,
+  .offButton,
+  .enableButton {
+    width: 100%;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .sectionHeader p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .hero {
+    height: 280px;
+    padding: 24px 16px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .content {
+    padding: 24px 14px 72px;
+  }
+
+  .rightColumn {
+    gap: 24px;
+  }
+
+  .alertCard,
+  .categoryCard,
+  .statusCard,
+  .pulseCard {
+    padding: 18px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.5rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}

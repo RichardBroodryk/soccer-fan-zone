@@ -1,5 +1,5 @@
 import styles from "./MatchRow.module.css";
-import { flagMap } from "../../data/flagMap";
+import { soccerFlags as flagMap } from "../../data/soccer/soccerFlags";
 
 type TeamRef = {
   name: string;
@@ -14,7 +14,7 @@ type Props = {
   state: MatchState;
   score?: { home: number; away: number };
   metaLeft?: string;
-  metaRight?: string;   // this is now the stadium slug
+  metaRight?: string; // stadium name
   onClick?: () => void;
 };
 
@@ -30,8 +30,10 @@ export default function MatchRow({
   const homeFlag = flagMap[home.country];
   const awayFlag = flagMap[away.country];
 
-  // Show score whenever it exists (more reliable than state alone)
-  const showScore = score && (score.home !== undefined && score.away !== undefined);
+  const showScore =
+    score &&
+    score.home !== undefined &&
+    score.away !== undefined;
 
   return (
     <div
@@ -40,14 +42,23 @@ export default function MatchRow({
     >
       <div className={styles.teamsGrid}>
         <div className={styles.teamLeft}>
-          {homeFlag && <img src={homeFlag} alt="" className={styles.flag} />}
-          <span className={styles.teamName}>{home.name}</span>
+          {homeFlag && (
+            <img
+              src={homeFlag}
+              alt=""
+              className={styles.flag}
+            />
+          )}
+
+          <span className={styles.teamName}>
+            {home.name}
+          </span>
         </div>
 
         <div className={styles.center}>
           {showScore ? (
             <div className={styles.score}>
-              {score!.home} - {score!.away}
+              {score.home} - {score.away}
             </div>
           ) : (
             <span className={styles.vs}>vs</span>
@@ -55,18 +66,38 @@ export default function MatchRow({
         </div>
 
         <div className={styles.teamRight}>
-          <span className={styles.teamName}>{away.name}</span>
-          {awayFlag && <img src={awayFlag} alt="" className={styles.flag} />}
+          <span className={styles.teamName}>
+            {away.name}
+          </span>
+
+          {awayFlag && (
+            <img
+              src={awayFlag}
+              alt=""
+              className={styles.flag}
+            />
+          )}
         </div>
       </div>
 
       {(metaLeft || metaRight) && (
         <div className={styles.meta}>
-          <span>{metaLeft}</span>
+          {metaLeft && (
+            <span className={styles.metaText}>
+              {metaLeft}
+            </span>
+          )}
+
           {metaRight && (
-            <a href={`/stadium/${metaRight}`} className={styles.tag}>
-              🏟 Stadium
-            </a>
+            <div className={styles.stadium}>
+              <span className={styles.stadiumIcon}>
+                🏟
+              </span>
+
+              <span className={styles.stadiumName}>
+                {metaRight}
+              </span>
+            </div>
           )}
         </div>
       )}

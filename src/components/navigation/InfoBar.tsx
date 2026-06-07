@@ -8,20 +8,50 @@ type InfoBarProps = {
 export default function InfoBar({ variant = "premium" }: InfoBarProps) {
   const isSuper = variant === "super";
 
-  const items = [
-    { label: "Notifications", route: "/notifications" },
-    { label: "Anthems", route: "/anthems" },
-    { label: "Tournaments", route: "/tournaments" },
-    { label: "Match Center", route: "/match-center" },
-    { label: "Matchday Journeys", route: "/matchday-journeys" },
-    { label: "The Rugby Studio", route: "/media" },
-    { label: "Fanzone", route: "/fanzone" },
-    { label: "News", route: "/news" },
-    { label: "Inside the Game", route: "/inside-the-game" },
-    { label: "Calendar", route: "/calendar" },
-    { label: "Stadiums", route: "/stadiums" },
-    { label: "Merch", route: "/merch" },
-  ];
+const items = [
+  { label: "Matches", route: "/soccer/matches" },
+
+  { label: "Live", route: "/soccer/live" },
+
+  { label: "My Feed", route: "/soccer/my-feed" },
+
+  {
+    label: "Notifications",
+    route: "/soccer/notifications",
+  },
+
+  { label: "Teams", route: "/soccer/teams" },
+
+  { label: "News", route: "/soccer/news" },
+
+  { label: "Anthems", route: "/anthems" },
+
+  {
+    label: "Match Center",
+    route: "/soccer/match-center",
+  },
+
+  { label: "Stadiums", route: "/soccer/stadiums" },
+
+  {
+  label: "Tactical",
+  route: "/soccer/tactical-room",
+},
+
+{
+  label: "Tournament Center",
+  route: "/soccer/tournament-center",
+},
+
+{
+  label: "Projections",
+  route: "/soccer/knockout-projections",
+},
+
+  { label: "Fanzone", route: "/soccer/fanzone" },
+
+  { label: "Calendar", route: "/soccer/calendar" },
+];
 
   if (isSuper) {
     items.splice(7, 0, { label: "Heritage", route: "/heritage" });

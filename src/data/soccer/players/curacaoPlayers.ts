@@ -1,0 +1,125 @@
+// src/data/soccer/players/curacaoPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const curacaoPlayers: SoccerPlayer[] = [
+  {
+    id: "eloy-room",
+    name: "Eloy Room",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "Miami FC",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 37,
+    number: 1,
+    captain: true,
+  },
+
+  {
+    id: "riechedly-bazoer",
+    name: "Riechedly Bazoer",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "Konyaspor",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 4,
+  },
+
+  {
+    id: "armando-obispo",
+    name: "Armando Obispo",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "PSV Eindhoven",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 5,
+  },
+
+  {
+    id: "juninho-bacuna",
+    name: "Juninho Bacuna",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "FC Volendam",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 7,
+  },
+
+  {
+    id: "leandro-bacuna",
+    name: "Leandro Bacuna",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "Iğdır",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 10,
+  },
+
+  {
+    id: "livano-comenencia",
+    name: "Livano Comenencia",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "FC Zürich",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 22,
+    number: 8,
+  },
+
+  {
+    id: "tahith-chong",
+    name: "Tahith Chong",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "Sheffield United",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 14,
+  },
+
+  {
+    id: "sontje-hansen",
+    name: "Sontje Hansen",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "Middlesbrough",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 11,
+  },
+
+  {
+    id: "jurgen-locadia",
+    name: "Jürgen Locadia",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "Miami FC",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 9,
+  },
+
+  {
+    id: "brandley-kuwas",
+    name: "Brandley Kuwas",
+    nation: "Curaçao",
+    teamId: "curacao",
+    club: "FC Volendam",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 33,
+    number: 17,
+  },
+];

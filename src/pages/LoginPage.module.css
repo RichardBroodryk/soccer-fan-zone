@@ -1,0 +1,359 @@
+.page {
+  min-height: 100vh;
+  background: #050505;
+  color: white;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  position: relative;
+
+  min-height: 46vh;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 80px 24px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.45),
+      rgba(0,0,0,0.88)
+    );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+
+  max-width: 900px;
+
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  border:
+    1px solid rgba(255,255,255,0.16);
+
+  margin-bottom: 22px;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+}
+
+.heroContent h1 {
+  font-size:
+    clamp(2.6rem, 6vw, 5rem);
+
+  line-height: 1.05;
+
+  margin-bottom: 20px;
+
+  font-weight: 800;
+}
+
+.heroContent p {
+  font-size: 1.1rem;
+
+  line-height: 1.8;
+
+  color:
+    rgba(255,255,255,0.82);
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 70px 24px 100px;
+}
+
+/* ================= CARD ================= */
+
+.card {
+  max-width: 720px;
+
+  margin: 0 auto 50px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.03)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 28px;
+
+  padding: 50px;
+}
+
+.card h2 {
+  font-size: 2.2rem;
+
+  margin-bottom: 14px;
+}
+
+.subtitle {
+  line-height: 1.8;
+
+  opacity: 0.82;
+
+  margin-bottom: 34px;
+}
+
+/* ================= FORM ================= */
+
+.field {
+  margin-bottom: 24px;
+}
+
+.field label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 0.95rem;
+
+  opacity: 0.85;
+}
+
+.input {
+  width: 100%;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.05);
+
+  color: white;
+
+  font-size: 1rem;
+
+  outline: none;
+}
+
+.input::placeholder {
+  color:
+    rgba(255,255,255,0.45);
+}
+
+/* ================= PASSWORD ================= */
+
+.passwordWrap {
+  position: relative;
+}
+
+.eyeButton {
+  position: absolute;
+
+  top: 50%;
+  right: 16px;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  color: white;
+
+  font-size: 1rem;
+}
+
+/* ================= LINKS ================= */
+
+.linkButton {
+  border: none;
+
+  background: transparent;
+
+  color: #60a5fa;
+
+  cursor: pointer;
+
+  margin-bottom: 26px;
+
+  font-size: 0.95rem;
+}
+
+/* ================= ERROR ================= */
+
+.error {
+  background:
+    rgba(255,70,70,0.12);
+
+  border:
+    1px solid rgba(255,70,70,0.28);
+
+  color: #ff8c8c;
+
+  padding: 16px;
+
+  border-radius: 14px;
+
+  margin-bottom: 24px;
+}
+
+/* ================= BUTTONS ================= */
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.primaryButton {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 18px 24px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0ea5e9,
+      #2563eb
+    );
+
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+}
+
+.secondaryButton {
+  border:
+    1px solid rgba(255,255,255,0.14);
+
+  background: transparent;
+
+  color: white;
+
+  cursor: pointer;
+
+  padding: 18px 24px;
+
+  border-radius: 16px;
+
+  font-size: 1rem;
+}
+
+/* ================= SUPPORT ================= */
+
+.supportGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 24px;
+
+  margin-bottom: 50px;
+}
+
+.supportCard {
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 22px;
+
+  padding: 30px;
+}
+
+.supportCard h3 {
+  margin-bottom: 14px;
+
+  font-size: 1.25rem;
+}
+
+.supportCard p {
+  line-height: 1.7;
+
+  opacity: 0.82;
+
+  margin-bottom: 20px;
+}
+
+.supportButton {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 14px 18px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  color: white;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  text-align: center;
+
+  opacity: 0.6;
+
+  line-height: 1.8;
+
+  font-size: 0.95rem;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .card {
+    padding: 34px 24px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.7rem;
+  }
+
+  .card h2 {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,125 @@
+// src/data/soccer/players/tunisiaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const tunisiaPlayers: SoccerPlayer[] = [
+  {
+    id: "aymen-dahman",
+    name: "Aymen Dahman",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "CS Sfaxien",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 1,
+  },
+
+  {
+    id: "ali-abdi",
+    name: "Ali Abdi",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Nice",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 2,
+  },
+
+  {
+    id: "montassar-talbi",
+    name: "Montassar Talbi",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Lorient",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 3,
+  },
+
+  {
+    id: "yan-valery",
+    name: "Yan Valery",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Young Boys",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 20,
+  },
+
+  {
+    id: "ellyes-skhiri",
+    name: "Ellyes Skhiri",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Eintracht Frankfurt",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 17,
+    captain: true,
+  },
+
+  {
+    id: "hannibal-mejbri",
+    name: "Hannibal Mejbri",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Burnley",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 10,
+  },
+
+  {
+    id: "anis-ben-slimane",
+    name: "Anis Ben Slimane",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Norwich City",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 8,
+  },
+
+  {
+    id: "elias-achouri",
+    name: "Elias Achouri",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "FC Copenhagen",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 11,
+  },
+
+  {
+    id: "hazem-mastouri",
+    name: "Hazem Mastouri",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Dynamo Makhachkala",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 9,
+  },
+
+  {
+    id: "elias-saad",
+    name: "Elias Saad",
+    nation: "Tunisia",
+    teamId: "tunisia",
+    club: "Hannover 96",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 7,
+  },
+];

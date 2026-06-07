@@ -1,0 +1,125 @@
+// src/data/soccer/players/haitiPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const haitiPlayers: SoccerPlayer[] = [
+  {
+    id: "johnny-placide",
+    name: "Johnny Placide",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "SC Bastia",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 38,
+    number: 1,
+    captain: true,
+  },
+
+  {
+    id: "jean-kevin-duverne",
+    name: "Jean-Kévin Duverne",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "KAA Gent",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 2,
+  },
+
+  {
+    id: "ricardo-ade",
+    name: "Ricardo Adé",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "LDU Quito",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 4,
+  },
+
+  {
+    id: "hannes-delcroix",
+    name: "Hannes Delcroix",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "FC Lugano",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 5,
+  },
+
+  {
+    id: "jean-jacques-danley",
+    name: "Jean-Jacques Danley",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "Philadelphia Union",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 8,
+  },
+
+  {
+    id: "jeanricner-bellegarde",
+    name: "Jeanricner Bellegarde",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "Wolverhampton Wanderers",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 10,
+  },
+
+  {
+    id: "louicius-deedson",
+    name: "Louicius Deedson",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "FC Dallas",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 11,
+  },
+
+  {
+    id: "duckens-nazon",
+    name: "Duckens Nazon",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "Esteghlal FC",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 9,
+  },
+
+  {
+    id: "frantzdy-pierrot",
+    name: "Frantzdy Pierrot",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "Çaykur Rizespor",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 20,
+  },
+
+  {
+    id: "wilson-isidor",
+    name: "Wilson Isidor",
+    nation: "Haiti",
+    teamId: "haiti",
+    club: "Sunderland",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 17,
+  },
+];

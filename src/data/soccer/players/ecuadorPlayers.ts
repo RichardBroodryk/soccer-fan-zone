@@ -1,0 +1,125 @@
+// src/data/soccer/players/ecuadorPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const ecuadorPlayers: SoccerPlayer[] = [
+  {
+    id: "hernan-galindez",
+    name: "Hernán Galíndez",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Huracán",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 39,
+    number: 1,
+  },
+
+  {
+    id: "willian-pacho",
+    name: "Willian Pacho",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Paris Saint-Germain",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 6,
+  },
+
+  {
+    id: "piero-hincapie",
+    name: "Piero Hincapié",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Arsenal",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 3,
+  },
+
+  {
+    id: "pervis-estupinan",
+    name: "Pervis Estupiñán",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "AC Milan",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 7,
+  },
+
+  {
+    id: "moises-caicedo",
+    name: "Moisés Caicedo",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Chelsea",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 23,
+    captain: true,
+  },
+
+  {
+    id: "kendry-paez",
+    name: "Kendry Páez",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "River Plate",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 19,
+    number: 10,
+  },
+
+  {
+    id: "alan-franco",
+    name: "Alan Franco",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Atlético Mineiro",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 8,
+  },
+
+  {
+    id: "gonzalo-plata",
+    name: "Gonzalo Plata",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Flamengo",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 19,
+  },
+
+  {
+    id: "enner-valencia",
+    name: "Enner Valencia",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Pachuca",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 37,
+    number: 13,
+  },
+
+  {
+    id: "kevin-rodriguez",
+    name: "Kevin Rodríguez",
+    nation: "Ecuador",
+    teamId: "ecuador",
+    club: "Union Saint-Gilloise",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 9,
+  },
+];

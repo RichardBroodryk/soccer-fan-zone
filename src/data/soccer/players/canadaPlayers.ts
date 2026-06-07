@@ -1,0 +1,125 @@
+// src/data/soccer/players/canadaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const canadaPlayers: SoccerPlayer[] = [
+  {
+    id: "dayne-st-clair",
+    name: "Dayne St Clair",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Inter Miami",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 1,
+  },
+
+  {
+    id: "alphonso-davies",
+    name: "Alphonso Davies",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Bayern Munich",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 19,
+    captain: true,
+  },
+
+  {
+    id: "alistair-johnston",
+    name: "Alistair Johnston",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Celtic",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 2,
+  },
+
+  {
+    id: "moise-bombito",
+    name: "Moïse Bombito",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Nice",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 15,
+  },
+
+  {
+    id: "stephen-eustaquio",
+    name: "Stephen Eustaquio",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Porto",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 7,
+  },
+
+  {
+    id: "ismael-kone",
+    name: "Ismaël Koné",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Sassuolo",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 8,
+  },
+
+  {
+    id: "tajon-buchanan",
+    name: "Tajon Buchanan",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Villarreal",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 27,
+    number: 17,
+  },
+
+  {
+    id: "jonathan-david",
+    name: "Jonathan David",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Juventus",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 10,
+  },
+
+  {
+    id: "cyle-larin",
+    name: "Cyle Larin",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Southampton",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 9,
+  },
+
+  {
+    id: "promise-david",
+    name: "Promise David",
+    nation: "Canada",
+    teamId: "canada",
+    club: "Union SG",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 20,
+  },
+];

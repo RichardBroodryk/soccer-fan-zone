@@ -1,0 +1,125 @@
+// src/data/soccer/players/norwayPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const norwayPlayers: SoccerPlayer[] = [
+  {
+    id: "orjan-nyland",
+    name: "Ørjan Nyland",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Sevilla",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 36,
+    number: 1,
+  },
+
+  {
+    id: "leo-ostigard",
+    name: "Leo Østigård",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Napoli",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 4,
+  },
+
+  {
+    id: "julian-ryerson",
+    name: "Julian Ryerson",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Borussia Dortmund",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 14,
+  },
+
+  {
+    id: "fredrik-ajer",
+    name: "Kristoffer Ajer",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Brentford",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 3,
+  },
+
+  {
+    id: "martin-odegaard",
+    name: "Martin Ødegaard",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Arsenal",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 10,
+    captain: true,
+  },
+
+  {
+    id: "sander-berge",
+    name: "Sander Berge",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Fulham",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 8,
+  },
+
+  {
+    id: "antonio-nusa",
+    name: "Antonio Nusa",
+    nation: "Norway",
+    teamId: "norway",
+    club: "RB Leipzig",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 21,
+    number: 7,
+  },
+
+  {
+    id: "oscar-bobb",
+    name: "Oscar Bobb",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Manchester City",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 11,
+  },
+
+  {
+    id: "erling-haaland",
+    name: "Erling Haaland",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Manchester City",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 26,
+    number: 9,
+  },
+
+  {
+    id: "alexander-sorloth",
+    name: "Alexander Sørloth",
+    nation: "Norway",
+    teamId: "norway",
+    club: "Atlético Madrid",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 19,
+  },
+];

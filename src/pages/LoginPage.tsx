@@ -1,221 +1,301 @@
+// src/pages/LoginPage.tsx
+
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { loginUser, getToken, getUserTier } from "../services/auth"; // ✅ FIXED IMPORT
-import { apiRequest } from "../services/api";
-import styles from "./FreemiumSignupPage.module.css";
+
+import { useNavigate } from "react-router-dom";
+
+import styles from "./LoginPage.module.css";
+
+import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const redirectState = location.state as
-    | {
-        redirectAfterLogin?: string;
-        tier?: "premium" | "super";
-      }
-    | null;
+  /* ================= FORM ================= */
 
-  const checkoutIntent =
-    redirectState?.redirectAfterLogin === "checkout";
+  const [email, setEmail] =
+    useState("");
 
-  const checkoutTier = redirectState?.tier;
+  const [password, setPassword] =
+    useState("");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] =
+    useState(false);
 
-  const [error, setError] = useState("");
-  const [info, setInfo] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
-  const isValidEmail = (email: string) =>
-    /\S+@\S+\.\S+/.test(email);
+  const [error, setError] =
+    useState("");
 
-  // ✅ CLEAN LOGIN HANDLER (FINAL FIXED)
+  /* ================= HELPERS ================= */
+
+  const isValidEmail = (
+    value: string
+  ) =>
+    /\S+@\S+\.\S+/.test(value);
+
+  /* ================= LOGIN ================= */
+
   const handleLogin = async () => {
-    if (!email || !password) {
-      setError("Please enter email and password.");
+    setError("");
+
+    if (!email.trim()) {
+      setError(
+        "Please enter your email."
+      );
       return;
     }
 
     if (!isValidEmail(email)) {
-      setError("Please enter a valid email address.");
+      setError(
+        "Please enter a valid email address."
+      );
       return;
     }
 
-    setLoading(true);
-    setError("");
-    setInfo("");
+    if (!password.trim()) {
+      setError(
+        "Please enter your password."
+      );
+      return;
+    }
 
     try {
-      await loginUser(email, password);
-      const token = getToken();
+      setLoading(true);
 
-      // 🔥 FORCE FRESH TIER (CRITICAL FIX)
-      const freshTier = await getUserTier();
+      /*
+        TEMP AUTH FLOW
 
-   // 🚨 HARD GUARD: ONLY ALLOW CHECKOUT AFTER CONFIRMED LOGIN + FREEMIUM
-if (checkoutIntent && checkoutTier) {
-  if (freshTier !== "freemium") {
-    console.log("🚫 BLOCKED CHECKOUT — user already paid:", freshTier);
-  } else if (token) {
-    const data = await apiRequest(
-      "/api/payments",
-      "POST",
-      { tier: checkoutTier },
-      token
-    );
+        Future:
+        backend auth
+        JWT
+        Google auth
+        Apple auth
+      */
 
-    if (!data.checkoutUrl) {
-      setError("Unable to start payment.");
-      return;
-    }
+      localStorage.setItem(
+        "sfz_logged_in",
+        "true"
+      );
 
-    window.location.href = data.checkoutUrl;
-    return;
-  }
-}
+      localStorage.setItem(
+        "sfz_user_email",
+        email
+      );
 
-if (window.history.state && window.history.state.usr) {
-  window.history.replaceState({}, document.title);
-}
-
-// ===============================
-// 🧭 NORMAL LOGIN ROUTING
-// ===============================
-if (freshTier === "super") {
-  navigate("/home-super");
-} else if (freshTier === "premium") {
-  navigate("/home");
-} else {
-  navigate("/home-free");
-}
+      navigate("/soccer");
 
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "";
-
-      if (message.toLowerCase().includes("password")) {
-        setError("Incorrect password");
-      } else if (message.toLowerCase().includes("user")) {
-        setError("Email not found");
-      } else {
-        setError("Login failed. Please try again.");
-      }
-
+      setError(
+        "Login failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  // 🔁 FORGOT PASSWORD (PLACEHOLDER)
-  const handleForgotPassword = () => {
-    if (!email) {
-      setError("Enter your email first.");
-      return;
-    }
+  /* ================= ROUTING ================= */
 
-    if (!isValidEmail(email)) {
-      setError("Enter a valid email.");
-      return;
-    }
+  const goToForgotPassword = () => {
+  navigate("/support");
+};
 
-    setError("");
-    setInfo("Password reset link will be available soon.");
+  const goToRestorePurchase = () => {
+    navigate("/restore-purchase");
+  };
+
+  const goToWelcome = () => {
+    navigate("/soccer/welcome");
   };
 
   return (
     <section className={styles.page}>
-      <header className={styles.header}>
-        <h1>Login</h1>
-        <p className={styles.subtitle}>
-          Sign in to access your Rugby Anthem Zone account.
-        </p>
-      </header>
+      {/* ================= HERO ================= */}
 
-      <section className={styles.content}>
-        <div className={styles.block}>
-          {/* EMAIL */}
-          <label className={styles.label}>Email</label>
-          <input
-            type="email"
-            className={styles.select}
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value.toLowerCase())
-            }
-            placeholder="you@example.com"
-          />
+      <section
+        className={styles.hero}
+        style={{
+          backgroundImage: `url(${heroImage})`,
+        }}
+      >
+        <div className={styles.overlay} />
 
-          {/* PASSWORD */}
-          <label className={styles.label}>Password</label>
-          <div style={{ position: "relative" }}>
-  <input
-    type={showPassword ? "text" : "password"}
-    className={styles.select}
-    value={password}
-    onChange={(e) => {
-      setPassword(e.target.value);
-      setError(""); // ✅ CLEAR ERROR ON TYPE
-    }}
-    placeholder="Enter password"
-    style={{ paddingRight: "40px" }}
-  />
+        <div className={styles.heroContent}>
+          <div className={styles.badge}>
+            MEMBER LOGIN
+          </div>
 
-  <span
-    onClick={() => setShowPassword(!showPassword)}
-    style={{
-      position: "absolute",
-      right: "10px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      cursor: "pointer",
-      fontSize: "14px",
-      opacity: 0.7,
-      userSelect: "none",
-    }}
-  >
-    {showPassword ? "🙈" : "👁️"}
-  </span>
-</div>
+          <h1>
+            Welcome Back
+            Football Fan
+          </h1>
 
-          {/* FORGOT PASSWORD */}
-          <p
-            onClick={handleForgotPassword}
-            style={{
-              marginTop: "8px",
-              fontSize: "12px",
-              color: "#007bff",
-              cursor: "pointer",
-              textDecoration: "underline",
-            }}
-          >
-            Forgot password?
+          <p>
+            Sign in to continue your
+            international football experience
+            across matches, stadiums,
+            rankings, media and tournament intelligence.
           </p>
-
-          {/* ERROR */}
-          {error && (
-            <p className={styles.error}>{error}</p>
-          )}
-
-          {/* INFO */}
-          {info && (
-            <p style={{ color: "#4caf50", fontSize: "12px" }}>
-              {info}
-            </p>
-          )}
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <button
-          className={styles.primaryButton}
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </footer>
+      {/* ================= LOGIN FORM ================= */}
+
+      <main className={styles.content}>
+        <section className={styles.card}>
+          <h2>
+            Account Login
+          </h2>
+
+          <p className={styles.subtitle}>
+            Access your football platform account.
+          </p>
+
+          {/* EMAIL */}
+
+          <div className={styles.field}>
+            <label>Email Address</label>
+
+            <input
+              type="email"
+              value={email}
+              placeholder="you@example.com"
+              onChange={(e) =>
+                setEmail(
+                  e.target.value.toLowerCase()
+                )
+              }
+              className={styles.input}
+            />
+          </div>
+
+          {/* PASSWORD */}
+
+          <div className={styles.field}>
+            <label>Password</label>
+
+            <div className={styles.passwordWrap}>
+              <input
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
+                value={password}
+                placeholder="Enter password"
+                onChange={(e) =>
+                  setPassword(
+                    e.target.value
+                  )
+                }
+                className={styles.input}
+              />
+
+              <button
+                type="button"
+                className={styles.eyeButton}
+                onClick={() =>
+                  setShowPassword(
+                    !showPassword
+                  )
+                }
+              >
+                {showPassword
+                  ? "🙈"
+                  : "👁️"}
+              </button>
+            </div>
+          </div>
+
+          {/* FORGOT */}
+
+          <button
+            className={styles.linkButton}
+            onClick={goToForgotPassword}
+          >
+            Account Recovery
+          </button>
+
+          {/* ERROR */}
+
+          {error && (
+            <div className={styles.error}>
+              {error}
+            </div>
+          )}
+
+          {/* CTA */}
+
+          <div className={styles.buttonGroup}>
+            <button
+              className={styles.primaryButton}
+              onClick={handleLogin}
+              disabled={loading}
+            >
+              {loading
+                ? "Signing In..."
+                : "Login"}
+            </button>
+
+            <button
+              className={styles.secondaryButton}
+              onClick={goToWelcome}
+            >
+              ← Back To Welcome
+            </button>
+          </div>
+        </section>
+
+        {/* ================= SUPPORT ================= */}
+
+        <section className={styles.supportGrid}>
+          {/* RESTORE */}
+
+          <div className={styles.supportCard}>
+            <h3>
+              Restore Existing Purchase
+            </h3>
+
+            <p>
+              Recover previously purchased
+              access across supported devices
+              and billing systems.
+            </p>
+
+            <button
+              className={styles.supportButton}
+              onClick={
+                goToRestorePurchase
+              }
+            >
+              Restore Purchase
+            </button>
+          </div>
+
+          {/* SECURITY */}
+
+          <div className={styles.supportCard}>
+            <h3>
+              Secure Platform Access
+            </h3>
+
+            <p>
+              Your account information and
+              platform access are protected
+              through secure authentication systems.
+            </p>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+
+        <footer className={styles.footer}>
+          International Soccer Fans Zone
+          is an independent football platform
+          built for global supporters worldwide.
+        </footer>
+      </main>
     </section>
   );
 }

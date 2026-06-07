@@ -1,135 +1,251 @@
-import { useEffect, useState } from "react";
+// src/pages/CheckoutPage.tsx
 
-declare global {
-  interface Window {
-    Paddle: any;
-  }
-}
+import { useNavigate } from "react-router-dom";
 
-const CheckoutPage = () => {
-  const [status, setStatus] = useState("Loading secure checkout...");
+import styles from "./CheckoutPage.module.css";
 
-  useEffect(() => {
-    console.log("🔥 CheckoutPage loaded - Initializing Paddle");
+import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
 
-    // If Paddle already exists, we still re-initialize (DO NOT return)
-    if (window.Paddle) {
-      console.log("⚠️ Paddle already loaded — reinitializing");
-    }
+export default function CheckoutPage() {
+  const navigate = useNavigate();
 
-    const script = document.createElement("script");
-    script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-    script.async = true;
+  /* ================= DATA ================= */
 
-    document.body.appendChild(script);
+  const email =
+    localStorage.getItem(
+      "sfz_user_email"
+    ) || "supporter@example.com";
 
-    script.onload = () => {
-      if (!window.Paddle) {
-        console.error("❌ Paddle failed to attach to window");
-        setStatus("Failed to initialize checkout. Please refresh.");
-        return;
-      }
+  /* ================= ROUTING ================= */
 
-      console.log("✅ Paddle script loaded successfully");
+ const handlePurchase = async () => {
+  /*
+    CURRENT STATUS
 
-      window.Paddle.Initialize({
-        token: "live_1315bcf84802de1b59fc1bd1da5",
+    Temporary development flow.
 
-        eventCallback: (event: any) => {
-          console.log("📦 Paddle event:", event.name);
+    Planned Web Billing:
+    Paddle Checkout
 
-          if (event.name === "checkout.completed") {
-            console.log("🎉 Checkout completed successfully");
+    Planned Mobile Billing:
+    Google Play Billing
+    Apple In-App Purchase
 
-            setStatus("Payment successful! Redirecting to your homepage...");
+    Real billing integration
+    will replace this route.
+  */
 
-            // 🔥 RETRY LOGIC (FIXES FREEMIUM ISSUE)
-            const checkTierAndRedirect = async () => {
-              const token = localStorage.getItem("raz_token");
-
-              for (let i = 0; i < 6; i++) {
-                try {
-                  const res = await fetch(
-                    "https://rugby-anthem-backend.fly.dev/api/subscription",
-                    {
-                      headers: token
-                        ? { Authorization: `Bearer ${token}` }
-                        : {},
-                    }
-                  );
-
-                  if (res.ok) {
-                    const data = await res.json();
-                    const tier = data.tier;
-
-                    console.log(`🔁 Tier check attempt ${i}:`, tier);
-
-                    if (tier === "super") {
-                      window.location.href = "/home-super";
-                      return;
-                    }
-
-                    if (tier === "premium") {
-                      window.location.href = "/home";
-                      return;
-                    }
-                  }
-                } catch (err) {
-                  console.error("Retry error:", err);
-                }
-
-                // wait 1 second before retry
-                await new Promise((res) => setTimeout(res, 1000));
-              }
-
-              console.warn("⚠️ Tier never updated — fallback to free");
-              window.location.href = "/home-free";
-            };
-
-            checkTierAndRedirect();
-          }
-        },
-      });
-
-      setStatus("Opening secure checkout...");
-    };
-
-    script.onerror = () => {
-      console.error("❌ Failed to load Paddle script");
-      setStatus("Network error loading checkout. Please refresh.");
-    };
-
-    // Cleanup on unmount
-    return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#0a0a0a",
-        color: "white",
-        textAlign: "center",
-        padding: "20px",
-      }}
-    >
-      <h2>{status}</h2>
-
-      <p>Please wait while we open the secure payment page...</p>
-
-      <p style={{ fontSize: "14px", opacity: 0.7, marginTop: "20px" }}>
-        You will be redirected automatically after payment.
-      </p>
-    </div>
+  localStorage.setItem(
+    "sfz_purchase_status",
+    "active"
   );
+
+  navigate("/purchase-success");
 };
 
-export default CheckoutPage;
+  const goBack = () => {
+    navigate("/account-setup");
+  };
+
+  const goToRestorePurchase = () => {
+    navigate("/restore-purchase");
+  };
+
+  const goToTerms = () => {
+    navigate("/terms");
+  };
+
+  const goToPrivacy = () => {
+    navigate("/privacy-policy");
+  };
+
+  return (
+    <section className={styles.page}>
+      {/* ================= HERO ================= */}
+
+      <section
+        className={styles.hero}
+        style={{
+          backgroundImage: `url(${heroImage})`,
+        }}
+      >
+        <div className={styles.overlay} />
+
+        <div className={styles.heroContent}>
+          <div className={styles.badge}>
+            SECURE CHECKOUT
+          </div>
+
+          <h1>
+            Unlock The Complete
+            Global Football Experience
+          </h1>
+
+          <p>
+            Secure your lifetime access
+            to immersive international football
+            experiences, match intelligence,
+            stadiums, rankings, media,
+            podcasts and supporter culture.
+          </p>
+        </div>
+      </section>
+
+      {/* ================= CHECKOUT ================= */}
+
+      <main className={styles.content}>
+        {/* PURCHASE CARD */}
+
+        <section className={styles.checkoutCard}>
+          <div className={styles.pricingLabel}>
+            GLOBAL ACCESS
+          </div>
+
+          <h2>$1.99 USD</h2>
+
+          <div className={styles.purchaseType}>
+            One-Time Purchase
+          </div>
+
+          <p className={styles.description}>
+            Your purchase unlocks full access
+            to the International Soccer Fans Zone platform.
+          </p>
+
+          {/* ACCOUNT */}
+
+          <div className={styles.accountBox}>
+            <div className={styles.accountLabel}>
+              ACCOUNT
+            </div>
+
+            <div className={styles.accountEmail}>
+              {email}
+            </div>
+          </div>
+
+          {/* FEATURES */}
+
+          <div className={styles.features}>
+            <div className={styles.feature}>
+              ✓ Full Match Center Access
+            </div>
+
+            <div className={styles.feature}>
+              ✓ Global Stadium Explorer
+            </div>
+
+            <div className={styles.feature}>
+              ✓ Football Media & Podcasts
+            </div>
+
+            <div className={styles.feature}>
+              ✓ AI Tournament Intelligence
+            </div>
+
+            <div className={styles.feature}>
+              ✓ Nations & Player Experiences
+            </div>
+
+            <div className={styles.feature}>
+              ✓ Future Platform Updates
+            </div>
+          </div>
+
+          {/* SECURITY */}
+
+          <div className={styles.securityBox}>
+            Secure payments and purchase
+            validation are handled through
+            supported official billing systems.
+          </div>
+
+          {/* CTA */}
+
+          <div className={styles.buttonGroup}>
+            <button
+              className={styles.primaryButton}
+              onClick={handlePurchase}
+            >
+              Complete Purchase
+            </button>
+
+            <button
+              className={styles.secondaryButton}
+              onClick={goBack}
+            >
+              ← Back To Account Setup
+            </button>
+          </div>
+        </section>
+
+        {/* SUPPORT OPTIONS */}
+
+        <section className={styles.supportGrid}>
+          {/* RESTORE */}
+
+          <div className={styles.supportCard}>
+            <h3>
+              Restore Existing Purchase
+            </h3>
+
+            <p>
+              Recover previously purchased
+              access through supported
+              billing providers.
+            </p>
+
+            <button
+              className={styles.supportButton}
+              onClick={
+                goToRestorePurchase
+              }
+            >
+              Restore Purchase
+            </button>
+          </div>
+
+          {/* TERMS */}
+
+          <div className={styles.supportCard}>
+            <h3>
+              Terms & Privacy
+            </h3>
+
+            <p>
+              Review platform terms,
+              privacy policies and
+              account usage information.
+            </p>
+
+            <div className={styles.linkButtons}>
+              <button
+                className={styles.linkButton}
+                onClick={goToTerms}
+              >
+                Terms
+              </button>
+
+              <button
+                className={styles.linkButton}
+                onClick={goToPrivacy}
+              >
+                Privacy
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* LEGAL */}
+
+        <footer className={styles.footer}>
+          International Soccer Fans Zone
+          is an independent football platform
+          and is not affiliated with or endorsed by
+          FIFA, UEFA, CAF, AFC, CONMEBOL,
+          CONCACAF, OFC or tournament organizers.
+        </footer>
+      </main>
+    </section>
+  );
+}

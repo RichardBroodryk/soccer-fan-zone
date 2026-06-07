@@ -1,0 +1,125 @@
+// src/data/soccer/players/egyptPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const egyptPlayers: SoccerPlayer[] = [
+  {
+    id: "mohamed-el-shenawy",
+    name: "Mohamed El Shenawy",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Al Ahly",
+    position: "Goalkeeper",
+    squadStatus: "provisional",
+    age: 38,
+    number: 1,
+    captain: true,
+  },
+
+  {
+    id: "mohamed-hany",
+    name: "Mohamed Hany",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Al Ahly",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 30,
+    number: 3,
+  },
+
+  {
+    id: "mohamed-abdelmonem",
+    name: "Mohamed Abdelmonem",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Nice",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 27,
+    number: 24,
+  },
+
+  {
+    id: "ahmed-fatouh",
+    name: "Ahmed Fatouh",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Zamalek",
+    position: "Defender",
+    squadStatus: "provisional",
+    age: 28,
+    number: 13,
+  },
+
+  {
+    id: "emam-ashour",
+    name: "Emam Ashour",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Al Ahly",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 28,
+    number: 8,
+  },
+
+  {
+    id: "mahmoud-trezeguet",
+    name: "Mahmoud Trezeguet",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Al Ahly",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 32,
+    number: 7,
+  },
+
+  {
+    id: "ibrahim-adel",
+    name: "Ibrahim Adel",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Nordsjaelland",
+    position: "Midfielder",
+    squadStatus: "provisional",
+    age: 25,
+    number: 10,
+  },
+
+  {
+    id: "mohamed-salah",
+    name: "Mohamed Salah",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Liverpool",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 34,
+    number: 11,
+  },
+
+  {
+    id: "omar-marmoush",
+    name: "Omar Marmoush",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Manchester City",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 27,
+    number: 22,
+  },
+
+  {
+    id: "hamza-abdelkarim",
+    name: "Hamza Abdelkarim",
+    nation: "Egypt",
+    teamId: "egypt",
+    club: "Barcelona U-19",
+    position: "Forward",
+    squadStatus: "provisional",
+    age: 19,
+    number: 18,
+  },
+];

@@ -1,0 +1,2269 @@
+/* src/pages/soccer/TacticalRoomPage.module.css */
+
+.page {
+  display: flex;
+  flex-direction: column;
+
+  gap: 34px;
+
+  padding-bottom: 80px;
+}
+
+/* ==================================================
+   HERO
+   ================================================== */
+
+.hero {
+  position: relative;
+
+  min-height: 520px;
+
+  border-radius: 36px;
+
+  overflow: hidden;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background-size: cover;
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.24);
+
+  margin-bottom: 2rem;
+}
+
+/* REMOVE LIGHT OVERLAY COMPLETELY */
+
+.heroOverlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    rgba(0,0,0,0.18);
+}
+
+.heroContent {
+  position: relative;
+
+  z-index: 2;
+
+  text-align: center;
+
+  max-width: 900px;
+
+  padding: 2rem;
+}
+
+.heroBadge {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.88);
+
+  color: #111827;
+
+  font-size: 0.82rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  margin-bottom: 20px;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.14);
+}
+
+.heroContent h1 {
+  color: #111827;
+
+  font-size: clamp(
+    3rem,
+    6vw,
+    5.2rem
+  );
+
+  line-height: 0.95;
+
+  font-weight: 900;
+
+  margin-bottom: 22px;
+
+  text-shadow:
+    0 2px 10px rgba(255,255,255,0.18);
+}
+
+.heroContent p {
+  color: #111827;
+
+  font-size: 1.08rem;
+
+  line-height: 1.9;
+
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  font-weight: 700;
+
+  text-shadow:
+    0 2px 8px rgba(255,255,255,0.12);
+}
+
+.heroPill {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 12px 20px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.12);
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  margin-bottom: 22px;
+
+  font-size: 0.82rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  color: #111827;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 440px;
+
+    border-radius: 28px;
+  }
+
+  .heroContent {
+    padding: 1.5rem;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+
+    line-height: 1.75;
+  }
+}
+
+/* ==================================================
+   SECTIONS
+   ================================================== */
+
+.section {
+  width: 100%;
+
+  max-width: 1320px;
+
+  margin: 0 auto;
+
+  padding: 0 24px;
+}
+
+.sectionHeader {
+  margin-bottom: 28px;
+}
+
+.sectionHeader h2 {
+  margin: 0 0 10px;
+
+  font-size: 2rem;
+
+  font-weight: 900;
+
+  color: #111827;
+}
+
+.sectionHeader p {
+  margin: 0;
+
+  color: #374151;
+
+  line-height: 1.7;
+
+  max-width: 760px;
+
+  font-weight: 500;
+}
+/* ==================================================
+   CONTROL CENTER
+   ================================================== */
+
+.controlGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 22px;
+}
+
+.controlCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.94),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 28px;
+
+  padding: 28px;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.18);
+}
+
+.controlLabel {
+  color:
+    rgba(255,255,255,0.62);
+
+  font-size: 0.88rem;
+
+  font-weight: 700;
+
+  margin-bottom: 12px;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+.controlValue {
+  font-size: 2.8rem;
+
+  font-weight: 900;
+
+  color: white;
+
+  margin-bottom: 12px;
+}
+
+.controlTrend {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(34,197,94,0.14);
+
+  color: #86efac;
+
+  font-weight: 800;
+
+  font-size: 0.82rem;
+}
+
+/* ==================================================
+   FORMATIONS
+   ================================================== */
+
+.formationGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 24px;
+}
+
+.formationCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.95),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 30px;
+
+  padding: 34px;
+
+  color: white;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.18);
+}
+
+.formationShape {
+  width: 110px;
+
+  height: 110px;
+
+  border-radius: 999px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
+
+  font-size: 1.5rem;
+
+  font-weight: 900;
+
+  color: white;
+}
+
+.formationCard h3 {
+  margin-top: 0;
+
+  margin-bottom: 12px;
+
+  font-size: 1.5rem;
+
+  font-weight: 900;
+}
+
+.formationCard p {
+  margin: 0;
+
+  color:
+    rgba(255,255,255,0.72);
+
+  line-height: 1.8;
+}
+
+/* ==================================================
+   MOMENTUM ENGINE
+   ================================================== */
+
+.momentumPanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(2,6,23,0.95),
+      rgba(15,23,42,0.94)
+    );
+
+  border-radius: 34px;
+
+  padding: 36px;
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.22);
+}
+
+.timeline {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.timelineEvent {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  border-radius: 22px;
+
+  padding: 18px 22px;
+}
+
+.timelineMinute {
+  min-width: 72px;
+
+  height: 72px;
+
+  border-radius: 999px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #84cc16
+    );
+
+  color: white;
+
+  font-size: 1.2rem;
+
+  font-weight: 900;
+}
+
+.timelineContent {
+  color: white;
+
+  font-weight: 700;
+
+  font-size: 1rem;
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 420px;
+
+    margin: 18px;
+  }
+
+  .heroContent {
+    padding: 38px 22px;
+  }
+
+  .section {
+    padding: 0 18px;
+  }
+
+  .momentumPanel {
+    padding: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 380px;
+
+    border-radius: 28px;
+  }
+
+  .heroContent h1 {
+    line-height: 1.02;
+  }
+
+  .controlValue {
+    font-size: 2.2rem;
+  }
+
+  .timelineEvent {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .timelineMinute {
+    width: 64px;
+
+    height: 64px;
+
+    min-width: 64px;
+  }
+
+  .formationCard {
+    padding: 26px;
+  }
+}
+/* ==================================================
+   TACTICAL IDENTITIES
+   ================================================== */
+
+.identityGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 24px;
+}
+
+.identityCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.95),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 28px;
+
+  padding: 30px;
+
+  color: white;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.18);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.identityCard:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(34,197,94,0.35);
+}
+
+.identityLevel {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(34,197,94,0.12);
+
+  color: #86efac;
+
+  font-size: 0.78rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  margin-bottom: 18px;
+}
+
+.identityCard h3 {
+  margin-top: 0;
+
+  margin-bottom: 12px;
+
+  font-size: 1.45rem;
+
+  font-weight: 900;
+}
+
+.identityCard p {
+  margin: 0;
+
+  line-height: 1.8;
+
+  color:
+    rgba(255,255,255,0.72);
+}
+
+@media (max-width: 768px) {
+  .identityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .identityCard {
+    padding: 24px;
+  }
+}
+/* ==================================================
+   COACH INTELLIGENCE
+   ================================================== */
+
+.coachGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 24px;
+}
+
+.coachCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.96),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 30px;
+
+  padding: 30px;
+
+  color: white;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.2);
+}
+
+.coachHeader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.coachAvatar {
+  width: 68px;
+
+  height: 68px;
+
+  border-radius: 999px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
+
+  font-weight: 900;
+
+  font-size: 1.1rem;
+
+  color: white;
+}
+
+.coachName {
+  margin: 0;
+
+  font-size: 1.3rem;
+
+  font-weight: 900;
+}
+
+.coachRole {
+  margin-top: 4px;
+
+  color:
+    rgba(255,255,255,0.62);
+
+  font-size: 0.88rem;
+}
+
+.coachStats {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.coachStat {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  gap: 12px;
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border-radius: 16px;
+
+  padding: 14px 16px;
+}
+
+.coachStat span {
+  color:
+    rgba(255,255,255,0.68);
+
+  font-size: 0.88rem;
+}
+
+.coachStat strong {
+  color: white;
+
+  font-size: 0.95rem;
+
+  font-weight: 800;
+
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .coachGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .coachCard {
+    padding: 24px;
+  }
+
+  .coachStat {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+}
+/* ==================================================
+   LIVE PRESSURE MAP
+   ================================================== */
+
+.pressurePanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(2,6,23,0.96),
+      rgba(15,23,42,0.94)
+    );
+
+  border-radius: 32px;
+
+  padding: 34px;
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.22);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.pressureRow {
+  display: grid;
+
+  grid-template-columns:
+    240px 1fr 80px;
+
+  align-items: center;
+
+  gap: 20px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  border-radius: 22px;
+
+  padding: 18px 20px;
+}
+
+.pressureMeta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.pressureMinute {
+  width: 64px;
+
+  height: 64px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: white;
+
+  font-weight: 900;
+
+  font-size: 1rem;
+}
+
+.pressureTeam {
+  color: white;
+
+  font-weight: 800;
+
+  margin-bottom: 4px;
+}
+
+.pressureState {
+  color:
+    rgba(255,255,255,0.62);
+
+  font-size: 0.88rem;
+}
+
+.pressureBar {
+  height: 14px;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,0.08);
+}
+
+.pressureFill {
+  height: 100%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #22c55e,
+      #84cc16,
+      #facc15
+    );
+}
+
+.pressureValue {
+  color: white;
+
+  font-weight: 900;
+
+  font-size: 1rem;
+
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .pressureRow {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .pressureValue {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .pressurePanel {
+    padding: 24px;
+  }
+
+  .pressureMeta {
+    align-items: flex-start;
+  }
+
+  .pressureMinute {
+    width: 58px;
+
+    height: 58px;
+  }
+}
+/* ==================================================
+   TACTICAL ANALYTICS
+   ================================================== */
+
+.analyticsGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 22px;
+}
+
+.analyticsCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.96),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  border-radius: 28px;
+
+  padding: 28px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.18);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.analyticsCard:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(34,197,94,0.3);
+}
+
+.analyticsLabel {
+  color:
+    rgba(255,255,255,0.62);
+
+  font-size: 0.88rem;
+
+  margin-bottom: 14px;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  font-weight: 700;
+}
+
+.analyticsValue {
+  font-size: 3rem;
+
+  font-weight: 900;
+
+  color: white;
+
+  margin-bottom: 16px;
+
+  line-height: 1;
+}
+
+.analyticsTag {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(34,197,94,0.12);
+
+  color: #86efac;
+
+  font-size: 0.8rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .analyticsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .analyticsCard {
+    padding: 24px;
+  }
+
+  .analyticsValue {
+    font-size: 2.5rem;
+  }
+}
+/* ==================================================
+   MATCH ZONE CONTROL
+   ================================================== */
+
+.zonePanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(2,6,23,0.96),
+      rgba(15,23,42,0.94)
+    );
+
+  border-radius: 34px;
+
+  padding: 34px;
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.22);
+}
+
+.pitch {
+  position: relative;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #166534,
+      #14532d
+    );
+
+  min-height: 520px;
+
+  padding: 32px;
+}
+
+.pitchOverlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 40px,
+      transparent 40px,
+      transparent 80px
+    );
+}
+
+.zoneGrid {
+  position: relative;
+
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 22px;
+}
+
+.zoneCard {
+  background:
+    rgba(255,255,255,0.08);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  color: white;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.zoneCard:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(255,255,255,0.2);
+}
+
+.zoneTitle {
+  font-size: 0.9rem;
+
+  color:
+    rgba(255,255,255,0.72);
+
+  margin-bottom: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+.zoneValue {
+  font-size: 2.4rem;
+
+  font-weight: 900;
+
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .zonePanel {
+    padding: 24px;
+  }
+
+  .pitch {
+    min-height: auto;
+
+    padding: 22px;
+  }
+
+  .zoneGrid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ==================================================
+   LIVE FORMATION BOARD
+   ================================================== */
+
+.boardPanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(2,6,23,0.96),
+      rgba(15,23,42,0.94)
+    );
+
+  border-radius: 34px;
+
+  padding: 34px;
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.22);
+}
+
+.boardPitch {
+  position: relative;
+
+  min-height: 760px;
+
+  border-radius: 30px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #166534,
+      #14532d
+    );
+
+  border:
+    3px solid rgba(255,255,255,0.08);
+}
+
+/* PITCH MARKINGS */
+
+.boardPitch::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 48px,
+      transparent 48px,
+      transparent 96px
+    );
+}
+
+.boardPitch::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 0;
+
+  right: 0;
+
+  height: 2px;
+
+  background:
+    rgba(255,255,255,0.12);
+}
+
+/* PLAYER NODE */
+
+.playerNode {
+  position: absolute;
+
+  transform:
+    translate(-50%, -50%);
+
+  width: 72px;
+
+  height: 72px;
+
+  border-radius: 999px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
+
+  color: white;
+
+  font-weight: 900;
+
+  font-size: 1rem;
+
+  border:
+    4px solid rgba(255,255,255,0.12);
+
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.25);
+
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .boardPanel {
+    padding: 24px;
+  }
+
+  .boardPitch {
+    min-height: 620px;
+  }
+
+  .playerNode {
+    width: 58px;
+
+    height: 58px;
+
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .boardPitch {
+    min-height: 560px;
+  }
+
+  .playerNode {
+    width: 50px;
+
+    height: 50px;
+
+    font-size: 0.72rem;
+  }
+}
+/* ==================================================
+   MATCH MOMENTUM RADAR
+   ================================================== */
+
+.radarGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 24px;
+}
+
+.radarCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.96),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  border-radius: 30px;
+
+  padding: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.2);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.radarCard:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(34,197,94,0.28);
+}
+
+.radarCircle {
+  width: 140px;
+
+  height: 140px;
+
+  border-radius: 999px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(34,197,94,0.35),
+      rgba(22,163,74,0.12)
+    );
+
+  border:
+    8px solid rgba(34,197,94,0.35);
+
+  box-shadow:
+    0 0 40px rgba(34,197,94,0.15);
+}
+
+.radarCircle span {
+  color: white;
+
+  font-size: 1.8rem;
+
+  font-weight: 900;
+}
+
+.radarTitle {
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .radarGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .radarCard {
+    padding: 24px;
+  }
+
+  .radarCircle {
+    width: 120px;
+
+    height: 120px;
+  }
+
+  .radarCircle span {
+    font-size: 1.5rem;
+  }
+}
+/* ==================================================
+   LIVE HEATMAP
+   ================================================== */
+
+.heatmapPanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(2,6,23,0.96),
+      rgba(15,23,42,0.94)
+    );
+
+  border-radius: 34px;
+
+  padding: 34px;
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.22);
+}
+
+.heatmapPitch {
+  position: relative;
+
+  min-height: 620px;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #166534,
+      #14532d
+    );
+
+  border:
+    3px solid rgba(255,255,255,0.08);
+
+  margin-bottom: 30px;
+}
+
+.heatmapPitch::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 48px,
+      transparent 48px,
+      transparent 96px
+    );
+}
+
+.heatZone {
+  position: absolute;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 999px;
+
+  filter: blur(4px);
+
+  opacity: 0.85;
+}
+
+/* INTENSITIES */
+
+.extreme {
+  width: 180px;
+
+  height: 180px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(239,68,68,0.9),
+      rgba(239,68,68,0.05)
+    );
+}
+
+.high {
+  width: 150px;
+
+  height: 150px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(249,115,22,0.82),
+      rgba(249,115,22,0.05)
+    );
+}
+
+.medium {
+  width: 120px;
+
+  height: 120px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(250,204,21,0.72),
+      rgba(250,204,21,0.05)
+    );
+}
+
+.low {
+  width: 90px;
+
+  height: 90px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(34,197,94,0.62),
+      rgba(34,197,94,0.05)
+    );
+}
+
+/* LEGEND */
+
+.heatmapLegend {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 18px;
+}
+
+.legendItem {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: white;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+}
+
+.legendDot {
+  width: 16px;
+
+  height: 16px;
+
+  border-radius: 999px;
+}
+
+@media (max-width: 768px) {
+  .heatmapPanel {
+    padding: 24px;
+  }
+
+  .heatmapPitch {
+    min-height: 500px;
+  }
+
+  .extreme {
+    width: 130px;
+    height: 130px;
+  }
+
+  .high {
+    width: 110px;
+    height: 110px;
+  }
+
+  .medium {
+    width: 90px;
+    height: 90px;
+  }
+}
+/* ==================================================
+   LIVE MATCH SELECTOR
+   ================================================== */
+
+.liveMatchPanel {
+  position: relative;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.96),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 34px;
+
+  padding: 34px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.22);
+}
+
+.liveMatchPanel::before {
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+
+  right: -120px;
+
+  width: 260px;
+
+  height: 260px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(34,197,94,0.08);
+}
+
+.liveBadge {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(239,68,68,0.14);
+
+  color: #fca5a5;
+
+  font-size: 0.82rem;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  margin-bottom: 20px;
+}
+
+.liveTeams {
+  position: relative;
+
+  z-index: 2;
+
+  color: white;
+
+  font-size: clamp(
+    2rem,
+    5vw,
+    4rem
+  );
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  margin-bottom: 18px;
+}
+
+.liveTeams span {
+  color: #22c55e;
+
+  margin: 0 14px;
+}
+
+.liveMeta {
+  color:
+    rgba(255,255,255,0.68);
+
+  font-size: 1rem;
+
+  margin-bottom: 28px;
+}
+
+.liveStats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(180px, 1fr));
+
+  gap: 18px;
+}
+
+.liveStat {
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  border-radius: 20px;
+
+  padding: 18px;
+}
+
+.liveStat span {
+  display: block;
+
+  color:
+    rgba(255,255,255,0.62);
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
+  margin-bottom: 10px;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+}
+
+.liveStat strong {
+  color: white;
+
+  font-size: 1rem;
+
+  font-weight: 900;
+}
+
+@media (max-width: 768px) {
+  .liveMatchPanel {
+    padding: 24px;
+  }
+
+  .liveTeams {
+    line-height: 1.15;
+  }
+
+  .liveStats {
+    grid-template-columns: 1fr;
+  }
+}
+/* ==================================================
+   TACTICAL NAVIGATION
+   ================================================== */
+
+.tacticalNav {
+  position: sticky;
+
+  top: 16px;
+
+  z-index: 50;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 24px;
+
+  background:
+    rgba(2,6,23,0.78);
+
+  backdrop-filter: blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.18);
+}
+
+.tacticalNavButton {
+  border: none;
+
+  cursor: pointer;
+
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.05);
+
+  color: rgba(255,255,255,0.78);
+
+  font-size: 0.88rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.tacticalNavButton:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
+
+  color: white;
+
+  transform:
+    translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .tacticalNav {
+    top: 10px;
+
+    gap: 10px;
+
+    padding: 14px;
+  }
+
+  .tacticalNavButton {
+    flex: 1 1 auto;
+
+    text-align: center;
+
+    padding: 10px 14px;
+
+    font-size: 0.82rem;
+  }
+}
+/* ==================================================
+   TACTICAL EVENT TIMELINE
+   ================================================== */
+
+.timelinePanel {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+
+  padding-left: 34px;
+}
+
+.timelinePanel::before {
+  content: "";
+
+  position: absolute;
+
+  left: 10px;
+
+  top: 0;
+
+  bottom: 0;
+
+  width: 2px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(34,197,94,0.6),
+      rgba(34,197,94,0.05)
+    );
+}
+
+.timelineEvent {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    80px 1fr;
+
+  gap: 20px;
+
+  align-items: start;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15,23,42,0.96),
+      rgba(30,41,59,0.92)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  border-radius: 26px;
+
+  padding: 24px;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.18);
+}
+
+.timelineDot {
+  position: absolute;
+
+  left: -33px;
+
+  top: 30px;
+
+  width: 18px;
+
+  height: 18px;
+
+  border-radius: 999px;
+
+  z-index: 2;
+}
+
+.timelineMinute {
+  color: #86efac;
+
+  font-size: 1rem;
+
+  font-weight: 900;
+}
+
+.timelineContent h3 {
+  margin: 0 0 10px;
+
+  color: white;
+
+  font-size: 1.1rem;
+
+  font-weight: 800;
+}
+
+.timelineContent p {
+  margin: 0;
+
+  color:
+    rgba(255,255,255,0.68);
+
+  line-height: 1.7;
+}
+
+/* TYPES */
+
+.press {
+  background: #22c55e;
+}
+
+.formation {
+  background: #3b82f6;
+}
+
+.momentum {
+  background: #f59e0b;
+}
+
+.sub {
+  background: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .timelinePanel {
+    padding-left: 24px;
+  }
+
+  .timelineEvent {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .timelineDot {
+    left: -24px;
+  }
+}
+/* ==================================================
+   TACTICAL STATUS BAR
+   ================================================== */
+
+.statusBar {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+}
+
+.statusPill {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(15,23,42,0.92);
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  color: white;
+
+  font-size: 0.88rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.18);
+}
+
+.statusPulse {
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 999px;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 12px rgba(34,197,94,0.8);
+
+  animation:
+    tacticalPulse 1.8s infinite;
+}
+
+@keyframes tacticalPulse {
+  0% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .statusBar {
+    gap: 10px;
+  }
+
+  .statusPill {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+/* ==================================================
+   ANALYST TERMINAL
+   ================================================== */
+
+.terminalPanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(2,6,23,0.98),
+      rgba(15,23,42,0.96)
+    );
+
+  border:
+    1px solid rgba(34,197,94,0.12);
+
+  border-radius: 30px;
+
+  padding: 30px;
+
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.24);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.terminalPanel::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,0.01),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+.terminalLine {
+  display: flex;
+
+  gap: 14px;
+
+  align-items: flex-start;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+
+  line-height: 1.7;
+}
+
+.terminalType {
+  color: #22c55e;
+
+  font-weight: 900;
+
+  min-width: 120px;
+
+  letter-spacing: 0.05em;
+}
+
+.terminalText {
+  color:
+    rgba(255,255,255,0.78);
+
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .terminalLine {
+    flex-direction: column;
+
+    gap: 6px;
+  }
+
+  .terminalType {
+    min-width: auto;
+  }
+
+  .terminalPanel {
+    padding: 24px;
+  }
+}
+/* ==================================================
+   HERO ATMOSPHERE
+   ================================================== */
+
+@keyframes tacticalGlow {
+  0% {
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(20px)
+      scale(1.08);
+  }
+
+  100% {
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+}
+
+@keyframes tacticalGlowAlt {
+  0% {
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-20px)
+      scale(1.06);
+  }
+
+  100% {
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+}
+/* ==================================================
+   PREMIUM DEPTH EFFECTS
+   ================================================== */
+
+.analyticsCard:hover,
+.radarCard:hover,
+.zoneCard:hover {
+  box-shadow:
+    0 16px 34px rgba(0,0,0,0.24);
+}

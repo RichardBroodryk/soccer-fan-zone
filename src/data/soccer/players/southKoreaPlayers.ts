@@ -1,0 +1,125 @@
+// src/data/soccer/players/southKoreaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const southKoreaPlayers: SoccerPlayer[] = [
+  {
+    id: "jo-hyun-woo",
+    name: "Jo Hyun-woo",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Ulsan HD",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 35,
+    number: 1,
+  },
+
+  {
+    id: "kim-min-jae",
+    name: "Kim Min-jae",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Bayern Munich",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 4,
+  },
+
+  {
+    id: "seol-young-woo",
+    name: "Seol Young-woo",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Red Star Belgrade",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 22,
+  },
+
+  {
+    id: "lee-kang-in",
+    name: "Lee Kang-in",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Paris Saint-Germain",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 18,
+  },
+
+  {
+    id: "hwang-in-beom",
+    name: "Hwang In-beom",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Feyenoord",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 6,
+  },
+
+  {
+    id: "lee-jae-sung",
+    name: "Lee Jae-sung",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Mainz",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 10,
+  },
+
+  {
+    id: "son-heung-min",
+    name: "Son Heung-min",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "LAFC",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 34,
+    number: 7,
+    captain: true,
+  },
+
+  {
+    id: "hwang-hee-chan",
+    name: "Hwang Hee-chan",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Wolverhampton Wanderers",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 30,
+    number: 11,
+  },
+
+  {
+    id: "cho-gyu-sung",
+    name: "Cho Gyu-sung",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Midtjylland",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 9,
+  },
+
+  {
+    id: "oh-hyun-kyu",
+    name: "Oh Hyun-kyu",
+    nation: "South Korea",
+    teamId: "south-korea",
+    club: "Beşiktaş",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 25,
+    number: 19,
+  },
+];

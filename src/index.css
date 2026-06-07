@@ -1,17 +1,116 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ================= GLOBAL RESET ================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+/* ================= ROOT ================= */
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100%;
+
+  background: #050505;
+
+  color: white;
+
+  scroll-behavior: smooth;
+}
+
+/* ================= BODY ================= */
+
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Inter",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Helvetica Neue",
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
+
+  text-rendering: optimizeLegibility;
+}
+
+/* ================= ROOT APP ================= */
+
+#root {
+  position: relative;
+}
+
+/* ================= TYPOGRAPHY ================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* ================= LINKS ================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ================= BUTTONS ================= */
+
+button {
+  font: inherit;
+}
+
+/* ================= INPUTS ================= */
+
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+
+/* ================= IMAGES ================= */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ================= CODE ================= */
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family:
+    source-code-pro,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Courier New",
     monospace;
 }
-/* Hide horizontal scrollbar but keep scrolling functional */
+
+/* ================= SCROLLBAR ================= */
+
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
@@ -19,4 +118,39 @@ code {
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ================= GLOBAL SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0b0b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.28);
+}
+
+/* ================= SELECTION ================= */
+
+::selection {
+  background: rgba(37, 99, 235, 0.4);
+  color: white;
+}
+
+/* ================= MOBILE FIXES ================= */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }

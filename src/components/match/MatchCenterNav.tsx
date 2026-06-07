@@ -4,16 +4,47 @@ import styles from "./MatchCenterNav.module.css";
 export default function MatchCenterNav() {
   return (
     <nav className={styles.nav}>
-      <NavLink to="/match-center" className={styles.link}>
+      <NavLink
+        to="/soccer/live"
+        className={({ isActive }) =>
+          isActive
+            ? `${styles.link} ${styles.active}`
+            : styles.link
+        }
+      >
         Live
       </NavLink>
-      <NavLink to="/fixtures" className={styles.link}>
+
+      <NavLink
+        to="/soccer/fixtures"
+        className={({ isActive }) =>
+          isActive
+            ? `${styles.link} ${styles.active}`
+            : styles.link
+        }
+      >
         Fixtures
       </NavLink>
-      <NavLink to="/results" className={styles.link}>
+
+      <NavLink
+        to="/soccer/results"
+        className={({ isActive }) =>
+          isActive
+            ? `${styles.link} ${styles.active}`
+            : styles.link
+        }
+      >
         Results
       </NavLink>
-      <NavLink to="/stats" className={styles.link}>
+
+      <NavLink
+        to="/soccer/stats"
+        className={({ isActive }) =>
+          isActive
+            ? `${styles.link} ${styles.active}`
+            : styles.link
+        }
+      >
         Stats
       </NavLink>
     </nav>

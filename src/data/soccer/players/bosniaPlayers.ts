@@ -1,0 +1,125 @@
+// src/data/soccer/players/bosniaPlayers.ts
+import { SoccerPlayer } from "../players";
+
+export const bosniaPlayers: SoccerPlayer[] = [
+  {
+    id: "nikola-vasilj",
+    name: "Nikola Vasilj",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "St. Pauli",
+    position: "Goalkeeper",
+    squadStatus: "confirmed",
+    age: 29,
+    number: 1,
+  },
+
+  {
+    id: "sead-kolasinac",
+    name: "Sead Kolašinac",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Atalanta",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 32,
+    number: 5,
+  },
+
+  {
+    id: "amar-dedic",
+    name: "Amar Dedić",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Benfica",
+    position: "Defender",
+    squadStatus: "confirmed",
+    age: 23,
+    number: 7,
+  },
+
+  {
+    id: "amir-hadziahmetovic",
+    name: "Amir Hadžiahmetović",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Hull City",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 6,
+  },
+
+  {
+    id: "benjamin-tahirovic",
+    name: "Benjamin Tahirović",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Brøndby",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 22,
+    number: 8,
+  },
+
+  {
+    id: "armin-gigovic",
+    name: "Armin Gigović",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Young Boys",
+    position: "Midfielder",
+    squadStatus: "confirmed",
+    age: 24,
+    number: 16,
+  },
+
+  {
+    id: "edin-dzeko",
+    name: "Edin Džeko",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Schalke 04",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 40,
+    number: 11,
+    captain: true,
+  },
+
+  {
+    id: "ermedin-demirovic",
+    name: "Ermedin Demirović",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "VfB Stuttgart",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 28,
+    number: 9,
+  },
+
+  {
+    id: "samed-bazdar",
+    name: "Samed Baždar",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Jagiellonia Białystok",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 22,
+    number: 19,
+  },
+
+  {
+    id: "haris-tabakovic",
+    name: "Haris Tabaković",
+    nation: "Bosnia and Herzegovina",
+    teamId: "bosnia",
+    club: "Borussia Mönchengladbach",
+    position: "Forward",
+    squadStatus: "confirmed",
+    age: 31,
+    number: 21,
+  },
+];
