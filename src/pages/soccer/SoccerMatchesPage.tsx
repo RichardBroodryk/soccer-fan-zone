@@ -19,6 +19,8 @@ import {
   getAllWorldCupMatches,
 } from "../../services/liveMatchService";
 
+import { matches as worldCupMatches } from "../../data/soccer/matches";
+
 /* UTILS */
 
 import {
@@ -73,18 +75,17 @@ export default function SoccerMatchesPage() {
 
         setError(null);
 
-        const response =
-          await getAllWorldCupMatches();
+       const response =
+  await getAllWorldCupMatches();
 
-        if (!mounted)
-          return;
+if (!mounted)
+  return;
 
-        const safeMatches =
-          Array.isArray(
-            response
-          )
-            ? response
-            : [];
+const safeMatches =
+  Array.isArray(response) &&
+  response.length > 0
+    ? response
+    : worldCupMatches;
 
         /* ======================================================
            NORMALIZE API RESPONSE
@@ -154,23 +155,21 @@ export default function SoccerMatchesPage() {
         setMatches(
           normalizedMatches
         );
-      } catch (
-        err
-      ) {
-        console.error(
-          "Failed to load matches:",
-          err
-        );
+    } catch (
+  err
+) {
+  console.error(
+    "Failed to load matches:",
+    err
+  );
 
-        if (!mounted)
-          return;
+  if (!mounted)
+    return;
 
-        setError(
-          "Unable to load matches."
-        );
+  setError(null);
 
-        setMatches([]);
-      } finally {
+  setMatches(worldCupMatches);
+} finally {
         if (mounted) {
           setLoading(
             false
