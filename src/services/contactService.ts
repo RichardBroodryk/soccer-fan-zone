@@ -1,5 +1,5 @@
 // --------------------------------------------------
-// RAZ SYSTEM — CONTACT SERVICE (EMAILJS)
+// SOCCER FAN ZONE — CONTACT SERVICE (EMAILJS)
 // --------------------------------------------------
 
 import emailjs from "@emailjs/browser";
@@ -19,9 +19,14 @@ export type ContactFormData = {
    ENV CONFIG
    ================================================== */
 
-const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
-const TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || "";
-const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || "";
+const SERVICE_ID =
+  process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
+
+const TEMPLATE_ID =
+  process.env.REACT_APP_EMAILJS_TEMPLATE_ID || "";
+
+const PUBLIC_KEY =
+  process.env.REACT_APP_EMAILJS_PUBLIC_KEY || "";
 
 /* ==================================================
    SEND FUNCTION
@@ -31,10 +36,20 @@ export async function sendContactMessage(
   data: ContactFormData
 ): Promise<{ success: boolean }> {
   try {
-    /* 🔴 SAFETY CHECK */
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-      console.warn("RAZ: EmailJS config missing");
-      return { success: false };
+    /* SAFETY CHECK */
+
+    if (
+      !SERVICE_ID ||
+      !TEMPLATE_ID ||
+      !PUBLIC_KEY
+    ) {
+      console.warn(
+        "SFZ: EmailJS config missing"
+      );
+
+      return {
+        success: false,
+      };
     }
 
     /* ==================================================
@@ -45,17 +60,32 @@ export async function sendContactMessage(
       SERVICE_ID,
       TEMPLATE_ID,
       {
-        from_email: data.email,
-        date: data.date,
-        heading: data.heading,
-        message: data.message,
+        from_email:
+          data.email,
+
+        date:
+          data.date,
+
+        heading:
+          data.heading,
+
+        message:
+          data.message,
       },
       PUBLIC_KEY
     );
 
-    return { success: true };
+    return {
+      success: true,
+    };
   } catch (error) {
-    console.warn("RAZ: Contact send failed", error);
-    return { success: false };
+    console.warn(
+      "SFZ: Contact send failed",
+      error
+    );
+
+    return {
+      success: false,
+    };
   }
 }
