@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">soccer-fan-zone</string>
-    <string name="title_activity_main">soccer-fan-zone</string>
+    <string name="app_name">Soccer Fan Zone</string>
+    <string name="title_activity_main">Soccer Fan Zone</string>
     <string name="package_name">com.soccerfanzone.app</string>
     <string name="custom_url_scheme">com.soccerfanzone.app</string>
 </resources>

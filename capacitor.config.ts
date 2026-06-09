@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.soccerfanzone.app',
-  appName: 'soccer-fan-zone',
+  appName: 'Soccer Fan Zone',
   webDir: 'build'
 };
 
