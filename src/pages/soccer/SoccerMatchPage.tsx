@@ -44,6 +44,10 @@ import {
   getAllWorldCupMatches,
 } from "../../services/liveMatchService";
 
+import {
+  matches as worldCupMatches,
+} from "../../data/soccer/matches";
+
 /* ======================================================
    PAGE
 ====================================================== */
@@ -75,21 +79,27 @@ export default function SoccerMatchPage() {
       try {
         setLoading(true);
 
-        const liveMatches =
-          await getAllWorldCupMatches();
+       const response =
+  await getAllWorldCupMatches();
 
-        setAllMatches(
-          liveMatches
-        );
+const liveMatches =
+  Array.isArray(response) &&
+  response.length > 0
+    ? response
+    : worldCupMatches;
 
-        const foundMatch =
-          liveMatches.find(
-            (
-              m: SoccerMatch
-            ) =>
-              String(m.id) ===
-              String(matchId)
-          );
+setAllMatches(
+  liveMatches
+);
+
+const foundMatch =
+  liveMatches.find(
+    (
+      m: SoccerMatch
+    ) =>
+      String(m.id) ===
+      String(matchId)
+  );
 
         setMatch(
           foundMatch || null
