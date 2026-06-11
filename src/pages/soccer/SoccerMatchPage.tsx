@@ -87,6 +87,19 @@ const liveMatches =
   response.length > 0
     ? response
     : worldCupMatches;
+    console.log("MATCH ID:", matchId);
+
+console.log(
+  "MATCH COUNT:",
+  liveMatches.length
+);
+
+console.log(
+  "FIRST IDS:",
+  liveMatches
+    .slice(0, 10)
+    .map((m) => m.id)
+);
 
 setAllMatches(
   liveMatches
