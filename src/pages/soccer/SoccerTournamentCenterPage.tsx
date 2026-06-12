@@ -147,22 +147,15 @@ export default function SoccerTournamentCenterPage() {
         "live"
     );
 
-  /* ======================================================
-     LOAD DATA
-  ====================================================== */
+/* ======================================================
+   LOAD DATA
+====================================================== */
 
-  useEffect(() => {
+useEffect(() => {
   async function load() {
+
     try {
-      const [
-        rankingsData,
-        favoriteData,
-        darkHorseData,
-        finalData,
-        favoritesData,
-        upsetData,
-        hotTeamsData,
-      ] =
+      const results =
         await Promise.all([
           getCachedPowerRankings(),
 
@@ -178,6 +171,16 @@ export default function SoccerTournamentCenterPage() {
 
           getHotTeams(5),
         ]);
+
+      const [
+        rankingsData,
+        favoriteData,
+        darkHorseData,
+        finalData,
+        favoritesData,
+        upsetData,
+        hotTeamsData,
+      ] = results;
 
       setRankings(
         rankingsData
@@ -214,6 +217,7 @@ export default function SoccerTournamentCenterPage() {
         error
       );
     } finally {
+
       setLoading(
         false
       );
@@ -223,42 +227,42 @@ export default function SoccerTournamentCenterPage() {
   load();
 }, []);
 
-  if (loading) {
-    return (
-      <main
-        className={
-          styles.page
-        }
-      >
-        <div
-          style={{
-            padding:
-              "80px 32px",
-
-            textAlign:
-              "center",
-
-            fontSize:
-              "1.2rem",
-
-            fontWeight: 800,
-          }}
-        >
-          Loading
-          tournament
-          intelligence...
-        </div>
-      </main>
-    );
-  }
-
+if (loading) {
   return (
     <main
       className={
         styles.page
       }
     >
-      {/* HERO */}
+      <div
+        style={{
+          padding:
+            "80px 32px",
+
+          textAlign:
+            "center",
+
+          fontSize:
+            "1.2rem",
+
+          fontWeight: 800,
+        }}
+      >
+        Loading
+        tournament
+        intelligence...
+      </div>
+    </main>
+  );
+}
+
+return (
+  <main
+    className={
+      styles.page
+    }
+  >
+    {/* HERO */}
 
       <section
         style={{

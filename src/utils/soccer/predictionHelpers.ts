@@ -150,6 +150,7 @@ export function safeGetStandings(): SafeStanding[] {
 export async function safeGetMomentum(): Promise<
   SafeMomentum[]
 > {
+
   try {
     const momentum =
       await getAllMomentum();

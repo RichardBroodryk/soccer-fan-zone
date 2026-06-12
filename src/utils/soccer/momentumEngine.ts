@@ -132,9 +132,6 @@ function normalizeMatches(
 async function getCompletedMatches(): Promise<
   SoccerMatch[]
 > {
-  console.time(
-    "Momentum:getCompletedMatches"
-  );
 
   try {
     const fixtures =
@@ -157,9 +154,6 @@ async function getCompletedMatches(): Promise<
 
     return [];
   } finally {
-    console.timeEnd(
-      "Momentum:getCompletedMatches"
-    );
   }
 }
 
@@ -535,9 +529,6 @@ export async function getTeamMomentum(
 export async function getAllMomentum(): Promise<
   TeamMomentum[]
 > {
-  console.time(
-    "Momentum:getAllMomentum"
-  );
 
   try {
     const completedMatches =
@@ -581,12 +572,8 @@ export async function getAllMomentum(): Promise<
 
     return [];
   } finally {
-    console.timeEnd(
-      "Momentum:getAllMomentum"
-    );
   }
 }
-
 /* ======================================================
    HOT TEAMS
 ====================================================== */

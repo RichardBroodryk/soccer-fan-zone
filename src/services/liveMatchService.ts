@@ -135,18 +135,19 @@ export async function getLiveWorldCupMatches(): Promise<
 export async function getAllWorldCupMatches(): Promise<
   SoccerMatch[]
 > {
+
   try {
     const fixtures =
       await fetchWorldCupFixtures();
 
-    const converted =
-      convertApiSportsFixtures(
-        fixtures
-      );
+  const converted =
+  convertApiSportsFixtures(
+    fixtures
+  );
 
-    return normalizeMatches(
-      converted
-    );
+return normalizeMatches(
+  converted
+);
   } catch (
     error
   ) {

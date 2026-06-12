@@ -60,15 +60,15 @@ export interface FinalPrediction {
 ====================================================== */
 
 export async function getTeamStrength(
-  teamName: string
+  teamName: string,
+  momentumTeam?: {
+    momentum: number;
+    formScore: number;
+  }
 ): Promise<number> {
+
   const standing =
     safeGetTeamStanding(
-      teamName
-    );
-
-  const momentumTeam =
-    await safeGetTeamMomentum(
       teamName
     );
 
@@ -254,23 +254,34 @@ export async function predictMatch(
 export async function getPowerRankings(): Promise<
   TeamPowerRanking[]
 > {
+
   const momentum =
     await safeGetMomentum();
+
+  const momentumMap =
+    new Map(
+      momentum.map(
+        (team) => [
+          team.team,
+          team,
+        ]
+      )
+    );
 
   const rankings =
     await Promise.all(
       teams.map(
         async (team) => {
-          const strength =
-            await getTeamStrength(
+
+          const momentumTeam =
+            momentumMap.get(
               team.name
             );
 
-          const momentumTeam =
-            momentum.find(
-              (m) =>
-                m.team ===
-                team.name
+          const strength =
+            await getTeamStrength(
+              team.name,
+              momentumTeam
             );
 
           const momentumValue =
@@ -397,32 +408,32 @@ export async function getBiggestFavorites() {
     "getBiggestFavorites"
   );
 
-  const futureMatches =
-    matches.filter(
-      (match) =>
-        match.status ===
-        "upcoming"
-    );
+  try {
+    const futureMatches =
+      matches.filter(
+        (match) =>
+          match.status ===
+          "upcoming"
+      );
 
-  const predictions =
-    await Promise.all(
-      futureMatches.map(
-        async (match) => ({
-          match: {
-            id: match.id,
-            home: match.home,
-            away: match.away,
-          },
-          prediction:
-            await predictMatch(
-              match
-            ),
-        })
-      )
-    );
+    const predictions =
+      await Promise.all(
+        futureMatches.map(
+          async (match) => ({
+            match: {
+              id: match.id,
+              home: match.home,
+              away: match.away,
+            },
+            prediction:
+              await predictMatch(
+                match
+              ),
+          })
+        )
+      );
 
-  const result =
-    predictions
+    return predictions
       .sort(
         (a, b) =>
           b.prediction
@@ -431,12 +442,11 @@ export async function getBiggestFavorites() {
             .confidence
       )
       .slice(0, 5);
-
-  console.timeEnd(
-    "getBiggestFavorites"
-  );
-
-  return result;
+  } finally {
+    console.timeEnd(
+      "getBiggestFavorites"
+    );
+  }
 }
 
 /* ======================================================

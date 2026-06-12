@@ -65,6 +65,11 @@ export default function SoccerFixturesPage() {
           data
         );
 
+        console.log(
+  "FIXTURE TOTAL:",
+  data.length
+);
+
         setAllMatches(data);
       } catch (err) {
         console.error(err);
