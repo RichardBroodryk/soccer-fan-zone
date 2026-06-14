@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./AccountSetupPage.module.css";
 
 import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
+import { registerUser } from "../services/auth";
 
 export default function AccountSetupPage() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function AccountSetupPage() {
 
   /* ================= ROUTING ================= */
 
-  const goToCheckout = () => {
+ const goToCheckout = async () => {
     setError("");
 
     /* EMAIL */
@@ -102,16 +103,39 @@ export default function AccountSetupPage() {
       return;
     }
 
-    /* TEMP SAVE */
+   try {
+  const result = await registerUser(
+    email,
+    password
+  );
 
-    localStorage.setItem(
-      "sfz_user_email",
-      email
-    );
+  localStorage.setItem(
+    "sfz_token",
+    result.token
+  );
 
-    /* CONTINUE */
+  localStorage.setItem(
+    "sfz_user_id",
+    result.userId
+  );
 
-    navigate("/checkout");
+  localStorage.setItem(
+    "sfz_user_email",
+    result.email
+  );
+
+  localStorage.setItem(
+    "sfz_tier",
+    result.tier
+  );
+
+  navigate("/checkout");
+} catch (err: any) {
+  setError(
+    err?.message ||
+      "Account creation failed."
+  );
+}
   };
 
   const goToLogin = () => {

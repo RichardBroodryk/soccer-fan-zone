@@ -1,6 +1,7 @@
 // src/pages/CheckoutPage.tsx
 
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config/api";
 
 import styles from "./CheckoutPage.module.css";
 
@@ -18,29 +19,62 @@ export default function CheckoutPage() {
 
   /* ================= ROUTING ================= */
 
- const handlePurchase = async () => {
-  /*
-    CURRENT STATUS
+const handlePurchase = async () => {
+  try {
+    const token =
+      localStorage.getItem(
+        "sfz_token"
+      );
 
-    Temporary development flow.
+    if (!token) {
+      alert(
+        "Please create an account first."
+      );
+      navigate("/account-setup");
+      return;
+    }
 
-    Planned Web Billing:
-    Paddle Checkout
+    const response =
+      await fetch(
+        `${API_BASE_URL}/api/payments/create-checkout`,
+        {
+          method: "POST",
 
-    Planned Mobile Billing:
-    Google Play Billing
-    Apple In-App Purchase
+          headers: {
+            "Content-Type":
+              "application/json",
 
-    Real billing integration
-    will replace this route.
-  */
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
 
-  localStorage.setItem(
-    "sfz_purchase_status",
-    "active"
-  );
+    const data =
+      await response.json();
 
-  navigate("/purchase-success");
+    if (!response.ok) {
+      throw new Error(
+        data.error ||
+          "Checkout creation failed"
+      );
+    }
+
+    if (!data.checkoutUrl) {
+      throw new Error(
+        "No checkout URL returned"
+      );
+    }
+
+    window.location.href =
+      data.checkoutUrl;
+  } catch (err) {
+    console.error(err);
+
+    alert(
+      "Unable to start checkout."
+    );
+  }
 };
 
   const goBack = () => {

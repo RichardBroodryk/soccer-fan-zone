@@ -4,7 +4,7 @@ const PROD_API =
   "https://soccer-fan-zone-backend.fly.dev";
 
 const DEV_API =
-  "http://localhost:4000";
+   "https://soccer-fan-zone-backend.fly.dev";
 
 export const API_BASE_URL =
   import.meta.env.PROD
