@@ -44,98 +44,82 @@ export default function AccountSetupPage() {
   /* ================= ROUTING ================= */
 
  const goToCheckout = async () => {
-    setError("");
+  alert("1. goToCheckout STARTED");
+  setError("");
 
-    /* EMAIL */
+  /* EMAIL */
+  if (!email.trim()) {
+    alert("Please enter your email.");
+    setError("Please enter your email.");
+    return;
+  }
 
-    if (!email.trim()) {
-      setError("Please enter your email.");
-      return;
-    }
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address.");
+    setError("Please enter a valid email address.");
+    return;
+  }
 
-    if (!isValidEmail(email)) {
-      setError(
-        "Please enter a valid email address."
-      );
-      return;
-    }
+  /* PASSWORD */
+  if (!password.trim()) {
+    alert("Please create a password.");
+    setError("Please create a password.");
+    return;
+  }
 
-    /* PASSWORD */
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters.");
+    setError("Password must be at least 6 characters.");
+    return;
+  }
 
-    if (!password.trim()) {
-      setError(
-        "Please create a password."
-      );
-      return;
-    }
+  /* CONFIRM */
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    setError("Passwords do not match.");
+    return;
+  }
 
-    if (password.length < 6) {
-      setError(
-        "Password must be at least 6 characters."
-      );
-      return;
-    }
+  /* COUNTRY */
+  if (!country) {
+    alert("Please select your country.");
+    setError("Please select your country.");
+    return;
+  }
 
-    /* CONFIRM */
+  /* TERMS */
+  if (!accepted) {
+    alert("You must accept the terms to continue.");
+    setError("You must accept the terms to continue.");
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      setError(
-        "Passwords do not match."
-      );
-      return;
-    }
+  alert("2. All validation passed. About to call registerUser");
 
-    /* COUNTRY */
-
-    if (!country) {
-      setError(
-        "Please select your country."
-      );
-      return;
-    }
-
-    /* TERMS */
-
-    if (!accepted) {
-      setError(
-        "You must accept the terms to continue."
-      );
-      return;
-    }
-
-   try {
-  const result = await registerUser(
-    email,
-    password
-  );
-
-  localStorage.setItem(
-    "sfz_token",
-    result.token
-  );
-
-  localStorage.setItem(
-    "sfz_user_id",
-    result.userId
-  );
-
-  localStorage.setItem(
-    "sfz_user_email",
-    result.email
-  );
-
-  localStorage.setItem(
-    "sfz_tier",
-    result.tier
-  );
-
-  navigate("/checkout");
-} catch (err: any) {
-  setError(
-    err?.message ||
-      "Account creation failed."
-  );
-}
+  try {
+    alert("3. Calling registerUser with: " + email);
+    
+    const result = await registerUser(email, password);
+    
+    alert("4. registerUser returned: " + JSON.stringify(result));
+    
+    alert("5. Token value: " + result?.token);
+    alert("6. User ID value: " + result?.userId);
+    
+    localStorage.setItem("sfz_token", String(result?.token));
+    localStorage.setItem("sfz_user_id", String(result?.userId));
+    localStorage.setItem("sfz_user_email", String(result?.email));
+    localStorage.setItem("sfz_tier", String(result?.tier));
+    
+    alert("7. Token saved. Navigating to /checkout");
+    
+    navigate("/checkout");
+    
+  } catch (err: any) {
+    alert("ERROR: " + (err?.message || "Account creation failed."));
+    console.error("REGISTER ERROR:", err);
+    setError(err?.message || "Account creation failed.");
+  }
   };
 
   const goToLogin = () => {

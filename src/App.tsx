@@ -22,6 +22,7 @@ import AccountSettingsPage from "./pages/AccountSettingsPage";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RestorePurchasePage from "./pages/RestorePurchasePage";
+import RefundPolicyPage from "./pages/RefundPolicyPage";
 import DeleteAccountPage from "./pages/DeleteAccountPage";
 import SupportPage from "./pages/SupportPage";
 
@@ -174,6 +175,8 @@ export default function App() {
   path="/restore-purchase"
   element={<RestorePurchasePage />}
 />
+
+<Route path="/refund-policy" element={<RefundPolicyPage />} />
 
 <Route
   path="/delete-account"
