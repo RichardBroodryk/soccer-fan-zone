@@ -3,37 +3,37 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://soccer-fan-zone.vercel.app/</loc>
+    <loc>https://www.globalsoccerfanzone.com/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://soccer-fan-zone.vercel.app/soccer</loc>
+    <loc>https://www.globalsoccerfanzone.com/soccer</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://soccer-fan-zone.vercel.app/soccer/matches</loc>
+    <loc>https://www.globalsoccerfanzone.com/soccer/matches</loc>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://soccer-fan-zone.vercel.app/soccer/tournament</loc>
+    <loc>https://www.globalsoccerfanzone.com/soccer/tournament</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://soccer-fan-zone.vercel.app/soccer/groups</loc>
+    <loc>https://www.globalsoccerfanzone.com/soccer/groups</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://soccer-fan-zone.vercel.app/soccer/stats</loc>
+    <loc>https://www.globalsoccerfanzone.com/soccer/stats</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
