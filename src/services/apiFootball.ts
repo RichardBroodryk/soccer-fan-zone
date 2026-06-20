@@ -3,7 +3,10 @@ const API_BASE =
     .VITE_API_BASE_URL ||
   "https://soccer-fan-zone-backend.fly.dev";
 
-  console.log("API_BASE =", API_BASE);
+  console.log(
+  "API FOOTBALL FILE LOADED",
+  API_BASE
+);
 
 /* ======================================================
    GENERIC FETCH
