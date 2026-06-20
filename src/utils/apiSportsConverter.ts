@@ -88,6 +88,13 @@ export function convertApiSportsFixture(
       leagueId
     ];
 
+    console.log(
+  "LEAGUE ID:",
+  leagueId,
+  "TOURNAMENT:",
+  tournamentId
+);
+
   if (!tournamentId) {
     return null;
   }
