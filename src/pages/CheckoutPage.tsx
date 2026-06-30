@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-declare global {
-  interface Window {
-    Paddle: any;
-  }
-}
-
 const CheckoutPage = () => {
-  const [status, setStatus] = useState("Loading secure checkout...");
+  const [status, setStatus] = useState("Preparing secure checkout...");
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("⚽ CheckoutPage loaded - Initializing Paddle");
+    console.log("⚽ CheckoutPage loaded - Initializing checkout");
 
     // Get user info
     const email = localStorage.getItem("sfz_user_email") || "";
@@ -41,83 +35,26 @@ const CheckoutPage = () => {
 
         const data = await response.json();
 
-        if (!response.ok || !data.checkoutUrl) {
-          throw new Error(data.error || "Failed to create checkout");
+        if (!response.ok) {
+          throw new Error(
+            data.error ||
+              "Unable to create checkout."
+          );
         }
 
-        console.log("✅ Checkout session created:", data.checkoutUrl);
+        if (!data.checkoutUrl) {
+          throw new Error(
+            "Checkout URL missing."
+          );
+        }
 
-        // Now load Paddle.js
-        const script = document.createElement("script");
-        script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-        script.async = true;
-        document.body.appendChild(script);
+        setStatus(
+          "Redirecting to secure checkout..."
+        );
 
-        script.onload = () => {
-          if (!window.Paddle) {
-            console.error("❌ Paddle failed to load");
-            setStatus("Failed to initialize checkout. Please refresh.");
-            return;
-          }
+        window.location.href =
+          data.checkoutUrl;
 
-          console.log("✅ Paddle script loaded");
-
-          // Initialize Paddle with your vendor ID (replace with YOUR vendor token)
-          window.Paddle.Initialize({
-            token: "live_631169e22b4d7e6c0baa85a1772", // Get this from Paddle dashboard
-            eventCallback: (event: any) => {
-              console.log("📦 Paddle event:", event.name);
-
-              if (event.name === "checkout.completed") {
-                console.log("🎉 Purchase completed!");
-
-                // Check if tier updated
-                const checkTier = async () => {
-                  for (let i = 0; i < 6; i++) {
-                    try {
-                      const res = await fetch(
-                        "https://soccer-fan-zone-backend.fly.dev/api/subscription",
-                        {
-                          headers: token
-                            ? { Authorization: `Bearer ${token}` }
-                            : {},
-                        }
-                      );
-
-                      if (res.ok) {
-                        const data = await res.json();
-                        console.log(`Tier check attempt ${i}:`, data.tier);
-
-                        if (data.tier === "premium" || data.tier === "freemium") {
-                          window.location.href = "/purchase-success";
-                          return;
-                        }
-                      }
-                    } catch (err) {
-                      console.error("Retry error:", err);
-                    }
-                    await new Promise((res) => setTimeout(res, 1000));
-                  }
-                  window.location.href = "/purchase-success";
-                };
-
-                checkTier();
-              }
-            },
-          });
-
-          // Open the checkout with the URL from backend
-          window.Paddle.Checkout.open({
-            transactionId: data.transactionId,
-          });
-
-          setStatus("Opening secure checkout...");
-        };
-
-        script.onerror = () => {
-          console.error("❌ Failed to load Paddle script");
-          setStatus("Network error loading checkout. Please refresh.");
-        };
       } catch (err: any) {
         console.error("Checkout error:", err);
         setStatus(err.message || "Failed to initialize checkout");
@@ -126,12 +63,6 @@ const CheckoutPage = () => {
     };
 
     createCheckoutSession();
-
-    return () => {
-      // Cleanup script if component unmounts
-      const scripts = document.querySelectorAll('script[src*="paddle"]');
-      scripts.forEach((script) => script.remove());
-    };
   }, [navigate]);
 
   return (
@@ -158,9 +89,9 @@ const CheckoutPage = () => {
         }}
       >
         <h2>{status}</h2>
-        <p>Please wait while we open the secure payment page...</p>
+        <p>Please wait while we connect you to our secure payment provider.</p>
         <p style={{ fontSize: "14px", opacity: 0.7, marginTop: "20px" }}>
-          You will be redirected automatically after payment.
+          You will be redirected automatically to complete your secure membership activation.
         </p>
       </div>
 

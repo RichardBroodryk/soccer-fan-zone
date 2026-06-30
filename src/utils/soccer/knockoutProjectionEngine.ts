@@ -221,113 +221,54 @@ export async function getQualifiedTeams(): Promise<
 }
 
 /* ======================================================
-   ROUND OF 16 SEEDING
+   ROUND OF 32
 ====================================================== */
 
-export async function buildRoundOf16(): Promise<
+export async function buildRoundOf32(): Promise<
   KnockoutMatch[]
 > {
-  const qualified =
-    await getQualifiedTeams();
+  const matches = await loadMatches();
 
-  const winners =
-    qualified.filter(
-      (team) =>
-        team.position === 1
-    );
+  const roundOf32 = matches.filter(
+    (match) => match.stage === "Round of 32"
+  );
 
-  const runnersUp =
-    qualified.filter(
-      (team) =>
-        team.position === 2
-    );
+  const knockoutMatches: KnockoutMatch[] = [];
 
-  const knockoutMatches:
-    KnockoutMatch[] = [];
+  for (const match of roundOf32) {
 
-  const total =
-    Math.min(
-      winners.length,
-      runnersUp.length
-    );
+    if (match.status === "final") {
 
-  for (
-    let i = 0;
-    i < total;
-    i++
-  ) {
-    const home =
-      winners[i];
+      knockoutMatches.push({
+        id: match.id,
+        stage: match.stage,
+        home: match.home,
+        away: match.away,
+        winner:
+          match.winner ??
+          (match.homeScore! > match.awayScore!
+            ? match.home
+            : match.away),
+        confidence: 100,
+        scorePrediction: `${match.homeScore}-${match.awayScore}`,
+      });
 
-    const away =
-      runnersUp[
-        (i + 1) %
-          runnersUp.length
-      ];
-
-    if (
-      !home ||
-      !away
-    ) {
       continue;
     }
 
-   const prediction =
-  await predictMatch({
-    id: `r16-${i}`,
-
-    home:
-      home.team,
-
-    away:
-      away.team,
-
-    date: "",
-
-    stadium: "",
-
-    city: "",
-
-    stage:
-      "Round of 16",
-
-    status:
-      "upcoming",
-  } as SoccerMatch);
+    const prediction =
+      await predictMatch(match);
 
     knockoutMatches.push({
-      id: `r16-${
-        i + 1
-      }`,
-
-      stage:
-        "Round of 16",
-
-      home:
-        home.team,
-
-      away:
-        away.team,
-
-      winner:
-        prediction.favorite ||
-        home.team,
-
-      confidence: clamp(
-        prediction.confidence ??
-          50,
-        1,
-        100
-      ),
-
-      scorePrediction: `${
-        prediction.expectedHomeGoals ??
-        1
-      }-${
-        prediction.expectedAwayGoals ??
-        0
-      }`,
+      id: match.id,
+      stage: match.stage,
+      home: match.home,
+      away: match.away,
+      winner: prediction.favorite,
+      confidence: prediction.confidence,
+      scorePrediction: `${prediction.expectedHomeGoals}-${prediction.expectedAwayGoals}`,
     });
+
   }
 
   return knockoutMatches;
@@ -435,6 +376,18 @@ async function buildNextRound(
 }
 
 /* ======================================================
+   ROUND OF 16
+====================================================== */
+
+export async function buildRoundOf16() {
+  return buildNextRound(
+    buildRoundOf32(),
+    "Round of 16",
+    "r16"
+  );
+}
+
+/* ======================================================
    QUARTERFINALS
 ====================================================== */
 
@@ -522,6 +475,9 @@ export async function getProjectedFinalist() {
 ====================================================== */
 
 export async function buildTournamentProjection(): Promise<TournamentProjection> {
+  const roundOf32 =
+    await buildRoundOf32();
+
   const roundOf16 =
     await buildRoundOf16();
 
@@ -536,6 +492,14 @@ export async function buildTournamentProjection(): Promise<TournamentProjection>
 
   return {
     rounds: [
+      {
+        stage:
+          "Round of 32",
+
+        matches:
+          roundOf32,
+      },
+
       {
         stage:
           "Round of 16",

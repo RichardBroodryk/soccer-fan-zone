@@ -2,7 +2,6 @@
 
 import {
   useEffect,
-  useMemo,
   useState,
 } from "react";
 
@@ -11,13 +10,6 @@ import {
 } from "react-router-dom";
 
 import styles from "../StatsPage.module.css";
-
-import { groups } from "../../data/soccer/groups";
-import { matches } from "../../data/soccer/matches";
-
-import {
-  buildAllGroupStandings,
-} from "../../utils/soccer/standingsEngine";
 
 import type {
   TeamMomentum,
@@ -59,30 +51,6 @@ export default function SoccerQualificationTrackerPage() {
     loading,
     setLoading,
   ] = useState(true);
-
-  /* ======================================================
-     STANDINGS
-  ====================================================== */
-
- const groupStandings =
-  useMemo(
-    () =>
-      buildAllGroupStandings(
-        matches
-      ),
-    []
-  );
-  const momentumLookup =
-  useMemo(() => {
-    return Object.fromEntries(
-      momentum.map(
-        (m) => [
-          m.nation,
-          m,
-        ]
-      )
-    );
-  }, [momentum]);
 
   /* ======================================================
      LOAD DATA
@@ -129,85 +97,6 @@ export default function SoccerQualificationTrackerPage() {
 
     load();
   }, []);
-
-  /* ======================================================
-     HELPERS
-  ====================================================== */
-
-
-
-  function getQualificationChance(
-    points: number,
-    position: number
-  ) {
-    if (
-      position === 1
-    ) {
-      return 92;
-    }
-
-    if (
-      position === 2
-    ) {
-      return 74;
-    }
-
-    if (
-      position === 3
-    ) {
-      return 38;
-    }
-
-    return Math.max(
-      5,
-      points * 4
-    );
-  }
-
-  function getStatus(
-    position: number
-  ) {
-    if (
-      position <= 2
-    ) {
-      return {
-        label:
-          "Projected Qualification",
-
-        color:
-          "rgba(34,197,94,0.16)",
-
-        text:
-          "#15803d",
-      };
-    }
-
-    if (
-      position === 3
-    ) {
-      return {
-        label:
-          "Danger Zone",
-
-        color:
-          "rgba(245,158,11,0.16)",
-
-        text:
-          "#b45309",
-      };
-    }
-
-    return {
-      label:
-        "Projected Elimination",
-
-      color:
-        "rgba(239,68,68,0.16)",
-
-      text:
-        "#b91c1c",
-    };
-  }
 
   if (loading) {
     return (
@@ -379,430 +268,76 @@ export default function SoccerQualificationTrackerPage() {
           />
 
           <HeroCard
-            label="Groups Tracking"
-            value={String(
-              groups.length
-            )}
-          />
-
-          <HeroCard
-            label="Qualified Spots"
-            value={String(
-              groups.length *
-                2
-            )}
-          />
-
-          <HeroCard
-            label="Teams Under Pressure"
+            label="Groups Completed"
             value="12"
+          />
+
+          <HeroCard
+            label="Qualified Nations"
+            value="32"
+          />
+
+          <HeroCard
+            label="Round of 32"
+            value="Live"
           />
         </div>
       </section>
 
-      {/* GROUP TRACKERS */}
+      {/* TOURNAMENT PROGRESS */}
 
-      {groupStandings.map(
-        (group) => (
-          <section
-            key={
-              group.groupId
-            }
-            className={
-              styles.section
-            }
+      <section className={styles.section}>
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "30px",
+            padding: "36px",
+            boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
+          }}
+        >
+          <h2 className={styles.sectionTitle}>
+            Tournament Progress
+          </h2>
+
+          <p
+            style={{
+              color: "#6b7280",
+              marginBottom: "28px",
+            }}
           >
-            <div
-              style={{
-                display:
-                  "flex",
-
-                justifyContent:
-                  "space-between",
-
-                alignItems:
-                  "center",
-
-                flexWrap:
-                  "wrap",
-
-                gap: "14px",
-
-                marginBottom:
-                  "24px",
-              }}
-            >
-              <div>
-                <h2
-                  className={
-                    styles.sectionTitle
-                  }
-                  style={{
-                    marginBottom:
-                      "8px",
-                  }}
-                >
-                  {
-                    group.groupName
-                  }
-                </h2>
-
-                <p
-                  style={{
-                    margin: 0,
-
-                    color:
-                      "#6b7280",
-                  }}
-                >
-                  Live
-                  qualification
-                  pressure and
-                  progression
-                  analysis.
-                </p>
-              </div>
-
-              <button
-                onClick={() =>
-                  navigate(
-                    `/soccer/groups/${group.groupId}`
-                  )
-                }
-                style={{
-                  border:
-                    "none",
-
-                  background:
-                    "#111827",
-
-                  color:
-                    "#ffffff",
-
-                  padding:
-                    "12px 18px",
-
-                  borderRadius:
-                    "999px",
-
-                  cursor:
-                    "pointer",
-
-                  fontWeight: 800,
-                }}
-              >
-                View Group
-              </button>
-            </div>
-
-            <div
-              style={{
-                display:
-                  "grid",
-
-                gap: "18px",
-              }}
-            >
-              {group.standings.map(
-                (
-                  team,
-                  index
-                ) => {
-                  const status =
-                    getStatus(
-                      index +
-                        1
-                    );
-
-                  const qualificationChance =
-                    getQualificationChance(
-                      team.points,
-                      index +
-                        1
-                    );
-
-                  const teamMomentum =
-  momentumLookup[
-    team.team
-  ];
-
-                  return (
-                    <div
-                      key={
-                        team.team
-                      }
-                      style={{
-                        background:
-                          "#ffffff",
-
-                        borderRadius:
-                          "26px",
-
-                        padding:
-                          "28px",
-
-                        boxShadow:
-                          "0 10px 28px rgba(0,0,0,0.08)",
-                      }}
-                    >
-                      {/* TOP */}
-
-                      <div
-                        style={{
-                          display:
-                            "flex",
-
-                          justifyContent:
-                            "space-between",
-
-                          alignItems:
-                            "center",
-
-                          flexWrap:
-                            "wrap",
-
-                          gap: "18px",
-
-                          marginBottom:
-                            "22px",
-                        }}
-                      >
-                        <div>
-                          <div
-                            style={{
-                              display:
-                                "flex",
-
-                              alignItems:
-                                "center",
-
-                              gap: "12px",
-
-                              marginBottom:
-                                "10px",
-                            }}
-                          >
-                            <div
-                              style={{
-                                width:
-                                  "42px",
-
-                                height:
-                                  "42px",
-
-                                borderRadius:
-                                  "999px",
-
-                                background:
-                                  "#111827",
-
-                                color:
-                                  "#ffffff",
-
-                                display:
-                                  "flex",
-
-                                alignItems:
-                                  "center",
-
-                                justifyContent:
-                                  "center",
-
-                                fontWeight: 900,
-                              }}
-                            >
-                              {index +
-                                1}
-                            </div>
-
-                            <h3
-                              style={{
-                                margin: 0,
-
-                                fontSize:
-                                  "1.5rem",
-
-                                fontWeight: 900,
-                              }}
-                            >
-                              {
-                                team.team
-                              }
-                            </h3>
-                          </div>
-
-                          <div
-                            style={{
-                              display:
-                                "inline-flex",
-
-                              padding:
-                                "8px 14px",
-
-                              borderRadius:
-                                "999px",
-
-                              background:
-                                status.color,
-
-                              color:
-                                status.text,
-
-                              fontWeight: 800,
-
-                              fontSize:
-                                "0.82rem",
-                            }}
-                          >
-                            {
-                              status.label
-                            }
-                          </div>
-                        </div>
-
-                        <div
-                          style={{
-                            textAlign:
-                              "right",
-                          }}
-                        >
-                          <div
-                            style={{
-                              color:
-                                "#6b7280",
-
-                              marginBottom:
-                                "8px",
-                            }}
-                          >
-                            Qualification
-                            Probability
-                          </div>
-
-                          <div
-                            style={{
-                              fontSize:
-                                "2rem",
-
-                              fontWeight: 900,
-                            }}
-                          >
-                            {
-                              qualificationChance
-                            }
-                            %
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* BAR */}
-
-                      <div
-                        style={{
-                          height:
-                            "12px",
-
-                          borderRadius:
-                            "999px",
-
-                          overflow:
-                            "hidden",
-
-                          background:
-                            "#e5e7eb",
-
-                          marginBottom:
-                            "24px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: `${qualificationChance}%`,
-
-                            height:
-                              "100%",
-
-                            background:
-                              qualificationChance >=
-                              75
-                                ? "#22c55e"
-                                : qualificationChance >=
-                                  45
-                                ? "#f59e0b"
-                                : "#ef4444",
-                          }}
-                        />
-                      </div>
-
-                      {/* STATS */}
-
-                      <div
-                        style={{
-                          display:
-                            "grid",
-
-                          gridTemplateColumns:
-                            "repeat(auto-fit, minmax(160px, 1fr))",
-
-                          gap: "16px",
-                        }}
-                      >
-                        <MiniStat
-                          label="Points"
-                          value={String(
-                            team.points
-                          )}
-                        />
-
-                        <MiniStat
-                          label="Goal Difference"
-                          value={String(
-                            team.goalDifference
-                          )}
-                        />
-
-                        <MiniStat
-                          label="Form"
-                          value={
-                            team.form?.join(
-                              " • "
-                            ) ||
-                            "-"
-                          }
-                        />
-
-                        <MiniStat
-                          label="Momentum"
-                          value={
-                            teamMomentum?.trend ||
-                            "STABLE"
-                          }
-                        />
-
-                        <MiniStat
-                          label="Attack Rating"
-                          value={String(
-                            teamMomentum?.attackRating ||
-                              0
-                          )}
-                        />
-
-                        <MiniStat
-                          label="Defense Rating"
-                          value={String(
-                            teamMomentum?.defenseRating ||
-                              0
-                          )}
-                        />
-                      </div>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-          </section>
-        )
-      )}
+            The group stage has concluded. Thirty-two nations have progressed into the knockout phase where every match is an elimination fixture.
+          </p>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(220px,1fr))",
+              gap: "18px",
+            }}
+          >
+            <HeroCard
+              label="Group Stage"
+              value="Completed"
+            />
+
+            <HeroCard
+              label="Round of 32"
+              value="In Progress"
+            />
+
+            <HeroCard
+              label="Teams Remaining"
+              value="32"
+            />
+
+            <HeroCard
+              label="Champion"
+              value="TBD"
+            />
+          </div>
+        </div>
+      </section>
 
       {/* AI INSIGHTS */}
 

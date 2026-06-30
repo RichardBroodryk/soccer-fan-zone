@@ -62,6 +62,10 @@ export interface SoccerMatch {
 
   awayScore?: number;
 
+  homePenalties?: number;
+  awayPenalties?: number;
+  winner?: string;
+
   date: string;
 
   stadium?: string;

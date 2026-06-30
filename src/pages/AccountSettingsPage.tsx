@@ -1,22 +1,30 @@
 // src/pages/AccountSettingsPage.tsx
 
 import { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-
 import styles from "./AccountSettingsPage.module.css";
-
 import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
+import {
+  getSubscription,
+} from "../services/subscriptionService";
+import {
+  logoutUser,
+} from "../services/accessService";
 
 export default function AccountSettingsPage() {
   const navigate = useNavigate();
 
   /* ================= USER ================= */
 
+  const subscription =
+    getSubscription();
+
   const email =
-    localStorage.getItem(
-      "sfz_user_email"
-    ) || "supporter@example.com";
+    subscription.email ||
+    "supporter@example.com";
+
+  const membershipStatus =
+    subscription.status;
 
   /* ================= AVATAR ================= */
 
@@ -82,10 +90,7 @@ export default function AccountSettingsPage() {
   };
 
   const logout = () => {
-    localStorage.removeItem(
-      "sfz_logged_in"
-    );
-
+    logoutUser();
     navigate("/login");
   };
 
@@ -143,11 +148,42 @@ export default function AccountSettingsPage() {
 
             <div>
               <span className={styles.label}>
-                Access
+                Membership
               </span>
 
               <div className={styles.value}>
-                Full Global Football Access
+                {membershipStatus}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* MEMBERSHIP */}
+
+        <section className={styles.card}>
+          <h2>
+            Membership
+          </h2>
+
+          <div className={styles.infoBox}>
+            <div>
+              <span className={styles.label}>
+                Status
+              </span>
+
+              <div className={styles.value}>
+                {membershipStatus}
+              </div>
+            </div>
+
+            <div>
+              <span className={styles.label}>
+                Renewal
+              </span>
+
+              <div className={styles.value}>
+                {subscription.nextRenewal ||
+                  "Will appear after activation"}
               </div>
             </div>
           </div>

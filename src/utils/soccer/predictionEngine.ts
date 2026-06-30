@@ -133,6 +133,21 @@ export async function getTeamStrength(
 export async function predictMatch(
   match: SoccerMatch
 ): Promise<MatchPrediction> {
+if (match.status === "final") {
+  return {
+    homeWin: match.homeScore! > match.awayScore! ? 100 : 0,
+    draw: match.homeScore === match.awayScore ? 100 : 0,
+    awayWin: match.awayScore! > match.homeScore! ? 100 : 0,
+    expectedHomeGoals: match.homeScore ?? 0,
+    expectedAwayGoals: match.awayScore ?? 0,
+    favorite: match.winner ??
+      (match.homeScore! >= match.awayScore!
+        ? match.home
+        : match.away),
+    confidence: 100,
+  };
+}
+
   const homeStrength =
     await getTeamStrength(
       match.home
@@ -288,35 +303,26 @@ export async function getPowerRankings(): Promise<
             momentumTeam
               ?.momentum || 0;
 
-          let projectedFinish =
-            "Group Stage";
+          let projectedFinish = "Group Stage";
 
-          if (
-            strength >= 95
-          ) {
-            projectedFinish =
-              "Champion";
-          } else if (
-            strength >= 90
-          ) {
-            projectedFinish =
-              "Final";
-          } else if (
-            strength >= 85
-          ) {
-            projectedFinish =
-              "Semifinal";
-          } else if (
-            strength >= 80
-          ) {
-            projectedFinish =
-              "Quarterfinal";
-          } else if (
-            strength >= 75
-          ) {
-            projectedFinish =
-              "Round of 16";
-          }
+const knockoutWins = matches.filter(
+  (m) =>
+    m.status === "final" &&
+    m.winner === team.name &&
+    m.stage !== "Group Stage"
+).length;
+
+if (knockoutWins >= 4) {
+  projectedFinish = "Champion";
+} else if (knockoutWins === 3) {
+  projectedFinish = "Final";
+} else if (knockoutWins === 2) {
+  projectedFinish = "Semifinal";
+} else if (knockoutWins === 1) {
+  projectedFinish = "Quarterfinal";
+} else if (strength >= 75) {
+  projectedFinish = "Round of 16";
+}
 
           return {
             team:
@@ -409,12 +415,14 @@ export async function getBiggestFavorites() {
   );
 
   try {
-    const futureMatches =
-      matches.filter(
-        (match) =>
-          match.status ===
-          "upcoming"
-      );
+    const futureMatches = matches.filter(
+  (match) =>
+    match.status === "upcoming" &&
+    !match.home.startsWith("TBD") &&
+    !match.away.startsWith("TBD") &&
+    !match.home.startsWith("Winner") &&
+    !match.away.startsWith("Winner")
+);
 
     const predictions =
       await Promise.all(
@@ -454,12 +462,14 @@ export async function getBiggestFavorites() {
 ====================================================== */
 
 export async function getUpsetWatchMatches() {
-  const futureMatches =
-    matches.filter(
-      (match) =>
-        match.status ===
-        "upcoming"
-    );
+  const futureMatches = matches.filter(
+  (match) =>
+    match.status === "upcoming" &&
+    !match.home.startsWith("TBD") &&
+    !match.away.startsWith("TBD") &&
+    !match.home.startsWith("Winner") &&
+    !match.away.startsWith("Winner")
+);
 
   const predictions =
     await Promise.all(

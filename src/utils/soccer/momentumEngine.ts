@@ -196,25 +196,30 @@ function getResult(
   nation: string,
   match: SoccerMatch
 ): "W" | "D" | "L" {
-  const gf =
-    getGoalsFor(
-      nation,
-      match
-    );
 
-  const ga =
-    getGoalsAgainst(
-      nation,
-      match
-    );
-
-  if (gf > ga) {
-    return "W";
+  // Knockout winner takes precedence
+  if (
+    match.status === "final" &&
+    match.winner
+  ) {
+    return match.winner === nation
+      ? "W"
+      : "L";
   }
 
-  if (gf < ga) {
-    return "L";
-  }
+  const gf = getGoalsFor(
+    nation,
+    match
+  );
+
+  const ga = getGoalsAgainst(
+    nation,
+    match
+  );
+
+  if (gf > ga) return "W";
+
+  if (gf < ga) return "L";
 
   return "D";
 }
@@ -318,6 +323,13 @@ function calculateMomentumScore(
   let score = 50;
 
   score += wins * 8;
+
+// Reward knockout progression
+score += wins >= 4
+  ? 10
+  : wins >= 2
+  ? 5
+  : 0;
 
   score += draws * 3;
 

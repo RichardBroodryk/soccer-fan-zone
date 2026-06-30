@@ -1,13 +1,14 @@
 // src/pages/AccountSetupPage.tsx
 
 import { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
-
 import styles from "./AccountSetupPage.module.css";
-
 import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
 import { registerUser } from "../services/auth";
+import { saveUser } from "../services/userService";
+import {
+  setSubscriptionStatus,
+} from "../services/subscriptionService";
 
 export default function AccountSetupPage() {
   const navigate = useNavigate();
@@ -34,6 +35,9 @@ export default function AccountSetupPage() {
   const [error, setError] =
     useState("");
 
+  const [loading, setLoading] =
+    useState(false);
+
   /* ================= HELPERS ================= */
 
   const isValidEmail = (
@@ -43,83 +47,83 @@ export default function AccountSetupPage() {
 
   /* ================= ROUTING ================= */
 
- const goToCheckout = async () => {
-  alert("1. goToCheckout STARTED");
-  setError("");
+  const goToCheckout = async () => {
+    setError("");
+    setLoading(true);
 
-  /* EMAIL */
-  if (!email.trim()) {
-    alert("Please enter your email.");
-    setError("Please enter your email.");
-    return;
-  }
+    /* EMAIL */
+    if (!email.trim()) {
+      setLoading(false);
+      setError("Please enter your email.");
+      return;
+    }
 
-  if (!isValidEmail(email)) {
-    alert("Please enter a valid email address.");
-    setError("Please enter a valid email address.");
-    return;
-  }
+    if (!isValidEmail(email)) {
+      setLoading(false);
+      setError("Please enter a valid email address.");
+      return;
+    }
 
-  /* PASSWORD */
-  if (!password.trim()) {
-    alert("Please create a password.");
-    setError("Please create a password.");
-    return;
-  }
+    /* PASSWORD */
+    if (!password.trim()) {
+      setLoading(false);
+      setError("Please create a password.");
+      return;
+    }
 
-  if (password.length < 6) {
-    alert("Password must be at least 6 characters.");
-    setError("Password must be at least 6 characters.");
-    return;
-  }
+    if (password.length < 6) {
+      setLoading(false);
+      setError("Password must be at least 6 characters.");
+      return;
+    }
 
-  /* CONFIRM */
-  if (password !== confirmPassword) {
-    alert("Passwords do not match.");
-    setError("Passwords do not match.");
-    return;
-  }
+    /* CONFIRM */
+    if (password !== confirmPassword) {
+      setLoading(false);
+      setError("Passwords do not match.");
+      return;
+    }
 
-  /* COUNTRY */
-  if (!country) {
-    alert("Please select your country.");
-    setError("Please select your country.");
-    return;
-  }
+    /* COUNTRY */
+    if (!country) {
+      setLoading(false);
+      setError("Please select your country.");
+      return;
+    }
 
-  /* TERMS */
-  if (!accepted) {
-    alert("You must accept the terms to continue.");
-    setError("You must accept the terms to continue.");
-    return;
-  }
+    /* TERMS */
+    if (!accepted) {
+      setLoading(false);
+      setError("You must accept the terms to continue.");
+      return;
+    }
 
-  alert("2. All validation passed. About to call registerUser");
+    try {
+      const result = await registerUser(email, password);
+      
+      saveUser(
+        String(result.userId),
+        String(result.email),
+        String(result.token)
+      );
 
-  try {
-    alert("3. Calling registerUser with: " + email);
-    
-    const result = await registerUser(email, password);
-    
-    alert("4. registerUser returned: " + JSON.stringify(result));
-    
-    alert("5. Token value: " + result?.token);
-    alert("6. User ID value: " + result?.userId);
-    
-    localStorage.setItem("sfz_token", String(result?.token));
-    localStorage.setItem("sfz_user_id", String(result?.userId));
-    localStorage.setItem("sfz_user_email", String(result?.email));
-    localStorage.setItem("sfz_tier", String(result?.tier));
-    
-    alert("7. Token saved. Navigating to /checkout");
-    
-    navigate("/checkout");
-    
-  } catch (err: any) {
-    alert("ERROR: " + (err?.message || "Account creation failed."));
-    console.error("REGISTER ERROR:", err);
-    setError(err?.message || "Account creation failed.");
-  }
+      /*
+        Every newly created account
+        starts here until payment
+        is completed.
+      */
+      setSubscriptionStatus(
+        "PENDING"
+      );
+      
+      setLoading(false);
+      navigate("/checkout");
+      
+    } catch (err: any) {
+      setLoading(false);
+      console.error("REGISTER ERROR:", err);
+      setError(err?.message || "Account creation failed.");
+    }
   };
 
   const goToLogin = () => {
@@ -332,8 +336,11 @@ export default function AccountSetupPage() {
             <button
               className={styles.primaryButton}
               onClick={goToCheckout}
+              disabled={loading}
             >
-              Continue To Secure Checkout
+              {loading
+                ? "Creating Account..."
+                : "Continue To Secure Checkout"}
             </button>
 
             <button

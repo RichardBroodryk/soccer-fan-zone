@@ -1,6 +1,10 @@
 // src/pages/soccer/SoccerTeamPage.tsx
 
-import { useMemo } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import {
   useNavigate,
@@ -11,7 +15,12 @@ import styles from "./SoccerTeamPage.module.css";
 
 import { teams } from "../../data/soccer/teams";
 import { groups } from "../../data/soccer/groups";
-import { matches } from "../../data/soccer/matches";
+import {
+  getAllWorldCupMatches,
+} from "../../services/liveMatchService";
+import {
+  matches as worldCupMatches,
+} from "../../data/soccer/matches";
 import { stadiums } from "../../data/soccer/stadiums";
 
 import PageWrapper from "../../components/layout/PageWrapper";
@@ -119,6 +128,69 @@ export default function SoccerTeamPage() {
 
   const navigate = useNavigate();
 
+  const [
+    matches,
+    setMatches,
+  ] = useState<SoccerMatch[]>([]);
+
+  const [
+    loadingMatches,
+    setLoadingMatches,
+  ] = useState(true);
+
+ // ======================================================
+// LOAD LIVE MATCHES
+// ======================================================
+
+useEffect(() => {
+  let mounted = true;
+
+  async function loadMatches() {
+    try {
+      const response =
+        await getAllWorldCupMatches();
+
+      if (!mounted) {
+        return;
+      }
+
+      const safeMatches =
+        Array.isArray(response) &&
+        response.length > 0
+          ? response
+          : worldCupMatches;
+
+      setMatches(
+        safeMatches
+      );
+    } catch (error) {
+      if (import.meta.env.DEV) {
+        console.error(
+          "Failed to load team matches:",
+          error
+        );
+      }
+
+      if (mounted) {
+        setMatches(
+          worldCupMatches
+        );
+      }
+    } finally {
+      if (mounted) {
+        setLoadingMatches(
+          false
+        );
+      }
+    }
+  }
+
+  loadMatches();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
   /* ======================================================
      TEAM
      ====================================================== */
@@ -129,36 +201,35 @@ export default function SoccerTeamPage() {
     );
   }, [teamId]);
 
-  /* ======================================================
-     GROUP
-     ====================================================== */
+ /* ======================================================
+   GROUP
+   ====================================================== */
 
-  const group = useMemo(() => {
-    if (!team) {
-      return null;
-    }
+const group = useMemo(() => {
+  if (!team) {
+    return null;
+  }
 
-    return groups.find((g) =>
-      g.teams.includes(team.name)
-    );
-  }, [team]);
+  return groups.find((g) =>
+    g.teams.includes(team.name)
+  );
+}, [team]);
 
-  /* ======================================================
-     MATCHES
-     ====================================================== */
+/* ======================================================
+   MATCHES
+   ====================================================== */
 
-  const teamMatches = useMemo(() => {
-    if (!team) {
-      return [];
-    }
+const teamMatches = useMemo(() => {
+  if (!team) {
+    return [];
+  }
 
-    return matches.filter(
-      (m: SoccerMatch) =>
-        m.home === team.name ||
-        m.away === team.name
-    );
-  }, [team]);
-
+  return matches.filter(
+    (m: SoccerMatch) =>
+      m.home === team.name ||
+      m.away === team.name
+  );
+}, [team, matches]);
   /* ======================================================
      STADIUMS
      ====================================================== */
@@ -370,6 +441,16 @@ const teamTheme =
 /* ======================================================
    NOT FOUND
    ====================================================== */
+
+if (loadingMatches) {
+  return (
+    <main className={styles.page}>
+      <div className={styles.empty}>
+        Loading team...
+      </div>
+    </main>
+  );
+}
 
 if (!team) {
   return (

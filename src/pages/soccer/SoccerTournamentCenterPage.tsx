@@ -395,22 +395,7 @@ return (
               opacity: 0.92,
             }}
           >
-            Live World
-            Cup
-            intelligence,
-            power
-            rankings,
-            knockout
-            projections,
-            momentum
-            tracking, AI
-            predictions,
-            tactical
-            trends and
-            tournament
-            analytics
-            across global
-            football.
+           Live World Cup intelligence covering the completed group stage, Round of 32 progress, AI power rankings, knockout projections, momentum tracking and championship simulations.
           </p>
         </div>
       </section>
@@ -492,11 +477,9 @@ return (
         />
 
         <OverviewCard
-          title="Tracked Nations"
-          value={String(
-            rankings.length
-          )}
-        />
+    title="Teams Remaining"
+    value="32"
+/>
       </section>
 
       {/* NAVIGATION */}
@@ -509,27 +492,27 @@ return (
       >
         <SectionHeader
           title="🌍 Tournament Navigation"
-          subtitle="Navigate every layer of the FIFA World Cup ecosystem."
+          subtitle="Navigate every layer of the Global World Cup ecosystem."
         />
 
         <AutoContentRail>
           <HubCard
-            title="World Cup Groups"
+            title="Tournament Progress"
             image={
               groupsImage
             }
-            to="/soccer/groups"
-            features={[
-              {
-                label: `${groups.length} Groups`,
+            to="/soccer/qualification-tracker"
+           features={[
+  {
+    label: "Group Stage Complete",
 
                 icon:
                   <UsersIcon />,
               },
 
               {
-                label:
-                  "Standings & Fixtures",
+    label:
+      "Tournament Progress",
 
                 icon:
                   <CalendarIcon />,

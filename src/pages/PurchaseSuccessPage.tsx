@@ -1,13 +1,24 @@
 // src/pages/PurchaseSuccessPage.tsx
 
-import { useNavigate } from "react-router-dom";
+import {
+  useEffect,
+} from "react";
+import {
+  useNavigate,
+} from "react-router-dom";
 
 import styles from "./PurchaseSuccessPage.module.css";
-
 import heroImage from "../assets/soccer/ui/global-soccer-logo.jpg";
+import {
+  activateSubscription,
+} from "../services/subscriptionService";
 
 export default function PurchaseSuccessPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    activateSubscription();
+  }, []);
 
   const enterPlatform = () => {
     navigate("/soccer");
@@ -27,7 +38,7 @@ export default function PurchaseSuccessPage() {
 
         <div className={styles.heroContent}>
           <div className={styles.successBadge}>
-            PURCHASE SUCCESSFUL
+            MEMBERSHIP ACTIVATED
           </div>
 
           <h1>
@@ -37,10 +48,8 @@ export default function PurchaseSuccessPage() {
           </h1>
 
           <p>
-            Your platform access has been
-            successfully unlocked.
-            You now have full access to the
-            complete global football experience.
+            Your Soccer Fan Zone membership
+            has been activated successfully.
           </p>
         </div>
       </section>
@@ -56,18 +65,18 @@ export default function PurchaseSuccessPage() {
           </div>
 
           <h2>
-            Global Access Activated
+            Membership Activated
           </h2>
 
           <p>
-            Your football platform access
-            is now active across supported devices.
+            Your quarterly membership is now active
+            and your account has full platform access.
           </p>
 
           <div className={styles.notice}>
-            Your platform access has been activated
-            successfully and your account is ready
-            to enter the football experience.
+            Your membership has been confirmed.
+            Enjoy the complete Soccer Fan Zone
+            experience across all supported devices.
           </div>
         </section>
 
